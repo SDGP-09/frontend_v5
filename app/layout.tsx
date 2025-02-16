@@ -27,7 +27,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+
+      <div className="h-screen w-full bg-white flex flex-col">
+          <div className="h-12 w-full bg-amber-400">
+              <div className="w-20 h-full  flex items-center">
+                  <p className="text-3xl italic text-black font-bold">CIVILINK</p>
+              </div>
+          </div>
+          <div className="w-full flex-1">
+              {children}
+          </div>
+
+      </div>
+        
       </body>
     </html>
   );
