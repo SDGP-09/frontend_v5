@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decodeJwt } from "jose";
-import axios from "axios"; // ✅ Use jose instead of jsonwebtoken
+import axios from "axios";
+
+
 
 export async function middleware(req: NextRequest) {
     const token = req.cookies.get("auth_token")?.value;

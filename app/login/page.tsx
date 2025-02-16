@@ -6,6 +6,13 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 
+
+interface DecodedToken {
+    realm_access?: {
+        roles?: string[];
+    };
+}
+
 export default function LoginPage() {
 
     const [username, setUsername] = useState("");
@@ -47,13 +54,8 @@ export default function LoginPage() {
             });
 
 
-
-
-
-
-
             const token = response.data.access_token;
-            const decodedToken: any = jwtDecode(token);
+            const decodedToken: DecodedToken | null = jwtDecode(token);
             const userRoles: string[] = decodedToken?.realm_access?.roles || [];
 
             if (userRoles.includes("genaral")) {
