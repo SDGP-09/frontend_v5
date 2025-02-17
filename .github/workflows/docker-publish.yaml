@@ -49,5 +49,5 @@ jobs:
 
       - name: Update GKE Deployment
         run: |
-          kubectl set image deployment/civilink-gateway civilink-gateway=lasithdev/civilink-gateway-server:latest -n development
-          kubectl rollout restart deployment civilink-gateway -n development
+          kubectl set image deployment/civilink-front civilink-front=lasithdev/civilink-front:latest -n development
+          kubectl rollout restart deployment civilink-front -n development
