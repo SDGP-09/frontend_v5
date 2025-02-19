@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import {Building2} from "lucide-react";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,23 +24,43 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-      <div className="h-screen w-full bg-white flex flex-col">
-          <div className="h-12 w-full bg-amber-400">
-              <div className="w-20 h-full  flex items-center">
-                  <p className="text-3xl italic text-black font-bold">CIVILINK</p>
-              </div>
-          </div>
-          <div className="w-full flex-1">
-              {children}
-          </div>
+      <div className="min-h-screen flex flex-col">
+              <nav className="bg-white shadow-md px-6 py-4">
+                  <div className="max-w-7xl mx-auto flex justify-between items-center">
+                      <div className="flex items-center space-x-2">
+                          <Building2 className="h-8 w-8 text-green-500" />
+                          <span className="text-xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                  CiviLink
+                </span>
+                      </div>
+                      <div className="space-x-4">
+                          <button
 
+                              className="px-4 py-2 text-green-600 hover:text-green-700 font-medium">
+                              Login
+                          </button>
+                          <button className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300">
+                              Sign Up
+                          </button>
+                      </div>
+                  </div>
+              </nav>
+
+          {children}
       </div>
+
+
+
+
+
+
         
       </body>
     </html>
