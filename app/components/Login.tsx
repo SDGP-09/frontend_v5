@@ -80,7 +80,7 @@ export default function Login({onClose}:LoginProps){
                     password: formData.password,
                 });
 
-                const response = await fetch(`http://civilink-gateway.development.svc.cluster.local:9090/api/v1/users/login?${params.toString()}`, {
+                const response = await fetch(`http://civilink-gateway-service:9090/api/v1/users/login?${params.toString()}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
