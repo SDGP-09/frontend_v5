@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t lasithdev/civilink-front:latest .
+          docker build --no-cache -t lasithdev/civilink-front:latest .
           docker push lasithdev/civilink-front:latest
 
   deploy:
