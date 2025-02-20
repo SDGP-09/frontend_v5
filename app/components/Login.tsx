@@ -1,11 +1,127 @@
 import {Building2, X} from "lucide-react";
+import React, {useState} from "react";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+
+
 
 interface LoginProps {
     onClose: () => void;
 }
 
+
+interface FormErrors {
+    username?: string;
+    password?: string;
+}
+
 export default function Login({onClose}:LoginProps){
 
+    const router = useRouter();
+
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+    });
+    const [touched, setTouched] = useState({
+        username: false,
+        password: false,
+    });
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const validate = (name: string, value: string) => {
+        if (!value.trim()) {
+            return `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+        }
+        return '';
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setTouched(prev => ({ ...prev, [name]: true }));
+        const error = validate(name, value);
+        setErrors(prev => ({ ...prev, [name]: error }));
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (touched[name as keyof typeof touched]) {
+            const error = validate(name, value);
+            setErrors(prev => ({ ...prev, [name]: error }));
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const newErrors: FormErrors = {};
+
+        Object.keys(formData).forEach(key => {
+            const error = validate(key, formData[key as keyof typeof formData]);
+            if (error) {
+                newErrors[key as keyof FormErrors] = error;
+            }
+        });
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length === 0) {
+
+
+
+            const params = new URLSearchParams({
+                username: formData.username,
+                password: formData.password,
+            })
+
+            try {
+                const params = new URLSearchParams({
+                    username: formData.username,
+                    password: formData.password,
+                });
+
+                const response = await fetch(`http://civilink-gateway.development.svc.cluster.local:9090/api/v1/users/login?${params.toString()}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    Cookies.set("token", data.access_token, {
+                        expires: 7,
+                        secure: true,
+                        sameSite: "Strict",
+                    });
+
+                    console.log("Login successful:", data);
+
+                    try {
+                        const decodedPayload = JSON.parse(atob(data.access_token.split(".")[1]));
+                        const userRoles = decodedPayload.realm_access?.roles || [];
+
+                        if (userRoles.includes("group_member")) {
+                            router.push("/application");
+                        } else {
+                            router.push("/");
+                        }
+                    } catch (decodeError) {
+                        console.error("Error decoding token:", decodeError);
+                        setErrors({ username: "Invalid token received." });
+                    }
+                } else {
+                    setErrors({ username: "Invalid credentials" });
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                setErrors({ username: "Login failed. Try again." });
+            }
+
+            console.log('Form submitted:', formData);
+        }
+    };
 
     return(
         <>
@@ -27,7 +143,7 @@ export default function Login({onClose}:LoginProps){
                             </h1>
                         </div>
 
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                                     Username
@@ -36,9 +152,19 @@ export default function Login({onClose}:LoginProps){
                                     type="text"
                                     id="username"
                                     name="username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
 
                                     placeholder="Enter your username"
-                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition-all duration-200`}/>
+                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition-all duration-200 ${
+                                        errors.username && touched.username
+                                            ? 'border-red-500 focus:ring-red-200'
+                                            : 'border-gray-300 focus:ring-green-200 focus:border-green-500'
+                                    }`}/>
+                                {errors.username && touched.username && (
+                                    <p className="mt-1 text-sm text-red-500">{errors.username}</p>
+                                )}
                     </div>
 
                     <div>
@@ -49,13 +175,19 @@ export default function Login({onClose}:LoginProps){
                             type="password"
                             id="password"
                             name="password"
-
+                            value={formData.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                             placeholder="Enter your password"
-                            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition-all duration-200`
-
-                            }
+                            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 transition-all duration-200 ${
+                                errors.password && touched.password
+                                    ? 'border-red-500 focus:ring-red-200'
+                                    : 'border-gray-300 focus:ring-green-200 focus:border-green-500'
+                            }`}
                         />
-
+                        {errors.password && touched.password && (
+                            <p className="mt-1 text-sm text-red-500">{errors.password}</p>
+                        )}
                     </div>
 
                     <div className="flex items-center justify-between">
