@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface LoginProps {
     onClose: () => void;
@@ -81,7 +82,7 @@ export default function Login({onClose}:LoginProps){
                 });
 
                 //IP address may connect http://civilink-gateway-service.development.svc.local:9090
-                const response = await fetch(`http://civilink-gateway-service:9090/api/v1/users/login?${params.toString()}`, {
+                const response = await fetch(`${API_BASE_URL}/api/v1/users/login?${params.toString()}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
