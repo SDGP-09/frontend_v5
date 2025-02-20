@@ -71,7 +71,7 @@ export default function Login({ onClose }: LoginProps) {
                 });
 
                 const response = await axios.post(
-                    `http:civilink-gateway-service.development.svc.cluster.local:9090/api/v1/users/login`,  // ✅ Use API_BASE_URL
+                    `http://civilink-gateway-service.development.svc.cluster.local:9090/api/v1/users/login`,  // ✅ Use API_BASE_URL
                     params.toString(),
                     {
                         headers: {
