@@ -1,6 +1,5 @@
-
-import {MainForm} from "@/app/project/MainForm";
-export default function project() {
+import {MainForm} from "@/app/application/project-management/components/MainForm";
+export default function ProjectManagementPage() {
     return (
         <>
 
@@ -12,5 +11,6 @@ export default function project() {
         </>
 
     );
-
 }
+
+
