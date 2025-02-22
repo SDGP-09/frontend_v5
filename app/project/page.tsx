@@ -1,5 +1,5 @@
 
-import MainForm from "@/app/project/MainForm";
+import {MainForm} from "@/app/project/MainForm";
 export default function project() {
     return (
         <>
@@ -12,4 +12,5 @@ export default function project() {
         </>
 
     );
+
 }
