@@ -63,10 +63,10 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
                         </label>
                         <select
                             value={newTask.status}
-                            onChange={(e) => setNewTask({ ...newTask, status: e.target.value as 'Pending' | 'In Progress' | 'Completed' })}
+                            onChange={(e) => setNewTask({ ...newTask, status: e.target.value as 'New' | 'In Progress' | 'Completed' })}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         >
-                            <option value="Pending">Pending</option>
+                            <option value="New">New</option>
                             <option value="In Progress">In Progress</option>
                             <option value="Completed">Completed</option>
                         </select>
@@ -132,3 +132,4 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
         </div>
     );
 }
+

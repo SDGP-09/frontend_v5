@@ -1,7 +1,7 @@
 export interface Task {
     id: string;
     name: string;
-    status?: 'Pending' | 'In Progress' | 'Completed';
+    status?: 'New' | 'In Progress' | 'Completed';
     startDate: Date;
     endDate: Date;
     description?: string;
@@ -10,7 +10,7 @@ export interface Task {
 export interface Project {
     id: string;
     name: string;
-    status: 'Pending' | 'In Progress' | 'Completed';
+    status: 'New' | 'In Progress' | 'Completed';
     startDate: Date;
     endDate: Date;
     description: string;

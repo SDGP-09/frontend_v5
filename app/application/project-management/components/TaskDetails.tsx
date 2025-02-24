@@ -1,241 +1,178 @@
 'use client';
 
-import { ChevronDown, ChevronRight, Trash } from 'lucide-react';
-import { Project, Task } from '@/app/types/project';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Plus, Pencil, Check, X } from 'lucide-react';
+import { SubtaskForm } from './SubtaskForm';
+import { Task, Project } from '@/app/types/project';
+import { GanttChart } from './GanttChart';
 
-interface GanttChartProps {
-    projects: Project[];
-    onProjectToggle?: (projectId: string) => void;
-    onProjectUpdate?: (project: Project) => void;
-    onTaskUpdate?: (projectId: string, task: Task) => void;
-    onTaskDelete?: (projectId: string, taskId: string) => void; // Added callback for deleting tasks
-    selectedProjectId?: string;
+interface TaskDetailsProps {
+    projectId: string;
 }
 
-export function GanttChart({
-                               projects,
-                               onProjectToggle,
-                               onProjectUpdate,
-                               onTaskUpdate,
-                               onTaskDelete,
-                               selectedProjectId
-                           }: GanttChartProps) {
-    const [timelineUnits, setTimelineUnits] = useState<string[]>([]);
-    const [timelineWidth, setTimelineWidth] = useState('');
-    const [useMonths, setUseMonths] = useState(false);
-    const [earliestDate, setEarliestDate] = useState(new Date());
+export function TaskDetails({ projectId }: TaskDetailsProps) {
+    const [showSubtaskForm, setShowSubtaskForm] = useState(false);
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [currentProject, setCurrentProject] = useState<Project | null>(null);
 
-    // Helper functions
-    const daysBetween = (date1: Date, date2: Date) => {
-        return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
-    };
+    const [editingField, setEditingField] = useState<keyof Project | null>(null);
+    const [editValue, setEditValue] = useState<string | Date>('');
 
-    const monthsBetween = (date1: Date, date2: Date) => {
-        return (
-            (date2.getFullYear() - date1.getFullYear()) * 12 +
-            date2.getMonth() - date1.getMonth()
-        );
-    };
-
-    const getEarliestDate = (projects: Project[]) => {
-        if (projects.length === 0) return new Date();
-        const projectDates = projects.map(p => p.startDate.getTime());
-        const taskDates = projects.flatMap(p =>
-            p.tasks.map(t => new Date(t.startDate).getTime())
-        );
-        return new Date(Math.min(...projectDates, ...taskDates));
-    };
-
-    const getLatestDate = (projects: Project[]) => {
-        if (projects.length === 0) {
-            const date = new Date();
-            date.setDate(date.getDate() + 30);
-            return date;
-        }
-        const projectDates = projects.map(p => p.endDate.getTime());
-        const taskDates = projects.flatMap(p =>
-            p.tasks.map(t => new Date(t.endDate).getTime())
-        );
-        return new Date(Math.max(...projectDates, ...taskDates));
-    };
-
-    const getPosition = (startDate: Date) => {
-        if (useMonths) {
-            const months = monthsBetween(earliestDate, startDate);
-            return `${months * 10}rem`;
-        }
-        const days = daysBetween(earliestDate, startDate);
-        return `${days * 5}rem`;
-    };
-
-    const getWidth = (startDate: Date, endDate: Date) => {
-        if (useMonths) {
-            const duration = monthsBetween(startDate, endDate) + 1;
-            return `${duration * 10}rem`;
-        }
-        const duration = daysBetween(startDate, endDate);
-        return `${duration * 5}rem`;
-    };
-
-    // Update timeline when projects change
+    // Simulated API call
     useEffect(() => {
-        const earliest = getEarliestDate(projects);
-        const latest = getLatestDate(projects);
-        const totalDays = daysBetween(earliest, latest) + 1;
-        const shouldUseMonths = totalDays > 60;
+        const project: Project = {
+            id: projectId,
+            name: 'Sample Project',
+            status: 'In Progress' as const,
+            startDate: new Date(),
+            endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            description: 'This is a sample project description',
+            contractor: 'John Construction Co.',
+            tasks: [],
+            expanded: true,
+        };
 
-        setUseMonths(shouldUseMonths);
-        setEarliestDate(earliest);
+        setCurrentProject(project);
+        setProjects([project]);
+    }, [projectId]);
 
-        const units = shouldUseMonths
-            ? Array.from(
-                { length: monthsBetween(earliest, latest) + 1 },
-                (_, i) => {
-                    const date = new Date(earliest);
-                    date.setMonth(date.getMonth() + i);
-                    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-                }
-            )
-            : Array.from(
-                { length: totalDays },
-                (_, i) => {
-                    const date = new Date(earliest);
-                    date.setDate(date.getDate() + i);
-                    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                }
-            );
+    const handleAddSubtask = (subtask: Task) => {
+        if (!currentProject) return;
 
-        setTimelineUnits(units);
-        setTimelineWidth(shouldUseMonths ? `${units.length * 10}rem` : `${units.length * 5}rem`);
-    }, [projects]);
+        const updatedProject = {
+            ...currentProject,
+            tasks: [...currentProject.tasks, subtask],
+        };
+
+        setCurrentProject(updatedProject);
+        setProjects(projects.map(p => (p.id === projectId ? updatedProject : p)));
+        setShowSubtaskForm(false);
+    };
 
     const handleProjectToggle = (projectId: string) => {
-        onProjectToggle?.(projectId);
+        setProjects(projects.map(project =>
+            project.id === projectId ? { ...project, expanded: !project.expanded } : project
+        ));
     };
 
-    const handleTaskDelete = (projectId: string, taskId: string) => {
-        // Here the delete callback is triggered with the respective project and task IDs.
-        onTaskDelete?.(projectId, taskId);
+    const startEditing = (field: keyof Project, value: string | Date) => {
+        setEditingField(field);
+        setEditValue(value);
     };
 
-    return (
-        <div className="relative border rounded-lg shadow-sm overflow-x-auto">
-            <div className="inline-block min-w-full">
-                {/* Header */}
-                <div className="sticky top-0 z-50 bg-white border-b flex">
-                    <div className="sticky left-0 w-64 flex-shrink-0 p-4 font-semibold bg-white">
-                        Projects
-                    </div>
-                    <div className="inline-flex" style={{ width: timelineWidth }}>
-                        {timelineUnits.map((unit) => (
-                            <div
-                                key={unit}
-                                className={`font-semibold bg-white border-r text-center whitespace-nowrap ${
-                                    useMonths ? 'w-40' : 'w-20'
-                                } p-4`}
-                            >
-                                {unit}
-                            </div>
-                        ))}
-                    </div>
+    const saveEdit = () => {
+        if (!currentProject || !editingField) return;
+
+        const updatedProject = {
+            ...currentProject,
+            [editingField]: editValue,
+        };
+
+        setCurrentProject(updatedProject);
+        setProjects(projects.map(p => (p.id === projectId ? updatedProject : p)));
+
+        setEditingField(null);
+        setEditValue('');
+    };
+
+    const cancelEditing = () => {
+        setEditingField(null);
+        setEditValue('');
+    };
+
+    const renderEditableField = (field: keyof Project, label: string, value: string | Date) => {
+        const displayValue = value instanceof Date ? value.toLocaleDateString() : value;
+
+        return (
+            <div className="flex justify-between items-center">
+                <div className="w-full">
+                    <h2 className="text-lg font-semibold">{label}</h2>
+                    {editingField === field ? (
+                        field === 'description' ? (
+                            <textarea
+                                className="border px-2 py-1 rounded-md w-full resize-none max-w-full h-48"
+                                value={editValue as string}
+                                onChange={(e) => setEditValue(e.target.value)}
+                            />
+                        ) : (
+                            <input
+                                type={field.includes('Date') ? 'date' : 'text'}
+                                className="border px-2 py-1 rounded-md w-full"
+                                value={field.includes('Date') ? new Date(editValue as string).toISOString().split('T')[0] : (editValue as string)}
+                                onChange={(e) => setEditValue(field.includes('Date') ? new Date(e.target.value) : e.target.value)}
+                            />
+                        )
+                    ) : (
+                        <div
+                            className="text-gray-600 w-full overflow-hidden whitespace-pre-wrap break-words"
+                            style={{ wordWrap: 'break-word' }}
+                        >
+                            {displayValue}
+                        </div>
+                    )}
                 </div>
 
-                {/* Projects and Tasks */}
-                <div>
-                    {projects.map(project => (
-                        <div key={project.id} className={`${selectedProjectId === project.id ? 'bg-blue-50' : ''}`}>
-                            {/* Project Row */}
-                            <div className="flex group hover:bg-gray-50">
-                                <div className="sticky left-0 w-64 flex-shrink-0 p-4 border-r bg-white z-40 flex items-center justify-between">
-                                    <div className="flex items-center space-x-2 flex-1">
-                                        <button
-                                            onClick={() => handleProjectToggle(project.id)}
-                                            className="p-1 hover:bg-gray-200 rounded"
-                                        >
-                                            {project.expanded ? (
-                                                <ChevronDown className="w-4 h-4" />
-                                            ) : (
-                                                <ChevronRight className="w-4 h-4" />
-                                            )}
-                                        </button>
-                                        <div className="flex-1">
-                                            <Link
-                                                href={`/project/${project.id}`}
-                                                className="text-sm font-medium hover:text-blue-600 transition-colors"
-                                            >
-                                                {project.name}
-                                            </Link>
-                                            <div className="text-xs text-gray-500">{project.contractor}</div>
-                                        </div>
-                                    </div>
-                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center">
-                                        <button className="p-1 hover:bg-gray-200 rounded">
-                                            <Trash className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div style={{ width: timelineWidth }}>
-                                    <div className="relative" style={{ height: '3.5rem' }}>
-                                        <div
-                                            className={`absolute top-1/2 -translate-y-1/2 h-8 rounded-lg shadow-md cursor-pointer hover:brightness-110 transition-all ${
-                                                project.status === 'Completed'
-                                                    ? 'bg-gradient-to-r from-green-400 to-blue-500'
-                                                    : project.status === 'In Progress'
-                                                        ? 'bg-gradient-to-r from-green-400 to-blue-500'
-                                                        : 'bg-gradient-to-r from-gray-300 to-gray-400'
-                                            }`}
-                                            style={{
-                                                left: getPosition(project.startDate),
-                                                width: getWidth(project.startDate, project.endDate),
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Tasks */}
-                            {project.expanded && project.tasks.map(task => (
-                                <div key={task.id} className="flex group hover:bg-gray-50/80">
-                                    <div className="sticky left-0 w-64 flex-shrink-0 p-4 border-r bg-gray-50 z-40 flex items-center justify-between">
-                                        <div className="flex items-center space-x-2 pl-8 flex-1">
-                            <span className="text-sm cursor-pointer hover:text-blue-600 transition-colors">
-                              {task.name}
-                            </span>
-                                        </div>
-                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center">
-                                            <button
-                                                className="p-1 hover:bg-gray-200 rounded mr-1"
-                                                onClick={() => handleTaskDelete(project.id, task.id)} // Calling the delete handler
-                                            >
-                                                <Trash className="w-4 h-4" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div style={{ width: timelineWidth }}>
-                                        <div className="relative" style={{ height: '3.5rem' }}>
-                                            <div
-                                                className={`absolute top-1/2 -translate-y-1/2 h-6 rounded-lg shadow-sm cursor-pointer hover:brightness-110 transition-all ${
-                                                    task.status === 'Completed'
-                                                        ? 'bg-gradient-to-r from-green-400/80 to-blue-500/80'
-                                                        : task.status === 'In Progress'
-                                                            ? 'bg-gradient-to-r from-yellow-400/80 to-orange-500/80'
-                                                            : 'bg-gradient-to-r from-gray-300/80 to-gray-400/80'
-                                                }`}
-                                                style={{
-                                                    left: getPosition(new Date(task.startDate)),
-                                                    width: getWidth(new Date(task.startDate), new Date(task.endDate)),
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ))}
+                <div className="flex items-center space-x-2">
+                    {editingField === field ? (
+                        <>
+                            <button onClick={saveEdit} className="text-green-500 hover:text-green-700">
+                                <Check className="w-5 h-5" />
+                            </button>
+                            <button onClick={cancelEditing} className="text-red-500 hover:text-red-700">
+                                <X className="w-5 h-5" />
+                            </button>
+                        </>
+                    ) : (
+                        <button onClick={() => startEditing(field, value)} className="text-gray-500">
+                            <Pencil className="w-5 h-5" />
+                        </button>
+                    )}
                 </div>
             </div>
+        );
+    };
+
+    if (!currentProject) return null;
+
+    return (
+        <div className="space-y-6">
+            <div className="flex justify-between items-center">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text">
+                    {currentProject.name}
+                </h1>
+                <button
+                    onClick={() => setShowSubtaskForm(true)}
+                    className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-md hover:from-green-500 hover:to-blue-600 transition-all shadow-md"
+                >
+                    <Plus className="w-4 h-4" />
+                    <span>Add Subtask</span>
+                </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-4">
+                    {renderEditableField('status', 'Status', currentProject.status)}
+                    {renderEditableField('contractor', 'Contractor', currentProject.contractor)}
+                    {renderEditableField('description', 'Description', currentProject.description)}
+                </div>
+                <div className="space-y-4">
+                    {renderEditableField('startDate', 'Start Date', currentProject.startDate)}
+                    {renderEditableField('endDate', 'End Date', currentProject.endDate)}
+                </div>
+            </div><br /><br /><br />
+
+            <div className="mt-8">
+                <h2 className="text-2xl font-bold mb-4">Timeline</h2>
+                <GanttChart
+                    projects={projects}
+                    onProjectToggle={handleProjectToggle}
+                    selectedProjectId={projectId}
+                />
+            </div>
+
+            {showSubtaskForm && (
+                <SubtaskForm onSubmit={handleAddSubtask} onCancel={() => setShowSubtaskForm(false)} />
+            )}
         </div>
     );
 }

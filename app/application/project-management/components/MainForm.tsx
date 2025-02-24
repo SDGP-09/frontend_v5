@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { Plus, X } from 'lucide-react';
-import { Project } from "@/app/types/project";
-import { GanttChart } from "@/app/application/project-management/components/GanttChart";
+import { Project } from '@/app/types/project';
+import { GanttChart } from './GanttChart';
 
 const CONTRACTORS = [
     'John Construction Co.',
@@ -11,35 +11,6 @@ const CONTRACTORS = [
     'Elite Construction',
     'Premier Contractors',
 ];
-
-// Helper function to calculate days between dates
-const daysBetween = (date1: Date, date2: Date) => {
-    return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
-};
-
-// Helper function to calculate months between dates
-const monthsBetween = (date1: Date, date2: Date) => {
-    return (
-        (date2.getFullYear() - date1.getFullYear()) * 12 +
-        date2.getMonth() - date1.getMonth()
-    );
-};
-
-// Get the earliest start date from all projects
-const getEarliestDate = (projects: Project[]) => {
-    if (projects.length === 0) return new Date();
-    return new Date(Math.min(...projects.map(p => p.startDate.getTime())));
-};
-
-// Get the latest end date from all projects
-const getLatestDate = (projects: Project[]) => {
-    if (projects.length === 0) {
-        const date = new Date();
-        date.setDate(date.getDate() + 30); // Default 30 days view
-        return date;
-    }
-    return new Date(Math.max(...projects.map(p => p.endDate.getTime())));
-};
 
 export function MainForm() {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -53,25 +24,7 @@ export function MainForm() {
         contractor: CONTRACTORS[0],
     });
 
-    // Generate timeline units based on project duration
-    const earliestDate = getEarliestDate(projects);
-    const latestDate = getLatestDate(projects);
-    const totalDays = daysBetween(earliestDate, latestDate) + 1;
-    const useMonths = totalDays > 60;
-
-    const timelineUnits = useMonths
-        ? Array.from({ length: monthsBetween(earliestDate, latestDate) + 1 }, (_, i) => {
-            const date = new Date(earliestDate);
-            date.setMonth(date.getMonth() + i);
-            return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-        })
-        : Array.from({ length: totalDays }, (_, i) => {
-            const date = new Date(earliestDate);
-            date.setDate(date.getDate() + i);
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        });
-
-    const toggleProject = (projectId: string) => {
+    const handleProjectToggle = (projectId: string) => {
         setProjects(projects.map(project =>
             project.id === projectId
                 ? { ...project, expanded: !project.expanded }
@@ -107,30 +60,6 @@ export function MainForm() {
         });
     };
 
-
-
-    const getProjectPosition = (startDate: Date) => {
-        if (useMonths) {
-            const months = monthsBetween(earliestDate, startDate);
-            return `${months * 10}rem`;
-        }
-        const days = daysBetween(earliestDate, startDate);
-        return `${days * 5}rem`;
-    };
-
-    const getProjectWidth = (startDate: Date, endDate: Date) => {
-        if (useMonths) {
-            const duration = monthsBetween(startDate, endDate) + 1;
-            return `${duration * 10}rem`;
-        }
-        const duration = daysBetween(startDate, endDate);
-        return `${duration * 5}rem`;
-    };
-
-    const timelineWidth = useMonths
-        ? `${timelineUnits.length * 10}rem`
-        : `${timelineUnits.length * 5}rem`;
-
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text">
@@ -139,13 +68,7 @@ export function MainForm() {
 
             <GanttChart
                 projects={projects}
-                timelineUnits={timelineUnits}
-                timelineWidth={timelineWidth}
-                useMonths={useMonths}
-                earliestDate={earliestDate}
-                toggleProject={toggleProject}
-                getProjectPosition={getProjectPosition}
-                getProjectWidth={getProjectWidth}
+                onProjectToggle={handleProjectToggle}
             />
 
             {/* Add Project Button */}
