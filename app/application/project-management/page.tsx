@@ -3,7 +3,7 @@ export default function ProjectManagementPage() {
     return (
         <>
 
-            <div className="w-full h-full flex justify-center items-center text-black">
+            <div className="w-full h-full flex justify-center items-center text-black bg-white">
                 <MainForm/>
             </div>
 
