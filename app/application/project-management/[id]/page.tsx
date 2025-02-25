@@ -11,3 +11,5 @@ export function generateStaticParams() {
 export default function ProjectPage({ params }: { params: { id: string } }) {
     return <TaskDetailsWrapper projectId={params.id} />;
 }
+
+
