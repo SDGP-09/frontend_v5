@@ -27,7 +27,7 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
             startDate: new Date(),
             endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
             description: 'This is a sample project description',
-            contractor: 'John Construction Co.',
+
             tasks: [],
             expanded: true,
         };
@@ -152,7 +152,7 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
             <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-4">
                     {renderEditableField('status', 'Status', currentProject.status)}
-                    {renderEditableField('contractor', 'Contractor', currentProject.contractor)}
+
                     {renderEditableField('description', 'Description', currentProject.description)}
                 </div>
                 <div className="space-y-4">

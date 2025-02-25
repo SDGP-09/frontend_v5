@@ -1,5 +1,9 @@
 import { TaskDetailsWrapper } from '@/app/application/project-management/components/TaskDetailsWrapper';
 
+interface params {
+    id:string;
+}
+
 // This function is required for static exports with dynamic routes
 export function generateStaticParams() {
 
@@ -8,7 +12,7 @@ export function generateStaticParams() {
     }));
 }
 
-export default function ProjectPage({ params }: { params: { id: string } }) {
+export default function ProjectPage(params:params) {
     return <TaskDetailsWrapper projectId={params.id} />;
 }
 
