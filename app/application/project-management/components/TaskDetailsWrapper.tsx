@@ -13,3 +13,4 @@ export function TaskDetailsWrapper({ projectId }: TaskDetailsWrapperProps) {
         </div>
     );
 }
+

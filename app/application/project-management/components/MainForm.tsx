@@ -6,6 +6,7 @@ import { Project } from '@/app/types/project';
 import { GanttChart } from './GanttChart';
 import axios from 'axios';
 
+
 const CONTRACTORS = [
     'John Construction Co.',
     'Smith Builders',
@@ -33,8 +34,6 @@ export function MainForm() {
         ));
     };
 
-
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newProject.name || !newProject.startDate || !newProject.endDate) return;
@@ -61,11 +60,26 @@ export function MainForm() {
 
             if (response.status === 201) {
                 console.log('Main task created successfully:', response.data);
+                setProjects([...projects, newProjectComplete]);
+                setShowForm(false);
+                setNewProject({
+                    name: '',
+                    status: 'New',
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    description: '',
+                });
+            }else {
+                console.error('Error creating main task:', response.status);
             }
         } catch (error) {
             console.error('Error creating main task:', error);
         }
     };
+
+
+
+
 
     return (
         <div className="container mx-auto px-4 py-8">
