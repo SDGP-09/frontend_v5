@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import { Project } from "@/app/types/project";
-import { GanttChart } from '@/app/components/GanttChart';
+import { GanttChart } from "@/app/application/project-management/components/GanttChart";
 
 const CONTRACTORS = [
     'John Construction Co.',
