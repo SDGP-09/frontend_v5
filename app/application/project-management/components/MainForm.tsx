@@ -7,13 +7,6 @@ import { GanttChart } from './GanttChart';
 import axios from 'axios';
 
 
-const CONTRACTORS = [
-    'John Construction Co.',
-    'Smith Builders',
-    'Elite Construction',
-    'Premier Contractors',
-];
-
 export function MainForm() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [showForm, setShowForm] = useState(false);
