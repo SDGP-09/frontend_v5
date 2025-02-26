@@ -1,11 +1,10 @@
 "use client";
 
 import { Building2, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import api from "@/app/util/api";
-
+import api, { setLoadingInterceptor } from "@/app/util/api";
 
 interface LoginProps {
     onClose: () => void;
@@ -16,6 +15,11 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
     const router = useRouter();
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoadingInterceptor(setLoading);
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -36,27 +40,22 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
                 `http://35.193.219.136:4040/api/v1/users/login`,
                 params.toString(),
                 {
-                    headers: { "Content-Type": "application/x-www-form-urlencoded","X-Require-Auth": "false", }
-
+                    headers: { "Content-Type": "application/x-www-form-urlencoded", "X-Require-Auth": "false" }
                 }
             );
 
             const data = response.data;
             Cookies.set("token", data.access_token, { expires: 7 });
 
-
-
-
             onLoginSuccess();
             onClose();
-
 
             const decodedPayload = JSON.parse(atob(data.access_token.split(".")[1]));
             const userRoles = decodedPayload.realm_access?.roles || [];
             router.push(userRoles.includes("group_member") ? "/application" : "/");
         } catch (error) {
-            setErrors({ username: "Invalid credentials"});
-            console.log(error)
+            setErrors({ username: "Invalid credentials" });
+            console.log(error);
         }
     };
 
@@ -74,6 +73,12 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
                             CiviLink
                         </h1>
                     </div>
+
+                    {loading && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70">
+                            <div className="text-lg font-semibold text-gray-700">Loading...</div>
+                        </div>
+                    )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
@@ -107,8 +112,12 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
                             />
                         </div>
 
-                        <button type="submit" className="w-full py-2 px-4 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-[1.02]">
-                            Sign in
+                        <button
+                            type="submit"
+                            className="w-full py-2 px-4 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-[1.02]"
+                            disabled={loading}
+                        >
+                            {loading ? "Signing in..." : "Sign in"}
                         </button>
                     </form>
                 </div>
