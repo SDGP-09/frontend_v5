@@ -3,7 +3,7 @@ export default function ApplicationPage() {
 
         <>
 
-            <div className="w-full h-full flex justify-center items-center">
+            <div className="w-full h-screen flex justify-center items-center bg-gray-50">
                 <p className="text-black">Application Home page</p>
             </div>
 
