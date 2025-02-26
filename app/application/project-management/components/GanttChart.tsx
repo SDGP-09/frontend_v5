@@ -1,25 +1,19 @@
 'use client';
 
 import { ChevronDown, ChevronRight, Trash,Pencil } from 'lucide-react';
-import { Project, Task } from '@/app/types/project';
+import { Project } from '@/app/types/project';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 interface GanttChartProps {
     projects: Project[];
     onProjectToggle?: (projectId: string) => void;
-    onProjectUpdate?: (project: Project) => void;
-    onTaskUpdate?: (projectId: string, task: Task) => void;
-    onTaskDelete?: (projectId: string, taskId: string) => void; // Added callback for deleting tasks
     selectedProjectId?: string;
 }
 
 export function GanttChart({
                                projects,
                                onProjectToggle,
-                               onProjectUpdate,
-                               onTaskUpdate,
-                               onTaskDelete,
                                selectedProjectId
                            }: GanttChartProps) {
     const [timelineUnits, setTimelineUnits] = useState<string[]>([]);
@@ -111,14 +105,13 @@ export function GanttChart({
         setTimelineWidth(shouldUseMonths ? `${units.length * 10}rem` : `${units.length * 5}rem`);
     }, [projects]);
 
+
+
     const handleProjectToggle = (projectId: string) => {
         onProjectToggle?.(projectId);
     };
 
-    const handleTaskDelete = (projectId: string, taskId: string) => {
-        // Here the delete callback is triggered with the respective project and task IDs.
-        onTaskDelete?.(projectId, taskId);
-    };
+
 
     return (
         <div className="relative border rounded-lg shadow-sm overflow-x-auto">
@@ -167,7 +160,7 @@ export function GanttChart({
                                             >
                                                 {project.name}
                                             </Link>
-                                            <div className="text-xs text-gray-500">{project.contractor}</div>
+
                                         </div>
                                     </div>
                                     <div
@@ -215,7 +208,6 @@ export function GanttChart({
                                             </button>
                                             <button
                                                 className="p-1 hover:bg-gray-200 rounded mr-1"
-                                                onClick={() => handleTaskDelete(project.id, task.id)} // Calling the delete handler
                                             >
                                                 <Trash className="w-4 h-4"/>
                                             </button>
