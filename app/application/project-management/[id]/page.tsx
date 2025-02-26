@@ -1,5 +1,6 @@
 'use client';
 
+
 import { usePathname } from 'next/navigation';
 import { TaskDetailsWrapper } from '@/app/application/project-management/components/TaskDetailsWrapper';
 
@@ -13,4 +14,5 @@ export default function ProjectPage() {
     }
 
     return <TaskDetailsWrapper projectId={projectId} />;
+
 }
