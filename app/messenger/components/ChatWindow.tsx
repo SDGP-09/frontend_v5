@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import ChatHeader from './ChatHeader';
 import MessagesList from './MessagesList';
 import MessageInput from './MessageInput';
 import {Conversation} from "@/app/types/conversation.messenger";
+import {Message} from "@/app/types";
+
 
 // interface Conversation {
 //     id: number;
@@ -12,27 +14,89 @@ import {Conversation} from "@/app/types/conversation.messenger";
 //     avatar: string;
 // }
 
-interface Message {
-    id: number;
-    text: string;
-    sent: boolean;
-    time: string;
-    seen?: boolean;
-}
+
 
 interface ChatWindowProps {
     conversation: Conversation | null; // null => no chat selected
-    messages: Message[];
+    // messages: Message[];
     onBack: () => void; // for mobile "back" button
 }
 
+
+//Message fetching function here
+async function fetchMessages(conversationID: number){
+    const conversationIdTempStore: number = conversationID;
+
+    const messages: Message[] = [
+        {
+            id: 1,
+            time: new Date('2025-02-22T10:15:00'),
+            message: "Hello, this is a test message.",
+            viewed: true,
+            edited: false,
+            viewedTime: new Date('2025-02-22T10:16:00'),
+            editedTime: null,
+        },
+        {
+            id: 2,
+            time: new Date('2025-02-22T10:20:00'),
+            message: "Hi there, thanks for your reply!",
+            reference: 1,
+            viewed: true,
+            edited: true,
+            viewedTime: new Date('2025-02-22T10:21:00'),
+            editedTime: new Date('2025-02-22T10:22:00'),
+        },
+        {
+            id: 3,
+            time: new Date('2025-02-22T10:25:00'),
+            message: "I haven't seen this one yet.",
+            viewed: false,
+            edited: false,
+            viewedTime: null,
+            editedTime: null,
+        },
+    ];
+
+
+    return messages;
+}
+
+
+
 export default function ChatWindow({
                                        conversation,
-                                       messages,
+                                       // messages,
                                        onBack,
                                    }: ChatWindowProps) {
     // 1) ref for auto-scrolling to bottom
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+    const [messages,setMessages] = useState<Message[]>([])
+
+
+    useEffect(()=>{
+        async function loadMessage(){
+            if (!conversation){
+                return;
+            }
+            try{
+                const fetched = await fetchMessages(conversation.id)
+                setMessages(fetched);
+            }catch (error){
+                console.log(error);
+            }
+        }
+        loadMessage();
+
+
+
+    },[conversation]);
+
+
+
+
+
 
     // 2) scroll to bottom whenever `conversation` changes
     useEffect(() => {
@@ -57,6 +121,12 @@ export default function ChatWindow({
             </div>
         );
     }
+
+    //Message fetching function call here.
+
+    // const fetchedMessages: Message[] = await fetchMessages(conversation.id)
+
+
 
     // 4) If a conversation is selected, render the chat UI
     return (

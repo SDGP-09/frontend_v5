@@ -12,34 +12,7 @@ import ChatWindow from './components/ChatWindow';
 import {Conversation} from "@/app/types/conversation.messenger";
 
 // Example messages data (moved here for convenience)
-const dummyMessages = [
-    {
-        id: 1,
-        text: "Hi, I've reviewed the project timeline",
-        sent: true,
-        time: "10:15 AM",
-        seen: true,
-    },
-    {
-        id: 2,
-        text: "Great! What do you think about the deadlines?",
-        sent: false,
-        time: "10:20 AM",
-    },
-    {
-        id: 3,
-        text: "They look achievable. I've added some notes to the document.",
-        sent: true,
-        time: "10:25 AM",
-        seen: true,
-    },
-    {
-        id: 4,
-        text: "The project timeline looks good",
-        sent: false,
-        time: "10:30 AM",
-    },
-];
+
 
 /*
   We'll define a TypeScript type for the conversation
@@ -161,7 +134,7 @@ export default function MessengerInterface({
                 {showMessageInterface && (
                     <ChatWindow
                         conversation={selectedConversation}
-                        messages={dummyMessages}
+                        // messages={dummyMessages}
                         onBack={() => setSelectedConversation(null)}
                     />
                 )}
