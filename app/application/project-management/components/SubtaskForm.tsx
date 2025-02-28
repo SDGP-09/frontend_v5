@@ -19,13 +19,16 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!newTask.name || !newTask.startDate || !newTask.endDate) return;
-
         const task: Task = {
             id: String(Date.now()),
+            projectId: newTask.projectId ?? '',
             name: newTask.name,
             startDate: new Date(newTask.startDate),
             endDate: new Date(newTask.endDate),
+            status: newTask.status ?? 'New',
+            description: newTask.description ?? '',
         };
+
 
         onSubmit(task);
     };
@@ -52,7 +55,7 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
                             type="text"
                             value={newTask.name}
                             onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            className="mt-1 block w-full p-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                             required
                         />
                     </div>
@@ -64,7 +67,7 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
                         <select
                             value={newTask.status}
                             onChange={(e) => setNewTask({ ...newTask, status: e.target.value as 'New' | 'In Progress' | 'Completed' })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            className="mt-1 block w-full p-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         >
                             <option value="New">New</option>
                             <option value="In Progress">In Progress</option>
@@ -81,7 +84,7 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
                                 type="date"
                                 value={newTask.startDate?.toISOString().split('T')[0]}
                                 onChange={(e) => setNewTask({ ...newTask, startDate: new Date(e.target.value) })}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="mt-1 block w-full p-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                 required
                             />
                         </div>
@@ -94,7 +97,7 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
                                 type="date"
                                 value={newTask.endDate?.toISOString().split('T')[0]}
                                 onChange={(e) => setNewTask({ ...newTask, endDate: new Date(e.target.value) })}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                className="mt-1 block w-full p-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                 required
                             />
                         </div>
@@ -108,7 +111,7 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
                             value={newTask.description}
                             onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                            rows={3}
+                            rows={4}
                         />
                     </div>
 
