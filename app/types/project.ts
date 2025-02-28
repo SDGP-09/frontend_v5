@@ -1,5 +1,6 @@
 export interface Task {
     id: string;
+    projectId: string;
     name: string;
     status?: 'New' | 'In Progress' | 'Completed';
     startDate: Date;
@@ -18,4 +19,11 @@ export interface Project {
     tasks: Task[];
     expanded: boolean;
 }
+export interface ProjectFormData extends Omit<Project, 'tasks' | 'expanded'> {
+    status: 'New' | 'In Progress' | 'Completed'; // Ensures strict typing
+}
+
+
+
+
 
