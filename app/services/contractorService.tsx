@@ -1,6 +1,6 @@
 const API_BASE_URL = "http://localhost:7071/contractor";
 
-// ✅ Fetch all contractors
+// Fetch all contractors
 export const fetchContractors = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/find-all`, {
@@ -10,7 +10,7 @@ export const fetchContractors = async () => {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+             new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const result = await response.json();
@@ -28,7 +28,7 @@ export const fetchContractors = async () => {
     }
 };
 
-// ✅ Fetch contractor by ID
+// Fetch contractor by ID
 export const fetchContractorById = async (id: string) => {
     try {
         const response = await fetch("http://localhost:7071/contractor/find-by-id", {
@@ -38,21 +38,24 @@ export const fetchContractorById = async (id: string) => {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+             new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const result = await response.json();
-        console.log("Fetched Contractor by ID:", result); // ✅ Debugging log
+        console.log("Fetched Contractor by ID:", result); // Debugging log
 
         if (!result || !result.data || !result.data.contractor) {
             console.warn("Contractor data is missing in response:", result);
             return null;
         }
 
-        return result.data.contractor; // ✅ Ensure correct data structure
+        return result.data.contractor; // Ensure correct data structure
     } catch (error) {
         console.error("Error fetching contractor by ID:", error);
-        return null; // ✅ Return null to prevent app crashes
+        return null; // Return null to prevent app crashes
     }
 };
+
+
+
 
