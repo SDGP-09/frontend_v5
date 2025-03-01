@@ -10,6 +10,7 @@ import { Building2 } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
 import {Conversation} from "@/app/types/conversation.messenger";
+import {io, Socket} from "socket.io-client";
 
 // Example messages data (moved here for convenience)
 
@@ -49,6 +50,10 @@ export default function MessengerInterface({
     // 4) State for detecting mobile (less than 768px)
     const [isMobileView, setIsMobileView] = useState(false);
 
+    const [socket, setSocket] = useState<Socket | null>(null);
+
+
+
     // 5) On mount, detect if the screen is mobile; also handle window resize
     useEffect(() => {
         const handleResize = () => {
@@ -58,6 +63,28 @@ export default function MessengerInterface({
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+
+    useEffect(()=>{
+        const token: string = "This is a dummy token";
+
+
+        const newSocket = io('http://localhost:3002', {
+            auth: {
+                token: `Bearer ${token}`
+            }
+        })
+
+        setSocket(newSocket)
+
+    }, []);
+
+
+
+
+
+
+
 
     // 6) Drag logic: sidebar resize
     const handleMouseDown = (e: React.MouseEvent) => {
@@ -81,6 +108,16 @@ export default function MessengerInterface({
         document.removeEventListener('mouseup', handleMouseUp);
     };
 
+
+    
+
+
+
+
+
+
+
+
     // 7) Show/hide conversation list + message window depending on mobile
     const showConversationList = !isMobileView || !selectedConversation;
     const showMessageInterface = !isMobileView || selectedConversation;
@@ -89,27 +126,7 @@ export default function MessengerInterface({
     //    We'll replicate the old nav for completeness:
     return (
         <div className="h-screen flex flex-col bg-gray-100">
-            {/* Navigation Bar */}
-            {/*<nav className="bg-white shadow-lg flex-none">*/}
-            {/*    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">*/}
-            {/*        <div className="flex justify-between h-16 items-center">*/}
-            {/*            <div className="flex items-center">*/}
-            {/*                <Building2 className="h-8 w-8 text-green-500" />*/}
-            {/*                <span className="ml-2 text-xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">*/}
-            {/*    BuildConnect*/}
-            {/*  </span>*/}
-            {/*            </div>*/}
-            {/*            <div className="flex items-center space-x-4">*/}
-            {/*                <button className="px-4 py-2 text-blue-600 hover:text-blue-700 font-medium">*/}
-            {/*                    Login*/}
-            {/*                </button>*/}
-            {/*                <button className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all">*/}
-            {/*                    Sign Up*/}
-            {/*                </button>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</nav>*/}
+
 
             {/* Main Messaging Layout */}
             <div className="flex-1 flex overflow-hidden">
@@ -136,6 +153,7 @@ export default function MessengerInterface({
                         conversation={selectedConversation}
                         // messages={dummyMessages}
                         onBack={() => setSelectedConversation(null)}
+                        socket={socket}
                     />
                 )}
             </div>

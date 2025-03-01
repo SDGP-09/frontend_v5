@@ -6,6 +6,7 @@ import MessagesList from './MessagesList';
 import MessageInput from './MessageInput';
 import {Conversation} from "@/app/types/conversation.messenger";
 import {Message} from "@/app/types";
+import {Socket} from "socket.io-client";
 
 
 // interface Conversation {
@@ -20,6 +21,7 @@ interface ChatWindowProps {
     conversation: Conversation | null; // null => no chat selected
     // messages: Message[];
     onBack: () => void; // for mobile "back" button
+    socket: Socket | null;
 }
 
 
@@ -68,6 +70,7 @@ export default function ChatWindow({
                                        conversation,
                                        // messages,
                                        onBack,
+                                       socket
                                    }: ChatWindowProps) {
     // 1) ref for auto-scrolling to bottom
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -102,6 +105,31 @@ export default function ChatWindow({
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [conversation]);
+
+
+
+    useEffect(() =>{
+        if (!socket) return;
+
+        const handleNewMessage = (newMessage: Message) => {
+
+            //Optional console log statement (will comment later)
+            console.log(newMessage);
+
+            setMessages((prev)=>[...prev, newMessage])
+        }
+
+        socket.on('message', handleNewMessage);
+
+
+    }, [socket]);
+
+
+    useEffect(()=>{
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
+
 
     if (!conversation) {
         // 3) Placeholder view if no conversation is selected
