@@ -4,29 +4,13 @@ import React from 'react';
 import {Conversation} from "@/app/types/conversation.messenger";
 import {formatDate, imageToURL} from "@/app/helpers/messenger.helper";
 
-// interface Conversation {
-//     id: number;
-//     name: string;
-//     lastMessage: string;
-//     time: string;
-//     unread: number;
-//     avatar: string;
-// }
+
 
 interface ConversationCardProps {
     conversation: Conversation;
     onClick: () => void;
 }
 
-// function formatDate(date: Date | null): string {
-//     if (!date) return "";
-//
-//     const year = date.getFullYear();
-//     const month = String(date.getMonth() + 1).padStart(2, "0");
-//     const day = String(date.getDate()).padStart(2, "0");
-//
-//     return `${year}/${month}/${day}`;
-// }
 
 
 

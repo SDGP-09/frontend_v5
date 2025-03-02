@@ -9,7 +9,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Building2 } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
-import {Conversation} from "@/app/types/conversation.messenger";
+import {Conversation, Message} from "@/app/types";
 import {io, Socket} from "socket.io-client";
 
 // Example messages data (moved here for convenience)
@@ -75,13 +75,53 @@ export default function MessengerInterface({
             }
         })
 
-        setSocket(newSocket)
+        newSocket.on('conversations', (updatedConversations: Conversation[])=>{
+            setConversations(updatedConversations);
+        });
+
+        setSocket(newSocket);
 
     }, []);
 
 
 
+    // useEffect(() => {
+    //
+    //     if (!socket) return;
+    //
+    //     const handleIncomingMessage = (newMessage: Message)=> {
+    //         //console log just for now (will delete later)
+    //         console.log("Message from main conversations: " + newMessage);
+    //
+    //         setConversations(prevConversations => prevConversations.map(conv => {
+    //
+    //
+    //
+    //
+    //             return conv;
+    //         }));
+    //
+    //
+    //     }
+    //
+    //
+    //
+    //
+    //
+    //
+    // });
 
+    function lastIds(): number[] {
+        if (conversations.length === 0) {
+            return [];
+        }
+        if (conversations.length === 1) {
+            return [conversations[0].id];
+        }
+
+        const lastIndex = conversations.length - 1;
+        return [conversations[lastIndex - 1].id, conversations[lastIndex].id];
+    }
 
 
 
@@ -154,6 +194,7 @@ export default function MessengerInterface({
                         // messages={dummyMessages}
                         onBack={() => setSelectedConversation(null)}
                         socket={socket}
+                        lastConversations={lastIds()}
                     />
                 )}
             </div>

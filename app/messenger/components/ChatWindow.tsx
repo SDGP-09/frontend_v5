@@ -22,6 +22,7 @@ interface ChatWindowProps {
     // messages: Message[];
     onBack: () => void; // for mobile "back" button
     socket: Socket | null;
+    lastConversations: number[];
 }
 
 
@@ -38,6 +39,7 @@ async function fetchMessages(conversationID: number){
             edited: false,
             viewedTime: new Date('2025-02-22T10:16:00'),
             editedTime: null,
+            conversationId:1,
         },
         {
             id: 2,
@@ -48,6 +50,7 @@ async function fetchMessages(conversationID: number){
             edited: true,
             viewedTime: new Date('2025-02-22T10:21:00'),
             editedTime: new Date('2025-02-22T10:22:00'),
+            conversationId:2,
         },
         {
             id: 3,
@@ -57,6 +60,7 @@ async function fetchMessages(conversationID: number){
             edited: false,
             viewedTime: null,
             editedTime: null,
+            conversationId:1,
         },
     ];
 
@@ -70,7 +74,8 @@ export default function ChatWindow({
                                        conversation,
                                        // messages,
                                        onBack,
-                                       socket
+                                       socket,
+                                       lastConversations
                                    }: ChatWindowProps) {
     // 1) ref for auto-scrolling to bottom
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -79,6 +84,13 @@ export default function ChatWindow({
 
 
     useEffect(()=>{
+
+
+        //Suggested handle with care.
+        if(!conversation) return;
+
+
+
         async function loadMessage(){
             if (!conversation){
                 return;
@@ -117,6 +129,25 @@ export default function ChatWindow({
             console.log(newMessage);
 
             setMessages((prev)=>[...prev, newMessage])
+
+            if (lastConversations.length === 0) return;
+
+            if(lastConversations.length === 1) {
+
+                socket.emit("GetSortedConversations", {last: lastConversations[0], flag: true});
+            } else {
+
+                if(newMessage.conversationId === lastConversations[1]){
+                    socket.emit("GetSortedConversations", {last: lastConversations[0], flag: true});
+
+                } else {
+                    socket.emit("GetSortedConversations", {last: lastConversations[1], flag: true});
+
+                }
+
+            }
+
+
         }
 
         socket.on('message', handleNewMessage);
