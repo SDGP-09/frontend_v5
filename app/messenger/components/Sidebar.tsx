@@ -5,14 +5,7 @@ import SearchBar from './SearchBar';
 import ConversationCard from './ConversationCard';
 import {Conversation} from "@/app/types/conversation.messenger";
 
-// interface Conversation {
-//     id: number;
-//     name: string;
-//     lastMessage: string;
-//     time: string;
-//     unread: number;
-//     avatar: string;
-// }
+
 
 interface SidebarProps {
     width: string; // e.g. '384px' or '100%' for mobile

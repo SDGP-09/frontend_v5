@@ -7,4 +7,5 @@ export interface Message{
     edited: boolean;
     viewedTime?: Date | null;
     editedTime?: Date | null;
+    conversationId: number;
 }
