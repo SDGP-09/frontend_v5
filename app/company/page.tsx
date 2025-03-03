@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ContractorCard from "@/app/contractors/ContractorCard"; // Import ContractorCard component
-import { fetchContractors, fetchContractorById } from "@/app/contractors/contractorService"; // Import API service
+import ContractorCard from "@/app/company/ContractorCard"; // Import ContractorCard component
+import { fetchContractors, fetchContractorById } from "@/app/company/contractorService"; // Import API service
 
 // Define Contractor Type
 interface Contractor {
