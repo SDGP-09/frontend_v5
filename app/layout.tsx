@@ -4,6 +4,7 @@ import React from "react";
 import NavBar from "@/app/components/NavBar";
 import { LoadingProvider } from "@/app/context/LoadingContext";
 import LoadingScreen from "@/app/components/LoadingScreen";
+import Footer from "@/app/components/Footer"
 
 export const metadata = {
     title: "CiviLink - Connecting Contractors",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <NavBar />
                 <div className="w-screen min-h-screen">{children}</div>
 
+            <Footer/>
         </LoadingProvider>
         </body>
         </html>
