@@ -19,14 +19,7 @@ import {io, Socket} from "socket.io-client";
   We'll define a TypeScript type for the conversation
   just so it's clearer. (Optional if you're not using TS.)
 */
-// interface Conversation {
-//     id: number;
-//     name: string;
-//     lastMessage: string;
-//     time: string;
-//     unread: number;
-//     avatar: string;
-// }
+
 
 interface MessengerInterfaceProps {
     initialConversations: Conversation[]; // from SSR
@@ -84,32 +77,6 @@ export default function MessengerInterface({
     }, []);
 
 
-
-    // useEffect(() => {
-    //
-    //     if (!socket) return;
-    //
-    //     const handleIncomingMessage = (newMessage: Message)=> {
-    //         //console log just for now (will delete later)
-    //         console.log("Message from main conversations: " + newMessage);
-    //
-    //         setConversations(prevConversations => prevConversations.map(conv => {
-    //
-    //
-    //
-    //
-    //             return conv;
-    //         }));
-    //
-    //
-    //     }
-    //
-    //
-    //
-    //
-    //
-    //
-    // });
 
     function lastIds(): number[] {
         if (conversations.length === 0) {
@@ -176,6 +143,7 @@ export default function MessengerInterface({
                         width={isMobileView ? '100%' : `${sidebarWidth}px`}
                         conversations={conversations}
                         onSelectConversation={(conv) => setSelectedConversation(conv)}
+                        socket={socket}
                     />
                 )}
 
