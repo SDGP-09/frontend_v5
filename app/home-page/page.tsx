@@ -36,57 +36,6 @@ function Home() {
 
     return (
         <div className="min-h-screen flex flex-col">
-            {/* Navigation */}
-            <nav className="bg-white shadow-lg">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex items-center">
-                            <Building2 className="h-8 w-8 text-green-500" />
-                            <span className="ml-2 text-xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text">
-                BuildConnect
-              </span>
-                        </div>
-
-                        {/* Mobile menu button */}
-                        <div className="flex items-center md:hidden">
-                            <button
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className="text-gray-700 hover:text-green-500 transition-colors duration-300"
-                            >
-                                {isMenuOpen ? (
-                                    <X className="h-6 w-6" />
-                                ) : (
-                                    <Menu className="h-6 w-6" />
-                                )}
-                            </button>
-                        </div>
-
-                        {/* Desktop nav items */}
-                        {/*<div className="hidden md:flex items-center space-x-4">*/}
-                        {/*    <button className="px-4 py-2 text-green-500 hover:text-green-600 transition-colors duration-300 font-medium">*/}
-                        {/*        Login*/}
-                        {/*    </button>*/}
-                        {/*    <button className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-md hover:from-green-500 hover:to-blue-600 transition-all duration-300 shadow-sm hover:shadow-md">*/}
-                        {/*        Sign Up*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
-                    </div>
-                </div>
-
-                {/* Mobile menu */}
-                {isMenuOpen && (
-                    <div className="md:hidden">
-                        <div className="px-2 pt-2 pb-3 space-y-1">
-                            <button className="block w-full text-left px-3 py-2 text-green-500 hover:text-green-600 transition-colors duration-300 font-medium">
-                                Login
-                            </button>
-                            <button className="block w-full text-left px-3 py-2 text-white bg-gradient-to-r from-green-400 to-blue-500 rounded-md hover:from-green-500 hover:to-blue-600 transition-colors duration-300">
-                                Sign Up
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </nav>
 
             {/* Image Carousel */}
             <div className="relative h-[35vh] overflow-hidden">
@@ -189,7 +138,7 @@ function Home() {
                         <div>
                             <h4 className="text-lg font-semibold mb-4">About Us</h4>
                             <p className="text-gray-400">
-                                BuildConnect is your premier platform for connecting
+                                CiviLink is your premier platform for connecting
                                 construction professionals and clients.
                             </p>
                         </div>
@@ -267,13 +216,13 @@ function Home() {
                                     aria-label="Email"
                                 >
 
-                                <Mail className="w-6 h-6" />
+                                    <Mail className="w-6 h-6" />
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-                        <p>&copy; 2024 BuildConnect. All rights reserved.</p>
+                        <p>&copy; 2024 CiviLink. All rights reserved.</p>
                     </div>
                 </div>
             </footer>
