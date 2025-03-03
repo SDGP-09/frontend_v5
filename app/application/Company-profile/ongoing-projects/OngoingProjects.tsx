@@ -283,10 +283,10 @@ export default function OngoingProjects() {
                             </div>
                         )}
                     </div>
-                    <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md flex items-center">
-                        <Plus size={20} className="mr-1" />
-                        Add Project
-                    </button>
+                    {/*<button className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md flex items-center">*/}
+                    {/*    <Plus size={20} className="mr-1" />*/}
+                    {/*    Add Project*/}
+                    {/*</button>*/}
                 </div>
 
                 {/* Search and Filter */}
