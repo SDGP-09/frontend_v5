@@ -53,7 +53,7 @@ export default function ContractorsPage() {
             <div className="container mx-auto p-6">
                 {/* Header with Search Bar in One Row */}
                 <div className="flex justify-between items-center mb-4">
-                    <h1 className="text-3xl font-bold text-black">Find a Contractor</h1>
+                    <h1 className="text-3xl font-bold text-black">Find a Company</h1>
                     <input
                         type="text"
                         placeholder="Search by Name or ID"
