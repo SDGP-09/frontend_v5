@@ -1,15 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import {
-    Building2,
-    Users2,
+
+
     Star,
-    Calendar,
-    ChevronRight,
-    ChevronLeft,
+
     BadgeCheck,
     Info,
 } from "lucide-react";
+import Image from "next/image";
 
 // Sample data - in a real app, this would come from an API
 const companyData = {
@@ -201,7 +200,7 @@ function CompanyProfile() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Company Info */}
                     <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-6 bg-white p-6 rounded-lg shadow-sm">
-                        <img
+                        <Image
                             src={companyData.profileImage}
                             alt={companyData.name}
                             className="w-full md:w-48 lg:w-full xl:w-48 h-48 object-cover rounded-lg"
@@ -273,10 +272,10 @@ function CompanyProfile() {
                                     className="flex transition-transform duration-500"
                                     style={{ transform: `translateX(-${currentDeal * 100}%)` }}
                                 >
-                                    {hotDeals.map((deal, index) => (
+                                    {hotDeals.map((deal) => (
                                         <div key={deal.id} className="w-full flex-shrink-0">
                                             <div className="relative aspect-video rounded-lg overflow-hidden">
-                                                <img
+                                                <Image
                                                     src={deal.image}
                                                     alt={deal.title}
                                                     className="w-full h-full object-cover"
@@ -329,7 +328,7 @@ function CompanyProfile() {
                                         className="flex-shrink-0 w-72 group hover:transform hover:-translate-y-1 transition-all duration-300"
                                     >
                                         <div className="relative aspect-video rounded-lg overflow-hidden">
-                                            <img
+                                            <Image
                                                 src={project.image}
                                                 alt={project.title}
                                                 className="w-full h-full object-cover"
@@ -367,7 +366,7 @@ function CompanyProfile() {
                                     className="flex-shrink-0 w-72 group hover:transform hover:-translate-y-1 transition-all duration-300"
                                 >
                                     <div className="relative aspect-video rounded-lg overflow-hidden">
-                                        <img
+                                        <Image
                                             src={project.image}
                                             alt={project.title}
                                             className="w-full h-full object-cover"
