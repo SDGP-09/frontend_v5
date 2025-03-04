@@ -47,7 +47,7 @@ export default function CompanyDashboard() {
                         <ProfileSection
                             companyName="BuildMaster Construction"
                             location="New York, NY"
-                            
+
                             rating={4.4}
                             reviewsCount={257}
                             isEditingProfile={isEditingProfile}
