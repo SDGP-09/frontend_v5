@@ -385,7 +385,7 @@ export function GanttChart({
                                 <label className="block text-sm font-medium mb-1 text-gray-700">Project Name</label>
                                 <input
                                     type="text"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     value={currentProject.name}
                                     onChange={(e) => setCurrentProject({...currentProject, name: e.target.value})}
                                     placeholder="Enter project name"
@@ -398,7 +398,7 @@ export function GanttChart({
                                     <label className="block text-sm font-medium mb-1 text-gray-700">Start Date</label>
                                     <input
                                         type="date"
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                         value={currentProject.startDate.toISOString().split('T')[0]}
                                         onChange={(e) => setCurrentProject({
                                             ...currentProject,
@@ -410,7 +410,7 @@ export function GanttChart({
                                     <label className="block text-sm font-medium mb-1 text-gray-700">End Date</label>
                                     <input
                                         type="date"
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                         value={currentProject.endDate.toISOString().split('T')[0]}
                                         onChange={(e) => setCurrentProject({
                                             ...currentProject,
@@ -424,7 +424,7 @@ export function GanttChart({
                             <div className="mb-1">
                                 <label className="block text-sm font-medium mb-1 text-gray-700">Status</label>
                                 <select
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     value={currentProject.status}
                                     onChange={(e) => setCurrentProject({...currentProject, status: e.target.value as "New" | "In Progress" | "Completed"})}>
                                     <option value="New">New</option>
@@ -438,7 +438,7 @@ export function GanttChart({
                                 <label className="block text-sm font-medium mb-2 text-gray-700">Project
                                     Description</label>
                                 <textarea
-                                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
                                     rows={4}
                                     placeholder="Enter a brief project description"
                                     value={currentProject.description || ""}
@@ -510,7 +510,7 @@ export function GanttChart({
                                 <label className="block text-sm font-medium mb-1 text-gray-700">Task Name</label>
                                 <input
                                     type="text"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     value={currentTask.name}
                                     placeholder="Enter task name"
                                     onChange={(e) => setCurrentTask({...currentTask, name: e.target.value})}
@@ -523,7 +523,7 @@ export function GanttChart({
                                     <label className="block text-sm font-medium mb-1 text-gray-700">Start Date</label>
                                     <input
                                         type="date"
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                         value={currentTask.startDate.toISOString().split('T')[0]}
                                         onChange={(e) => setCurrentTask({
                                             ...currentTask,
@@ -535,7 +535,7 @@ export function GanttChart({
                                     <label className="block text-sm font-medium mb-1 text-gray-700">End Date</label>
                                     <input
                                         type="date"
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                         value={currentTask.endDate.toISOString().split('T')[0]}
                                         onChange={(e) => setCurrentTask({
                                             ...currentTask,
@@ -549,7 +549,7 @@ export function GanttChart({
                             <div className="mb-1">
                                 <label className="block text-sm font-medium mb-1 text-gray-700">Status</label>
                                 <select
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     value={currentTask.status}
                                     onChange={(e) => setCurrentTask({...currentTask, status: e.target.value as "New" | "In Progress" | "Completed"})}
 
@@ -564,7 +564,7 @@ export function GanttChart({
                             <div className="mb-5">
                                 <label className="block text-sm font-medium mb-2 text-gray-700">Task Description</label>
                                 <textarea
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     rows={4}
                                     placeholder="Enter a brief task description.."
                                     value={currentTask.description}
