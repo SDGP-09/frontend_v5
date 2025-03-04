@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, ArrowLeft, Calendar, CheckCircle, Clock, Briefcase, FileText } from 'lucide-react';
+import { Plus, ArrowLeft, Calendar, CheckCircle, Clock,  FileText } from 'lucide-react';
 import { SubtaskForm } from './SubtaskForm';
 import { Task, Project } from '@/app/types/project';
 import { GanttChart } from './GanttChart';
