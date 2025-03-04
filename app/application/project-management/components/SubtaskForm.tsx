@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { X } from 'lucide-react';
 import { Task } from '@/app/types/project';
+import {v4 as uuidv4} from "uuid";
+
 
 interface SubtaskFormProps {
     onSubmit: (task: Task) => void;
@@ -16,120 +17,121 @@ export function SubtaskForm({ onSubmit, onCancel }: SubtaskFormProps) {
         endDate: new Date(),
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newTask.name || !newTask.startDate || !newTask.endDate) return;
 
         const task: Task = {
-            id: String(Date.now()),
+            id:uuidv4() ,
+            projectId: newTask.projectId ?? '',
             name: newTask.name,
             startDate: new Date(newTask.startDate),
             endDate: new Date(newTask.endDate),
+            status: newTask.status ?? 'New',
+            description: newTask.description ?? '',
         };
-
         onSubmit(task);
     };
 
+
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold">Add New Subtask</h2>
-                    <button
-                        onClick={onCancel}
-                        className="p-1 hover:bg-gray-100 rounded"
-                    >
-                        <X className="w-5 h-5" />
-                    </button>
+
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+        <div className="bg-white rounded-xl shadow-lg p-4 w-full max-w-lg sm:max-w-md">
+            <h3 className="text-2xl font-bold mb-4 text-gray-800">Add New SubTask</h3>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit(e);
+            }}>
+                {/* Task Name */}
+                <div className="mb-1">
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Task Name</label>
+                    <input
+                        type="text"
+                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                        value={newTask.name}
+                        placeholder="Enter task name"
+                        onChange={(e) => setNewTask({...newTask, name: e.target.value})}
+                    />
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Date Inputs (Start Date & End Date) */}
+                <div className="grid grid-cols-2 gap-6 mb-1">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                            Task Name
-                        </label>
+                        <label className="block text-sm font-medium mb-1 text-gray-700">Start Date</label>
                         <input
-                            type="text"
-                            value={newTask.name}
-                            onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                            required
+                            type="date"
+                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                            value={newTask.startDate?.toISOString().split('T')[0]}
+                            onChange={(e) => setNewTask({
+                                ...newTask,
+                                startDate: new Date(e.target.value)
+                            })}
                         />
                     </div>
-
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                            Status
-                        </label>
-                        <select
-                            value={newTask.status}
-                            onChange={(e) => setNewTask({ ...newTask, status: e.target.value as 'New' | 'In Progress' | 'Completed' })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        >
-                            <option value="New">New</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Completed">Completed</option>
-                        </select>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">
-                                Start Date
-                            </label>
-                            <input
-                                type="date"
-                                value={newTask.startDate?.toISOString().split('T')[0]}
-                                onChange={(e) => setNewTask({ ...newTask, startDate: new Date(e.target.value) })}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                required
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">
-                                End Date
-                            </label>
-                            <input
-                                type="date"
-                                value={newTask.endDate?.toISOString().split('T')[0]}
-                                onChange={(e) => setNewTask({ ...newTask, endDate: new Date(e.target.value) })}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                            Description
-                        </label>
-                        <textarea
-                            value={newTask.description}
-                            onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                            rows={3}
+                        <label className="block text-sm font-medium mb-1 text-gray-700">End Date</label>
+                        <input
+                            type="date"
+                            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                            value={newTask.endDate?.toISOString().split('T')[0]}
+                            onChange={(e) => setNewTask({
+                                ...newTask,
+                                endDate: new Date(e.target.value)
+                            })}
                         />
                     </div>
+                </div>
 
-                    <div className="flex justify-end space-x-3 mt-6">
-                        <button
-                            type="button"
-                            onClick={onCancel}
-                            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-md hover:from-green-500 hover:to-blue-600"
-                        >
-                            Create
-                        </button>
-                    </div>
-                </form>
-            </div>
+                {/* Task Status */}
+                <div className="mb-1">
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Status</label>
+                    <select
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                        value={newTask.status}
+                        onChange={(e) => setNewTask({
+                            ...newTask,
+                            status: e.target.value as "New" | "In Progress" | "Completed"
+                        })}
+                    >
+                        <option value="New">New</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                {/* Description */}
+                <div className="mb-5">
+                    <label className="block text-sm font-medium mb-2 text-gray-700">Task Description</label>
+                    <textarea
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                        rows={4}
+                        placeholder="Enter a brief task description.."
+                        value={newTask.description}
+                        onChange={(e) => setNewTask({...newTask, description: e.target.value})}
+                    ></textarea>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex justify-end space-x-4">
+                    <button
+                        type="button"
+                        className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none"
+                        onClick={onCancel}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="px-6 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 focus:outline-none"
+                    >
+                        Create
+                    </button>
+                </div>
+            </form>
         </div>
-    );
+    </div>
+
+);
 }
 
