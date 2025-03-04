@@ -39,7 +39,7 @@ export default function Home() {
         <div className="min-h-screen flex flex-col">
 
             {/* Image Carousel */}
-            <div className="relative h-[35vh] overflow-hidden">
+            <div className="relative h-[35vh] overflow-hidden z-0">
                 {images.map((img, index) => (
                     <div
                         key={index}
@@ -47,10 +47,9 @@ export default function Home() {
                             currentImage === index ? "opacity-100" : "opacity-0"
                         }`}
                     >
-                        <Image
+                        <img
                             src={img}
                             alt={`Construction site ${index + 1}`}
-                            fill
                             className="object-cover"
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
