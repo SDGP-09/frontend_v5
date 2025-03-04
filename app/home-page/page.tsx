@@ -1,15 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import {
-    Building2,
     Users,
     Hammer,
     FileSpreadsheet,
     Instagram,
     Mail,
-    Menu,
-    X, Facebook, Linkedin, Youtube,
+     Facebook, Linkedin, Youtube,
 } from "lucide-react";
+import Image from "next/image";
 
 const images = [
     "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=2070",
@@ -21,7 +20,7 @@ const images = [
 
 function Home() {
     const [currentImage, setCurrentImage] = useState(0);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -46,7 +45,7 @@ function Home() {
                             currentImage === index ? "opacity-100" : "opacity-0"
                         }`}
                     >
-                        <img
+                        <Image
                             src={img}
                             alt={`Construction site ${index + 1}`}
                             className="w-full h-full object-cover"
@@ -54,7 +53,7 @@ function Home() {
                         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
                         <div className="absolute inset-0 flex items-center justify-center">
                             <h1 className="text-white text-4xl md:text-5xl font-bold text-center px-4">
-                                Building Tomorrow's Projects Today
+                                Building Tomorrow&apos;s Projects Today
                             </h1>
                         </div>
                     </div>
