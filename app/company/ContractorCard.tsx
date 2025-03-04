@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface Contractor {
     id?: string;
     name?: string;
@@ -20,7 +22,7 @@ export default function ContractorCard({ contractor }: { contractor: Contractor 
     return (
         <div className="bg-white border rounded-lg shadow-lg overflow-hidden">
             {/* Placeholder for contractor image */}
-            <img src="/placeholder.jpg" alt={contractor.name} className="w-full h-40 object-cover" />
+            <Image src="/placeholder.jpg" alt={contractor.name} className="w-full h-40 object-cover" />
             <div className="p-6">
                 <h2 className="text-xl font-semibold mb-1 text-black">{contractor.name}</h2>
                 <p className="text-gray-600">ID: <span className="font-bold">{contractor.id}</span></p>  {/* ✅ Show ID */}
