@@ -33,7 +33,6 @@ export default function ProfileSection({
                                            location,
                                            rating,
                                            reviewsCount,
-                                           isEditingProfile,
                                            onEditProfile,
                                            profileImage,
                                        }: ProfileSectionProps) {
