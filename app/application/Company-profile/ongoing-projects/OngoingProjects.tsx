@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import ProjectFilterBar from "./components/ProjectFilterBar";
 import ProjectCount from "./components/ProjectCount";
 import ProjectCard from "./components/ProjectCard";
-import ProjectPagination from "./components/ProjectPagination";
+// import ProjectPagination from "./components/ProjectPagination";
+import ProjectModal from "./components/ProjectModal";
 
 const projectsData = [
     {
@@ -13,8 +14,6 @@ const projectsData = [
         description:
             "A modern shopping mall with over 200 retail spaces, food court, and entertainment facilities in the heart of downtown.",
         status: "In Progress",
-        progress: 65,
-        members: 24,
         duration: "8 months",
         image:
             "<https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80>",
@@ -27,8 +26,6 @@ const projectsData = [
         description:
             "Luxury apartment complex with 120 units featuring riverside views, modern amenities, and sustainable design.",
         status: "In Progress",
-        progress: 42,
-        members: 18,
         duration: "14 months",
         image:
             "<https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80>",
@@ -41,8 +38,6 @@ const projectsData = [
         description:
             "State-of-the-art office complex designed for tech companies with collaborative spaces, green areas, and smart building features.",
         status: "Planning",
-        progress: 15,
-        members: 12,
         duration: "24 months",
         image:
             "<https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80>",
@@ -55,8 +50,6 @@ const projectsData = [
         description:
             "State-of-the-art medical facility with emergency services, specialized care units, and outpatient clinics.",
         status: "In Progress",
-        progress: 38,
-        members: 32,
         duration: "18 months",
         image:
             "<https://images.unsplash.com/photo-1586880244406-556ebe35f282?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80>",
@@ -68,9 +61,7 @@ const projectsData = [
         title: "Downtown Revitalization",
         description:
             "Urban renewal project focused on improving infrastructure, public spaces, and commercial opportunities in the city center.",
-        status: "Completed",
-        progress: 100,
-        members: 15,
+        status: "In Progress",
         duration: "12 months",
         image:
             "<https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2680&q=80>",
@@ -83,8 +74,6 @@ const projectsData = [
         description:
             "Luxury beachfront resort with private villas, spa facilities, and sustainable eco-friendly design.",
         status: "Planning",
-        progress: 8,
-        members: 20,
         duration: "30 months",
         image:
             "<https://images.unsplash.com/photo-1540541338287-41700207dee6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80>",
@@ -97,8 +86,6 @@ const projectsData = [
         description:
             "Comprehensive renovation of the city's iconic harbor bridge, including structural reinforcement, lighting upgrades, and pedestrian walkways.",
         status: "In Progress",
-        progress: 72,
-        members: 45,
         duration: "36 months",
         image:
             "<https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80>",
@@ -111,8 +98,6 @@ const projectsData = [
         description:
             "Eco-friendly residential community with 85 single-family homes, community gardens, solar power integration, and rainwater harvesting systems.",
         status: "Planning",
-        progress: 22,
-        members: 16,
         duration: "20 months",
         image:
             "<https://images.unsplash.com/photo-1448630360428-65456885c650?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80>",
@@ -125,8 +110,6 @@ const projectsData = [
         description:
             "Urban transit project extending the city's metro line with 5 new stations, connecting suburban areas to the downtown business district.",
         status: "In Progress",
-        progress: 51,
-        members: 78,
         duration: "48 months",
         image:
             "<https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80>",
@@ -138,9 +121,8 @@ const projectsData = [
         title: "University Research Center",
         description:
             "Advanced research facility for the state university featuring laboratories, collaborative spaces, and sustainable design elements.",
-        status: "Completed",
-        progress: 100,
-        members: 22,
+        status: "Planning",
+
         duration: "16 months",
         image:
             "<https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80>",
@@ -153,8 +135,6 @@ const projectsData = [
         description:
             "State-of-the-art convention center with panoramic water views, flexible event spaces, and integrated smart building technology.",
         status: "In Progress",
-        progress: 35,
-        members: 40,
         duration: "22 months",
         image:
             "<https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80>",
@@ -167,56 +147,48 @@ const projectsData = [
         description:
             "Luxury mountain resort with 150 rooms, spa facilities, conference center, and outdoor recreation areas integrated into the natural landscape.",
         status: "Planning",
-        progress: 12,
-        members: 25,
         duration: "26 months",
         image:
             "<https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80>",
         visible: false,
         private: true,
     },
-    {
-        id: 13,
-        title: "Industrial Park Development",
-        description:
-            "Modern industrial complex with manufacturing facilities, warehouses, and office spaces designed for logistics and light manufacturing businesses.",
-        status: "In Progress",
-        progress: 58,
-        members: 30,
-        duration: "20 months",
-        image:
-            "<https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80>",
-        visible: true,
-        private: false,
-    },
-    {
-        id: 14,
-        title: "Solar Farm Installation",
-        description:
-            "Renewable energy project featuring a 50-acre solar panel installation capable of powering 5,000 homes with clean energy.",
-        status: "Completed",
-        progress: 100,
-        members: 28,
-        duration: "10 months",
-        image:
-            "<https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80>",
-        visible: true,
-        private: false,
-    },
-    {
-        id: 15,
-        title: "Historic Theater Restoration",
-        description:
-            "Careful restoration of a 1920s theater, preserving historical elements while updating infrastructure, seating, and technical capabilities.",
-        status: "In Progress",
-        progress: 82,
-        members: 18,
-        duration: "15 months",
-        image:
-            "<https://images.unsplash.com/photo-1503174971373-b1f69b1a3760?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2013&q=80>",
-        visible: true,
-        private: false,
-    },
+    // {
+    //     id: 13,
+    //     title: "Industrial Park Development",
+    //     description:
+    //         "Modern industrial complex with manufacturing facilities, warehouses, and office spaces designed for logistics and light manufacturing businesses.",
+    //     status: "In Progress",
+    //     duration: "20 months",
+    //     image:
+    //         "<https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80>",
+    //     visible: true,
+    //     private: false,
+    // },
+    // {
+    //     id: 14,
+    //     title: "Solar Farm Installation",
+    //     description:
+    //         "Renewable energy project featuring a 50-acre solar panel installation capable of powering 5,000 homes with clean energy.",
+    //     status: "Planning",
+    //     duration: "10 months",
+    //     image:
+    //         "<https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80>",
+    //     visible: true,
+    //     private: false,
+    // },
+    // {
+    //     id: 15,
+    //     title: "Historic Theater Restoration",
+    //     description:
+    //         "Careful restoration of a 1920s theater, preserving historical elements while updating infrastructure, seating, and technical capabilities.",
+    //     status: "In Progress",
+    //     duration: "15 months",
+    //     image:
+    //         "<https://images.unsplash.com/photo-1503174971373-b1f69b1a3760?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2013&q=80>",
+    //     visible: true,
+    //     private: false,
+    // },
 ];
 
 export default function OngoingProjects() {
@@ -225,6 +197,30 @@ export default function OngoingProjects() {
     const [projects, setProjects] = useState(projectsData);
     const [isAdmin, setIsAdmin] = useState(true); // Toggle for admin view
     const [visibilityFilter, setVisibilityFilter] = useState("all"); // all, visible, hidden
+
+    // Handle project deletion
+    const handleDelete = (id: number) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+        if (confirmDelete) {
+            setProjects((prevProjects) => prevProjects.filter((project) => project.id !== id));
+        }
+    };
+
+    // Handle project edit
+    const handleEdit = (id: number) => {
+        // You can redirect to an edit page or show a modal with a form to edit the project details.
+        alert(`Edit project with ID: ${id}`);
+    };
+
+    // Handle project detail view
+    const handleViewDetails = (id: number) => {
+        // You can navigate to a detail page or show a modal with detailed info.
+        alert(`View details of project with ID: ${id}`);
+    };
+
+
+
+
 
     const toggleVisibility = (id: number) => {
         setProjects((prevProjects) =>
@@ -243,6 +239,10 @@ export default function OngoingProjects() {
     };
 
     const filteredProjects = projects.filter((project) => {
+        // Exclude completed projects
+        if (project.status === "Completed") {
+            return false;
+        }
         // Status filter
         if (filter !== "All Projects" && project.status !== filter) {
             return false;
@@ -266,6 +266,7 @@ export default function OngoingProjects() {
         }
         return true;
     });
+
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -322,6 +323,9 @@ export default function OngoingProjects() {
                                 isAdmin={isAdmin}
                                 onToggleVisibility={() => toggleVisibility(project.id)}
                                 onTogglePrivacy={() => togglePrivacy(project.id)}
+                                onEdit={() => { handleEdit(project.id) }}
+                                onDelete={() => { handleDelete(project.id) }}
+                                onViewDetails={() => { handleViewDetails(project.id)}}
                             />
                         ))}
                     </div>
@@ -351,9 +355,10 @@ export default function OngoingProjects() {
                     </div>
                 )}
 
-                {/* Pagination */}
-                {filteredProjects.length > 0 && <ProjectPagination />}
+                {/*/!* Pagination *!/*/}
+                {/*{filteredProjects.length > 0 && <ProjectPagination />}*/}
             </div>
         </div>
     );
 }
+

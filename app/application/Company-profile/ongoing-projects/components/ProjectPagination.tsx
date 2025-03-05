@@ -1,81 +1,51 @@
-"use client";
-
-import React from "react";
-
-export default function ProjectPagination() {
-    return (
-        <div className="mt-8 flex justify-center">
-            <nav
-                className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-                aria-label="Pagination"
-            >
-                <a
-                    href="#"
-                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                    <span className="sr-only">Previous</span>
-                    <svg
-                        className="h-5 w-5"
-                        xmlns="<http://www.w3.org/2000/svg>"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                </a>
-                <a
-                    href="#"
-                    aria-current="page"
-                    className="z-10 bg-emerald-50 border-emerald-500 text-emerald-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                >
-                    1
-                </a>
-                <a
-                    href="#"
-                    className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                >
-                    2
-                </a>
-                <a
-                    href="#"
-                    className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                >
-                    3
-                </a>
-                <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-          ...
-        </span>
-                <a
-                    href="#"
-                    className="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                >
-                    5
-                </a>
-                <a
-                    href="#"
-                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                    <span className="sr-only">Next</span>
-                    <svg
-                        className="h-5 w-5"
-                        xmlns="<http://www.w3.org/2000/svg>"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                </a>
-            </nav>
-        </div>
-    );
-}
+// "use client";
+//
+// import React, { useState } from "react";
+//
+// export default function ProjectPagination() {
+//     const projects = [];
+//
+//     const projectsPerPage = 6;
+//     const totalPages = Math.ceil(projects.length / projectsPerPage);
+//     const [currentPage, setCurrentPage] = useState(1);
+//
+//     const indexOfLastProject = currentPage * projectsPerPage;
+//     const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+//     const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+//
+//     const handlePageChange = (page) => {
+//         if (page >= 1 && page <= totalPages) {
+//             setCurrentPage(page);
+//         }
+//     };
+//
+//     return (
+//         <div className="mt-8 flex flex-col items-center">
+//             <div className="mt-8 flex space-x-2">
+//                 <button
+//                     onClick={() => handlePageChange(currentPage - 1)}
+//                     disabled={currentPage === 1}
+//                     className="px-4 py-2 border rounded-md disabled:opacity-50"
+//                 >
+//                     1
+//                 </button>
+//                 {[...Array(totalPages)].map((_, i) => (
+//                     <button
+//                         key={i}
+//                         onClick={() => handlePageChange(i + 1)}
+//                         className={`px-4 py-2 border rounded-md ${currentPage === i + 1 ? "bg-emerald-500 text-white" : "bg-white"}`}
+//                     >
+//                         {i + 1}
+//                     </button>
+//                 ))}
+//                 <button
+//                     onClick={() => handlePageChange(currentPage + 1)}
+//                     disabled={currentPage === totalPages}
+//                     className="px-4 py-2 border rounded-md disabled:opacity-50"
+//                 >
+//                     2
+//                 </button>
+//             </div>
+//         </div>
+//     );
+// }
