@@ -1,6 +1,4 @@
 "use client";
-
-
 import { useRouter } from "next/navigation"; //
 import React, { useState } from "react";
 // import { useRouter } from "next/router";
@@ -211,10 +209,10 @@ export default function OngoingProjects() {
     };
 
     // Handle project edit
-    const handleEdit = (id: number) => {
-        // You can redirect to an edit page or show a modal with a form to edit the project details.
-        alert(`Edit project with ID: ${id}`);
-    };
+    // const handleEdit = (id: number) => {
+    //     // You can redirect to an edit page or show a modal with a form to edit the project details.
+    //     alert(`Edit project with ID: ${id}`);
+    // };
 
     // Handle project detail view
     // const handleViewDetails = (id: number) => {
@@ -225,7 +223,9 @@ export default function OngoingProjects() {
         router.push(`/projects/${id}`);
     };
 
-
+    const handleEdit = (id: number) => {
+        router.push(`/projects/${id}/edit`);
+    };
 
 
 
