@@ -1,6 +1,9 @@
 "use client";
 
+
+import { useRouter } from "next/navigation"; //
 import React, { useState } from "react";
+// import { useRouter } from "next/router";
 import ProjectFilterBar from "./components/ProjectFilterBar";
 import ProjectCount from "./components/ProjectCount";
 import ProjectCard from "./components/ProjectCard";
@@ -197,6 +200,7 @@ export default function OngoingProjects() {
     const [projects, setProjects] = useState(projectsData);
     const [isAdmin, setIsAdmin] = useState(true); // Toggle for admin view
     const [visibilityFilter, setVisibilityFilter] = useState("all"); // all, visible, hidden
+    const router = useRouter();
 
     // Handle project deletion
     const handleDelete = (id: number) => {
@@ -213,9 +217,12 @@ export default function OngoingProjects() {
     };
 
     // Handle project detail view
+    // const handleViewDetails = (id: number) => {
+    //     // You can navigate to a detail page or show a modal with detailed info.
+    //     alert(`View details of project with ID: ${id}`);
+    // };
     const handleViewDetails = (id: number) => {
-        // You can navigate to a detail page or show a modal with detailed info.
-        alert(`View details of project with ID: ${id}`);
+        router.push(`/projects/${id}`);
     };
 
 
@@ -320,7 +327,7 @@ export default function OngoingProjects() {
                             <ProjectCard
                                 key={project.id}
                                 project={project}
-                                isAdmin={isAdmin}
+                                isAdmin={true}
                                 onToggleVisibility={() => toggleVisibility(project.id)}
                                 onTogglePrivacy={() => togglePrivacy(project.id)}
                                 onEdit={() => { handleEdit(project.id) }}
