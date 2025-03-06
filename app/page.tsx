@@ -3,13 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useLoading } from "@/app/context/LoadingContext";
 
 import {
-    Building2,
     Users,
     Hammer,
     FileSpreadsheet,
-    Instagram,
-    Mail,
-    Facebook, Linkedin, Youtube,
 } from "lucide-react";
 
 const images = [
