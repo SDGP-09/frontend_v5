@@ -1,4 +1,4 @@
-// application/Company-profile/ongoing-projects/components/CompanyInfo.tsx
+
 "use client";
 import React from "react";
 
