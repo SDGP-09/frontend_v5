@@ -3,6 +3,7 @@
 
 import React, {useState} from "react";
 import { X } from "lucide-react";
+import Image from "next/image"
 
 interface ImageModalProps {
     imageUrl: string;
@@ -49,7 +50,7 @@ export default function ImageModal({ imageUrl, onClose }: ImageModalProps) {
                 </button>
 
                 {/* Enlarged Image */}
-                <img
+                <Image
                     src={imageUrl}
                     alt="Enlarged view"
                     className="max-w-full max-h-[90vh] object-contain rounded-lg"

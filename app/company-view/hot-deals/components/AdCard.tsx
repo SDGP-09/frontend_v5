@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Ad } from "@/app/types";
+import Image from "next/image"
 
 interface AdCardProps {
     ad: Ad;
@@ -28,7 +29,7 @@ export default function AdCard({ ad, onCardClick }: AdCardProps) {
         >
             {/* Card Image */}
             <div className="relative h-48">
-                <img
+                <Image
                     src={ad.images[0]}
                     alt={ad.title}
                     className="w-full h-full object-cover transition-all duration-300 group-hover:brightness-75"

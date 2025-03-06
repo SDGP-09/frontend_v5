@@ -4,6 +4,7 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import {ConversationHeader} from "@/app/types/conversation.messenger";
 import {imageToURL} from "@/app/helpers";
+import Image from "next/image"
 
 
 interface ChatHeaderProps {
@@ -22,7 +23,7 @@ export default function ChatHeader({ conversation, onBack }: ChatHeaderProps) {
                 <ArrowLeft className="h-6 w-6" />
             </button>
 
-            <img
+            <Image
                 src={imageToURL(conversation.profilePicture)}
                 alt={conversation.name}
                 className="w-10 h-10 rounded-full"

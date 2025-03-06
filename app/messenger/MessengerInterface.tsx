@@ -6,7 +6,7 @@
 */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Building2 } from 'lucide-react';
+// import { Building2 } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
 import {Conversation, Message} from "@/app/types";

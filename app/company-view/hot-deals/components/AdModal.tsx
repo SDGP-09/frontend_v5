@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import { Ad } from "@/app/types";
+import Image from "next/image"
 
 interface AdModalProps {
     ad: Ad;
@@ -65,7 +66,7 @@ export default function AdModal({ ad, onClose, onImageClick }: AdModalProps) {
                     {/* Images Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         {ad.images.map((image, index) => (
-                            <img
+                            <Image
                                 key={index}
                                 src={image}
                                 alt={`${ad.title} ${index + 1}`}
@@ -102,7 +103,7 @@ export default function AdModal({ ad, onClose, onImageClick }: AdModalProps) {
 
                     {/* Action Button */}
                     <button className="w-full px-6 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 text-lg font-semibold">
-                        Let's make a deal
+                        Let&apos;s make a deal
                     </button>
                 </div>
             </div>

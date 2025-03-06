@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import {imageToURL} from "@/app/helpers";
+import Image from "next/image"
 
 
 type RoleFilter = 'Consultant' | 'Contractor' | 'Both';
@@ -117,7 +118,7 @@ export default function SearchProfilesModal({
                             className="p-2 flex items-center border rounded hover:bg-gray-50 cursor-pointer"
                             onClick={() => handleProfileClick(profile)}
                         >
-                            <img
+                            <Image
                                 src={imageToURL(profile.avatar)}
                                 alt={profile.name}
                                 className="w-10 h-10 rounded-full object-cover mr-2"
