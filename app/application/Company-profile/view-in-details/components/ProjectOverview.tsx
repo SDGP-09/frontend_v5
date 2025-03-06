@@ -12,12 +12,6 @@ interface ProjectOverviewProps {
     estimatedCompletion: string;
 }
 
-/**
- * ProjectOverview Component
- * -------------------------
- * Renders an overview section with project description, client details,
- * location, budget, start date, and estimated completion date.
- */
 const ProjectOverview: React.FC<ProjectOverviewProps> = ({
                                                              description,
                                                              client,

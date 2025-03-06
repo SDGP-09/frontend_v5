@@ -8,11 +8,6 @@ import ProjectOverview from "./components/ProjectOverview";
 import ProjectTimeline, { TimelineItem } from "./components/ProjectTimeline";
 import ProjectUpdates, { Update } from "./components/ProjectUpdates";
 
-/**
- * Project Interface
- * -----------------
- * Represents a project and its associated data.
- */
 interface Project {
     id: string;
     name: string;
@@ -106,12 +101,7 @@ const sampleProject: Project = {
     ],
 };
 
-/**
- * ProjectDetailsPage Component
- * ----------------------------
- * The main component for the project details view. It assembles the back
- * button, image grid, overview, timeline, and recent updates into one cohesive page.
- */
+
 const ProjectDetailsPage = () => {
     return (
         <div className="min-h-screen bg-gray-50">

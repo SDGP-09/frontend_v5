@@ -2,11 +2,6 @@
 
 import React from "react";
 
-/**
- * TimelineItem Interface
- * ----------------------
- * Represents a single timeline event in the project.
- */
 export interface TimelineItem {
     date: string;
     title: string;
@@ -18,12 +13,6 @@ interface ProjectTimelineProps {
     timeline: TimelineItem[];
 }
 
-/**
- * ProjectTimeline Component
- * -------------------------
- * Renders a vertical timeline of project events with visual indicators
- * for completed, in-progress, and upcoming milestones.
- */
 const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ timeline }) => {
     return (
         <div className="mb-12">

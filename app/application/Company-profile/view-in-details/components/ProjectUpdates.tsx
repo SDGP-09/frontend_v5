@@ -2,11 +2,6 @@
 
 import React from "react";
 
-/**
- * Update Interface
- * ----------------
- * Represents a single project update.
- */
 export interface Update {
     date: string;
     title: string;
@@ -18,12 +13,6 @@ interface ProjectUpdatesProps {
     updates: Update[];
 }
 
-/**
- * ProjectUpdates Component
- * ------------------------
- * Renders a list of recent updates, each showing the title, date,
- * description, and author.
- */
 const ProjectUpdates: React.FC<ProjectUpdatesProps> = ({ updates }) => {
     return (
         <div>
