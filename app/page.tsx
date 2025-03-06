@@ -42,7 +42,7 @@ export default function Home() {
         <div className="min-h-screen flex flex-col">
 
             {/* Image Carousel */}
-            <div className="relative h-[35vh] overflow-hidden">
+            <div className="relative h-[35vh] overflow-visible">
                 {images.map((img, index) => (
                     <div
                         key={index}
