@@ -64,7 +64,6 @@ export default function ProjectFilterBar({
                             <option>All Projects</option>
                             <option>In Progress</option>
                             <option>Planning</option>
-                            <option>Completed</option>
                         </select>
                     </div>
                 </div>

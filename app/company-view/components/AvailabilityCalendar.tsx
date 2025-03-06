@@ -1,4 +1,4 @@
-// application/Company-profile/ongoing-projects/components/AvailabilityCalendar.tsx
+
 "use client";
 import React from "react";
 
