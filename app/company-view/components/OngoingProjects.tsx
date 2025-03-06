@@ -1,6 +1,6 @@
-// application/Company-profile/ongoing-projects/components/OngoingProjects.tsx
 "use client";
 import React from "react";
+import Link from "next/link";
 import { Info } from "lucide-react";
 
 interface Project {
@@ -18,15 +18,18 @@ const OngoingProjects: React.FC<OngoingProjectsProps> = ({ projects }) => {
         <div className="bg-white p-6 rounded-lg shadow-sm h-full">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Ongoing Projects</h2>
-                <button className="text-blue-500 hover:text-blue-600 transition-colors">
+                <Link
+                    href="/ongoing-user-view"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                >
                     View All
-                </button>
+                </Link>
             </div>
             <div className="overflow-x-auto">
                 <div className="flex gap-4 pb-4">
-                    {projects.map((project) => (
+                    {projects.map((project, index) => (
                         <div
-                            key={project.id}
+                            key={`${project.id}-${index}`} // Ensures unique keys
                             className="flex-shrink-0 w-72 group hover:transform hover:-translate-y-1 transition-all duration-300"
                         >
                             <div className="relative aspect-video rounded-lg overflow-hidden">
