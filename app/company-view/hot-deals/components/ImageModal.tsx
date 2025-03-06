@@ -36,10 +36,13 @@ export default function ImageModal({ imageUrl, onClose }: ImageModalProps) {
             className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-50 cursor-default image-modal-overlay"
             onClick={handleOverlayClick}
         >
-            <div className="relative animate-modal-in">
+            <div
+                className={`relative ${isClosing ? "animate-modal-out" : "animate-modal-in"}`} // CHANGED
+                onAnimationEnd={handleAnimationEnd} // CHANGED
+            >
                 {/* Close button */}
                 <button
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="absolute left-4 top-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-200"
                 >
                     <X className="w-6 h-6 text-white" />

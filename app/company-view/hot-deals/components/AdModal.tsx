@@ -44,10 +44,15 @@ export default function AdModal({ ad, onClose, onImageClick }: AdModalProps) {
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 modal-overlay"
             onClick={handleOverlayClick}
         >
-            <div className="relative w-[70vw] max-h-[90vh] bg-white rounded-xl shadow-2xl overflow-y-auto animate-modal-in">
+            <div
+                className={`relative w-[70vw] max-h-[90vh] bg-white rounded-xl shadow-2xl overflow-y-auto ${
+                    isClosing ? "animate-modal-out" : "animate-modal-in"
+                }`} // CHANGED
+                onAnimationEnd={handleAnimationEnd} // CHANGED
+            >
                 {/* Close button */}
                 <button
-                    onClick={onClose}
+                    onClick={handleClose} // CHANGED
                     className="absolute right-4 top-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 z-10"
                 >
                     <X className="w-6 h-6" />
