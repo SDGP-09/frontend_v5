@@ -1,16 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-
-
-    Star,
-
-    BadgeCheck,
-    Info,
-} from "lucide-react";
+import {Star, BadgeCheck, Info,} from "lucide-react";
 import Image from "next/image";
 
-// Sample data - in a real app, this would come from an API
 const companyData = {
     name: "BuildMaster Construction",
     location: "New York, NY",

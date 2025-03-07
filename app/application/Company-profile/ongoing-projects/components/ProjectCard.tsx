@@ -1,7 +1,6 @@
 "use client";
-
 import React from "react";
-import { Eye, EyeOff, Lock, MoreVertical, User } from "lucide-react";
+import { Eye, EyeOff, Lock } from "lucide-react";
 
 interface Project {
     id: number;
@@ -19,8 +18,6 @@ interface ProjectCardProps {
     isAdmin: boolean;
     onToggleVisibility: () => void;
     onTogglePrivacy: () => void;
-    onEdit: () => void;
-    onDelete: () => void;
     onViewDetails: () => void;
 }
 
@@ -29,8 +26,6 @@ export default function ProjectCard({
                                         isAdmin,
                                         onToggleVisibility,
                                         onTogglePrivacy,
-                                        onEdit,
-                                        onDelete,
                                         onViewDetails,
                                     }: ProjectCardProps) {
     // Determine status badge styles
@@ -66,11 +61,13 @@ export default function ProjectCard({
                                 title={project.visible ? "Hide Project" : "Show Project"}
                             >
                                 {project.visible ? (
-                                    <Eye size={18} className="text-emerald-600" />
+                                    <Eye size={18} className="text-emerald-600"/>
                                 ) : (
-                                    <EyeOff size={18} className="text-gray-600" />
+                                    <EyeOff size={18} className="text-gray-600"/>
                                 )}
                             </button>
+
+
                             <button
                                 onClick={onTogglePrivacy}
                                 className="p-1 bg-white rounded-full shadow-md hover:bg-gray-100"
@@ -83,9 +80,6 @@ export default function ProjectCard({
                             </button>
                         </>
                     )}
-                    <button className="p-1 bg-white rounded-full shadow-md hover:bg-gray-100">
-                        <MoreVertical size={18} className="text-gray-600" />
-                    </button>
                 </div>
                 <div className="absolute top-3 left-3 flex space-x-2">
                     <div
@@ -144,20 +138,6 @@ export default function ProjectCard({
                             >
                                 View Details
                             </button>
-                            <button
-                                onClick={onEdit}
-                                className="text-yellow-600 hover:text-yellow-800"
-                                title="Edit Project"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                onClick={onDelete}
-                                className="text-red-600 hover:text-red-800"
-                                title="Delete Project"
-                            >
-                                Delete
-                            </button>
                         </div>
                     )}
                 </div>
@@ -165,27 +145,5 @@ export default function ProjectCard({
         </div>
     );
 }
-// import React from "react";
-//
-// export default function ProjectCard({ project, isAdmin, onToggleVisibility }) {
-//     return (
-//         <div className="bg-white shadow-md rounded-lg p-4">
-//             <img src={project.image} alt={project.title} className="w-full h-40 object-cover rounded-md" />
-//             <h3 className="text-lg font-semibold mt-2">{project.title}</h3>
-//             <p className="text-sm text-gray-600">{project.description}</p>
-//             <p className="text-sm text-gray-500 mt-1">Status: {project.status}</p>
-//
-//             {/* ✅ Visibility Toggle Button (only for Admins) */}
-//             {isAdmin && (
-//                 <button
-//                     onClick={onToggleVisibility}
-//                     className={`mt-3 px-3 py-1 rounded-md text-sm font-medium
-//                         ${project.visible ? "bg-red-500" : "bg-green-500"} text-white`}
-//                 >
-//                     {project.visible ? "Hide" : "Show"}
-//                 </button>
-//             )}
-//         </div>
-//     );
-// }
+
 
