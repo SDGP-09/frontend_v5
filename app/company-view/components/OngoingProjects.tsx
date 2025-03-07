@@ -1,6 +1,7 @@
-// application/Company-profile/ongoing-projects/components/OngoingProjects.tsx
+
 "use client";
 import React from "react";
+import Image from "next/image";
 import { Info } from "lucide-react";
 
 interface Project {
@@ -30,10 +31,11 @@ const OngoingProjects: React.FC<OngoingProjectsProps> = ({ projects }) => {
                             className="flex-shrink-0 w-72 group hover:transform hover:-translate-y-1 transition-all duration-300"
                         >
                             <div className="relative aspect-video rounded-lg overflow-hidden">
-                                <img
+                                <Image
                                     src={project.image}
                                     alt={project.title}
-                                    className="w-full h-full object-cover"
+                                    layout="fill"
+                                    objectFit="cover"
                                 />
                                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                     <button className="bg-white text-gray-900 px-4 py-2 rounded-md flex items-center gap-2">

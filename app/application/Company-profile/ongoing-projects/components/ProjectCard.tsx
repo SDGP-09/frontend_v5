@@ -1,15 +1,13 @@
 "use client";
-
 import React from "react";
-import { Eye, EyeOff, Lock, MoreVertical, User } from "lucide-react";
+import Image from "next/image";
+import { Eye, EyeOff, Lock, MoreVertical } from "lucide-react";
 
 interface Project {
     id: number;
     title: string;
     description: string;
     status: string;
-    progress: number;
-    members: number;
     duration: string;
     image: string;
     visible: boolean;
@@ -21,6 +19,9 @@ interface ProjectCardProps {
     isAdmin: boolean;
     onToggleVisibility: () => void;
     onTogglePrivacy: () => void;
+    onEdit: () => void;
+    onDelete: () => void;
+    onViewDetails: () => void;
 }
 
 export default function ProjectCard({
@@ -28,6 +29,9 @@ export default function ProjectCard({
                                         isAdmin,
                                         onToggleVisibility,
                                         onTogglePrivacy,
+                                        onEdit,
+                                        onDelete,
+                                        onViewDetails,
                                     }: ProjectCardProps) {
     // Determine status badge styles
     let statusClasses = "";
@@ -48,10 +52,13 @@ export default function ProjectCard({
             }`}
         >
             <div className="relative h-48">
-                <img
+                <Image
                     src={project.image}
                     alt={project.title}
+                    width={384} // Equivalent to w-full for the image width (h-full)
+                    height={192} // Equivalent to the h-48 height
                     className="w-full h-full object-cover"
+                    priority // Optional: Ensures faster loading for this key image
                 />
                 <div className="absolute top-3 right-3 flex space-x-2">
                     {isAdmin && (
@@ -111,35 +118,12 @@ export default function ProjectCard({
                     {project.description}
                 </p>
 
-                <div className="mb-4">
-                    <div className="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progress</span>
-                        <span>{project.progress}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                            className={`h-2 rounded-full ${
-                                project.status === "Completed"
-                                    ? "bg-green-500"
-                                    : project.progress > 50
-                                        ? "bg-emerald-500"
-                                        : project.progress > 25
-                                            ? "bg-blue-500"
-                                            : "bg-yellow-500"
-                            }`}
-                            style={{ width: `${project.progress}%` }}
-                        ></div>
-                    </div>
-                </div>
+                {/* Removed progress section */}
 
                 <div className="flex justify-between text-sm text-gray-500">
                     <div className="flex items-center">
-                        <User size={16} className="mr-1" />
-                        <span>{project.members} members</span>
-                    </div>
-                    <div className="flex items-center">
                         <svg
-                            xmlns="<http://www.w3.org/2000/svg>"
+                            xmlns="http://www.w3.org/2000/svg"
                             className="h-4 w-4 mr-1"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -154,6 +138,31 @@ export default function ProjectCard({
                         </svg>
                         <span>{project.duration}</span>
                     </div>
+                    {isAdmin && (
+                        <div className="flex space-x-2">
+                            <button
+                                onClick={onViewDetails}
+                                className="text-blue-600 hover:text-blue-800"
+                                title="View Details"
+                            >
+                                View Details
+                            </button>
+                            <button
+                                onClick={onEdit}
+                                className="text-yellow-600 hover:text-yellow-800"
+                                title="Edit Project"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                onClick={onDelete}
+                                className="text-red-600 hover:text-red-800"
+                                title="Delete Project"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { Edit2, Trash2 } from "lucide-react";
 
 /**
@@ -24,7 +25,14 @@ interface ProjectCardProps {
 export default function ProjectCard({ title, status, image }: ProjectCardProps) {
     return (
         <div className="flex items-center gap-4 p-4 border rounded-lg">
-            <img src={image} alt={title} className="w-24 h-24 rounded object-cover" />
+            <Image
+                src={image}
+                alt={title}
+                width={96}  // Equivalent to w-24 (24 * 4px = 96px)
+                height={96} // Equivalent to h-24
+                className="rounded object-cover"
+                priority // Improves LCP (optional, use if it's critical for initial loading)
+            />
             <div className="flex-1">
                 <div className="flex justify-between items-start">
                     <div>

@@ -7,7 +7,6 @@ import {
     Hammer,
     FileSpreadsheet,
 } from "lucide-react";
-import Image from "next/image";
 
 const images = [
     "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=2070",
@@ -20,7 +19,7 @@ const images = [
 export default function Home() {
     const { setLoading } = useLoading();
     const [currentImage, setCurrentImage] = useState(0);
-    // const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -39,7 +38,7 @@ export default function Home() {
         <div className="min-h-screen flex flex-col">
 
             {/* Image Carousel */}
-            <div className="relative h-[35vh] overflow-hidden z-0">
+            <div className="relative h-[35vh] overflow-visible">
                 {images.map((img, index) => (
                     <div
                         key={index}
@@ -50,7 +49,7 @@ export default function Home() {
                         <img
                             src={img}
                             alt={`Construction site ${index + 1}`}
-                            className="object-cover"
+                            className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
                         <div className="absolute inset-0 flex items-center justify-center">

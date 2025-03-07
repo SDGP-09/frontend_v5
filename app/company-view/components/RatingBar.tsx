@@ -1,4 +1,4 @@
-// application/Company-profile/ongoing-projects/components/RatingBar.tsx
+
 "use client";
 import React from "react";
 

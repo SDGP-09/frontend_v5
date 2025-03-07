@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { Star, Edit2 } from "lucide-react";
 
 /**
@@ -9,7 +10,6 @@ import { Star, Edit2 } from "lucide-react";
  * @param location - The company's location.
  * @param rating - The company's rating.
  * @param reviewsCount - The number of reviews.
- * @param isEditingProfile - Flag to indicate if the profile is in edit mode.
  * @param onEditProfile - Callback function when "Edit Profile" is clicked.
  * @param profileImage - URL of the company’s profile image.
  */
@@ -18,7 +18,6 @@ interface ProfileSectionProps {
     location: string;
     rating: number;
     reviewsCount: number;
-    isEditingProfile: boolean;
     onEditProfile: () => void;
     profileImage: string;
 }
@@ -39,10 +38,13 @@ export default function ProfileSection({
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex gap-6">
-                <img
+                <Image
                     src={profileImage}
                     alt={companyName}
-                    className="w-40 h-40 rounded-lg object-cover"
+                    width={160} // Equivalent to w-40 (40 * 4px = 160px)
+                    height={160} // Equivalent to h-40
+                    className="rounded-lg object-cover"
+                    priority // Ensures faster loading for key images
                 />
                 <div className="space-y-2">
                     <h1 className="text-2xl font-bold">{companyName}</h1>
