@@ -1,4 +1,3 @@
-// application/company-profile/view-in-details/page.tsx
 "use client";
 
 import React from "react";

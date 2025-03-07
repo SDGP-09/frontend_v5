@@ -8,12 +8,6 @@ interface ProjectImageGridProps {
     name: string;
 }
 
-/**
- * ProjectImageGrid Component
- * --------------------------
- * Renders a grid of project images. Overlays the project name on the images.
- * If there are no images, displays a placeholder.
- */
 const ProjectImageGrid: React.FC<ProjectImageGridProps> = ({ images, name }) => {
     const hasImages = images && images.length > 0;
 
