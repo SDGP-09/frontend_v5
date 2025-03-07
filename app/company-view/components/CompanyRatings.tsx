@@ -1,7 +1,7 @@
-// application/Company-profile/ongoing-projects/components/CompanyRatings.tsx
 "use client";
-import React from "react";
+import React, { useState, useCallback } from "react";
 import RatingBar from "./RatingBar";
+import RatingModal from "./RatingModal";
 import { BadgeCheck, Star } from "lucide-react";
 
 interface CompanyRatingsProps {
@@ -9,13 +9,35 @@ interface CompanyRatingsProps {
     isApproved: boolean;
 }
 
-const CompanyRatings: React.FC<CompanyRatingsProps> = ({ ratings, isApproved }) => {
+const CompanyRatings: React.FC<CompanyRatingsProps> = ({
+                                                           ratings: initialRatings,
+                                                           isApproved,
+                                                       }) => {
+    const [ratings, setRatings] = useState(initialRatings);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Calculate statistics
     const totalRatings = Object.values(ratings).reduce((a, b) => a + b, 0);
     const averageRating =
         Object.entries(ratings).reduce(
             (acc, [key, value]) => acc + Number(key) * value,
             0
-        ) / totalRatings;
+        ) / totalRatings || 0;
+
+    // Handle new rating submission
+    const handleRatingSubmit = useCallback((rating: number) => {
+        setRatings((prevRatings) => {
+            const newRatings = { ...prevRatings };
+            newRatings[rating] = (newRatings[rating] || 0) + 1;
+            return newRatings;
+        });
+
+        // You could add an API call here to save the rating to your backend
+    }, []);
+
+    // Open and close modal handlers
+    const openModal = useCallback(() => setIsModalOpen(true), []);
+    const closeModal = useCallback(() => setIsModalOpen(false), []);
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -34,16 +56,34 @@ const CompanyRatings: React.FC<CompanyRatingsProps> = ({ ratings, isApproved }) 
                     <Star className="w-6 h-6 text-yellow-400 fill-current" />
                 </div>
             </div>
+
             <div className="space-y-2">
                 {Object.entries(ratings)
-                    .reverse()
+                    .sort((a, b) => Number(b[0]) - Number(a[0])) // Sort by rating in descending order
                     .map(([rating, count]) => (
-                        <RatingBar key={rating} rating={Number(rating)} count={count} total={totalRatings} />
+                        <RatingBar
+                            key={rating}
+                            rating={Number(rating)}
+                            count={count}
+                            total={totalRatings}
+                        />
                     ))}
             </div>
-            <button className="mt-4 w-full bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-all">
-                Rate Company
+
+            <button
+                onClick={openModal}
+                className="mt-4 w-full bg-gradient-to-r from-green-400 to-blue-500
+ px-6 py-2 rounded-md  hover:from-green-500 hover:to-blue-600 transition-all font-medium text-white"
+            >
+                Rate Civilink
             </button>
+
+            {/* Rating Modal */}
+            <RatingModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                onSubmit={handleRatingSubmit}
+            />
         </div>
     );
 };
