@@ -8,12 +8,12 @@ import axios from 'axios';
 
 
 
-const CONTRACTORS = [
-    'John Construction Co.',
-    'Smith Builders',
-    'Elite Construction',
-    'Premier Contractors',
-];
+// const CONTRACTORS = [
+//     'John Construction Co.',
+//     'Smith Builders',
+//     'Elite Construction',
+//     'Premier Contractors',
+// ];
 
 
 export function MainForm() {
