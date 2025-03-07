@@ -97,7 +97,8 @@ export default function AdModal({ ad, onClose, onImageClick }: AdModalProps) {
 
                     {/* Action Button */}
                     <button className="w-full px-6 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 text-lg font-semibold">
-                        Let's make a deal
+                        {/*Let's make a deal*/}
+                        Let&apos;s make a deal
                     </button>
                 </div>
             </div>
