@@ -68,11 +68,11 @@ interface Project {
     name: string;
     status: string;
     description: string;
-    progress: number;
     timeline: string;
     updates: { date: string; text: string }[];
     image: string;
 }
+
 
 interface ProjectListProps {
     projects: Project[];

@@ -50,7 +50,7 @@ export default function CompanyDashboard() {
 
                             rating={4.4}
                             reviewsCount={257}
-                            isEditingProfile={isEditingProfile}
+                            //isEditingProfile={isEditingProfile}
                             onEditProfile={() => setIsEditingProfile(true)}
                             profileImage="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=300&h=300"
                         />

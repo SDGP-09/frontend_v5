@@ -2,9 +2,7 @@
 import React, { useState, useEffect } from "react";
 import {
 
-
     Star,
-
     BadgeCheck,
     Info,
 } from "lucide-react";
