@@ -240,7 +240,7 @@ function CompanyProfile() {
                                 ))}
                         </div>
                         <button className="mt-4 w-full bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-all">
-                            Rate Company
+                            Share your feedback
                         </button>
                     </div>
 
