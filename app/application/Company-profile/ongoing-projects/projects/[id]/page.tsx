@@ -1,10 +1,17 @@
-
 "use client";
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-const projectsData = [
+type Project = {
+    id: number;
+    title: string;
+    description: string;
+    status: string;
+    duration: string;
+};
+
+const projectsData: Project[] = [
     { id: 1, title: "City Center Mall", description: "A modern shopping mall...", status: "In Progress", duration: "8 months" },
     { id: 2, title: "Riverside Apartments", description: "Luxury apartment complex...", status: "In Progress", duration: "14 months" }
 ];
@@ -12,10 +19,10 @@ const projectsData = [
 export default function ProjectDetails({ params }: { params: { id: string } }) {
     const router = useRouter();
     const projectId = Number(params.id);
-    const [project, setProject] = useState<any>(null);
+    const [project, setProject] = useState<Project | null>(null);
 
     useEffect(() => {
-        const foundProject = projectsData.find(p => p.id === projectId);
+        const foundProject = projectsData.find((p) => p.id === projectId);
         if (foundProject) {
             setProject(foundProject);
         }
@@ -32,15 +39,13 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
 
             <button
                 onClick={() => router.push(`/application/projects/${projectId}/edit`)}
-                // onClick={() => router.push(`/Company-profile/ongoing-projects/application/projects/${projectId}/edit`)}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
             >
                 Edit Project
             </button>
 
             <button
-                // onClick={() => router.push("/Company-profile/ongoing-projects/application/projects")}
-                onClick={() => router.push(`/application/projects/${project.id}/edit`)}
+                onClick={() => router.push(`/application/projects`)}
                 className="mt-4 block text-gray-500 underline"
             >
                 Back to Projects
@@ -48,3 +53,4 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
         </div>
     );
 }
+

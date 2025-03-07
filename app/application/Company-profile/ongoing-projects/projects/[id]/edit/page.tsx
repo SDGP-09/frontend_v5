@@ -3,7 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-const projectsData = [
+type Project = {
+    id: number;
+    title: string;
+    description: string;
+    status: string;
+    duration: string;
+};
+
+const projectsData: Project[] = [
     { id: 1, title: "City Center Mall", description: "A modern shopping mall...", status: "In Progress", duration: "8 months" },
     { id: 2, title: "Riverside Apartments", description: "Luxury apartment complex...", status: "In Progress", duration: "14 months" }
 ];
@@ -11,18 +19,18 @@ const projectsData = [
 export default function EditProject({ params }: { params: { id: string } }) {
     const router = useRouter();
     const projectId = Number(params.id);
-    const [project, setProject] = useState<any>(null);
-    const [editedProject, setEditedProject] = useState<any>(null);
+    const [project, setProject] = useState<Project | null>(null);
+    const [editedProject, setEditedProject] = useState<Project | null>(null);
 
     useEffect(() => {
-        const foundProject = projectsData.find(p => p.id === projectId);
+        const foundProject = projectsData.find((p) => p.id === projectId);
         if (foundProject) {
             setProject(foundProject);
             setEditedProject(foundProject);
         }
     }, [projectId]);
 
-    if (!project) return <p className="text-center mt-10">Project not found</p>;
+    if (!project || !editedProject) return <p className="text-center mt-10">Project not found</p>;
 
     const handleSave = () => {
         setProject(editedProject);
@@ -38,17 +46,17 @@ export default function EditProject({ params }: { params: { id: string } }) {
                 <input
                     type="text"
                     value={editedProject.title}
-                    onChange={(e) => setEditedProject({...editedProject, title: e.target.value})}
+                    onChange={(e) => setEditedProject({ ...editedProject, title: e.target.value })}
                     className="w-full border p-2 rounded-md"
                 />
                 <textarea
                     value={editedProject.description}
-                    onChange={(e) => setEditedProject({...editedProject, description: e.target.value})}
+                    onChange={(e) => setEditedProject({ ...editedProject, description: e.target.value })}
                     className="w-full border p-2 rounded-md"
                 />
                 <select
                     value={editedProject.status}
-                    onChange={(e) => setEditedProject({...editedProject, status: e.target.value})}
+                    onChange={(e) => setEditedProject({ ...editedProject, status: e.target.value })}
                     className="w-full border p-2 rounded-md"
                 >
                     <option value="In Progress">In Progress</option>
@@ -56,20 +64,21 @@ export default function EditProject({ params }: { params: { id: string } }) {
                     <option value="Pending">Pending</option>
                 </select>
 
-                <button onClick={handleSave} className="bg-green-500 text-white px-4 py-2 rounded-md">Save</button>
-                {/*<button*/}
-                {/*    onClick={() => router.push(`/Company-profile/ongoing-projects/application/projects/${projectId}`)}*/}
-                {/*    className="ml-4 text-gray-500 underline">Cancel*/}
-                {/*</button>*/}
+                <button onClick={handleSave} className="bg-green-500 text-white px-4 py-2 rounded-md">
+                    Save
+                </button>
+
                 <button
                     onClick={() => router.push(`/application/projects/${projectId}`)}
-                    className="ml-4 text-gray-500 underline">Cancel
+                    className="ml-4 text-gray-500 underline"
+                >
+                    Cancel
                 </button>
             </div>
         </div>
     );
 }
-// "use client";
+
 //
 // import { useParams, useRouter } from "next/navigation";
 // import { useState, useEffect } from "react";
