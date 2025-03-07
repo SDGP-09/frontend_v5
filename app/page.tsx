@@ -19,7 +19,7 @@ const images = [
 export default function Home() {
     const { setLoading } = useLoading();
     const [currentImage, setCurrentImage] = useState(0);
-    //const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         setLoading(true);

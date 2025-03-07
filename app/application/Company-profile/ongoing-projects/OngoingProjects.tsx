@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation"; //
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ProjectFilterBar from "./components/ProjectFilterBar";
 import ProjectCount from "./components/ProjectCount";
@@ -242,6 +242,13 @@ export default function OngoingProjects() {
                             </div>
                         )}
                     </div>
+                    <button
+                        onClick={() => setIsAdmin(prevState => !prevState)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                    >
+                        {isAdmin ? "Switch to User View" : "Switch to Admin View"}
+                    </button>
+
 
                 </div>
 
