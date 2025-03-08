@@ -3,16 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
 };
-// module.exports = {
-//   images: {
-//     remotePatterns: [
-//       {
-//         protocol: 'https',
-//         hostname: 'images.unsplash.com',
-//       },
-//     ],
-//   },
-// };
+module.exports = {
+  images: {
+    domains: ['res.cloudinary.com', 'images.unsplash.com'],
+  },
+};
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   images: {
