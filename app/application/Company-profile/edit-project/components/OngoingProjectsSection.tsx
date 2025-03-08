@@ -60,6 +60,7 @@ export default function OngoingProjectsSection() {
                     status="ongoing"
                     image="https://res.cloudinary.com/ddcbr53w0/image/upload/v1740427131/old-buildings-port-evening_1268-14340_j234y6.avif"
                 />
+
             </div>
         </div>
     );

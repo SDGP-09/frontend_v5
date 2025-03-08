@@ -22,13 +22,13 @@ export default function HotDealsSection() {
                     title="Spring Special Offer"
                     discount="20%"
                     description="off on all residential projects"
-                    active={true}
+                    //active={true}
                 />
                 <PromotionCard
                     title="Early Bird Discount"
                     discount="15%"
                     description="for bookings made 3 months in advance"
-                    active={false}
+                    //active={false}
                 />
             </div>
         </div>
