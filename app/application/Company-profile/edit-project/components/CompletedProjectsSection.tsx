@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import CompletedProjectCard from "./CompletedProjectCard";
+import Image from 'next/image';
 
 /**
  * CompletedProjectsSection Component

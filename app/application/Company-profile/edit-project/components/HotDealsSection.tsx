@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import PromotionCard from "./PromotionCard";
+import Image from 'next/image';
 
 /**
  * HotDealsSection Component
