@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   output: "standalone",
 };
 module.exports = {
+  output: "standalone",
+};
+
+module.exports = {
   images: {
 
     domains: ['res.cloudinary.com'],
