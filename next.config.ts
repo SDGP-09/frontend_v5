@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 };
 module.exports = {
   images: {
-<<<<<<< Updated upstream
+
     domains: ['res.cloudinary.com'],
     formats: ["image/avif", "image/webp"],
   },
@@ -30,11 +30,7 @@ module.exports = {
 //   },
 // };
 //
-=======
-    domains: ['images.unsplash.com'],
-  },
-}
->>>>>>> Stashed changes
+
 
 
 export default nextConfig;
