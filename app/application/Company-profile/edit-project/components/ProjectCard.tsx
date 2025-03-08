@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { Edit2, Trash2 } from "lucide-react";
+
 
 /**
  * ProjectCardProps
@@ -39,14 +39,7 @@ export default function ProjectCard({ title, status, image }: ProjectCardProps) 
                         <h3 className="font-medium">{title}</h3>
                         <span className="text-sm text-gray-500 capitalize">{status}</span>
                     </div>
-                    <div className="flex gap-2">
-                        <button className="p-2 text-blue-600 hover:bg-blue-50 rounded">
-                            <Edit2 className="w-4 h-4" />
-                        </button>
-                        <button className="p-2 text-red-600 hover:bg-red-50 rounded">
-                            <Trash2 className="w-4 h-4" />
-                        </button>
-                    </div>
+
                 </div>
             </div>
         </div>

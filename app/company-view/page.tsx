@@ -32,6 +32,7 @@ const companyData = {
 
 const hotDeals = [
     {
+
         id: 1,
         title: "Spring Special Offer",
         description: "20% off on all residential projects",

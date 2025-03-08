@@ -19,7 +19,7 @@ const OngoingProjects: React.FC<OngoingProjectsProps> = ({ projects }) => {
         <div className="bg-white p-6 rounded-lg shadow-sm h-full">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Ongoing Projects</h2>
-                <Link href="/application/Company-profile/ongoing-projects">
+                <Link href="/ongoing-user-view">
                     <span className="text-blue-500 hover:text-blue-600 transition-colors cursor-pointer">
                         View All
                     </span>

@@ -5,29 +5,30 @@ const nextConfig: NextConfig = {
 };
 module.exports = {
   images: {
-    domains: ['res.cloudinary.com', 'images.unsplash.com'],
-  },
-};
-
-/** @type {import('next').NextConfig} */
-module.exports = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-    ],
-  },
-};
-
-module.exports = nextConfig;
-
-module.exports = {
-  images: {
     domains: ['res.cloudinary.com'],
+    formats: ["image/avif", "image/webp"],
+  },
+};
+module.exports = {
+  images: {
+    domains: ['images.unsplash.com'],
+
   },
 };
 
-module.exports = nextConfig;
+
+// /** @type {import('next').NextConfig} */
+// module.exports = {
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: "https",
+//         hostname: "images.unsplash.com",
+//       },
+//     ],
+//   },
+// };
+//
+
+
 export default nextConfig;

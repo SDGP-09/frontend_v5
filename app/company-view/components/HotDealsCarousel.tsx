@@ -52,11 +52,9 @@ const HotDealsCarousel: React.FC<HotDealsCarouselProps> = ({ deals }) => {
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                                         <h3 className="text-white font-semibold">{deal.title}</h3>
                                         <p className="text-white/80 text-sm">{deal.description}</p>
-                                        {/*<button className="mt-2 bg-white text-gray-900 px-4 py-1 rounded-md text-sm hover:bg-gray-100 transition-colors">*/}
-                                        {/*    Learn More*/}
-                                        {/*</button>*/}
+
                                     </div>
-                                </div>n
+                                </div>
                             </div>
                         ))}
                     </div>
