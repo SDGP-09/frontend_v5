@@ -38,10 +38,7 @@ const CompletedProjects: React.FC<CompletedProjectsProps> = ({ projects }) => {
                                     objectFit="cover"
                                 />
                                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button className="bg-white text-gray-900 px-4 py-2 rounded-md flex items-center gap-2">
-                                        <Info className="w-4 h-4" />
-                                        Details
-                                    </button>
+
                                 </div>
                             </div>
                             <h3 className="mt-2 font-semibold">{project.title}</h3>

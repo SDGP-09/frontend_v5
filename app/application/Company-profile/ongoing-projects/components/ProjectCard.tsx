@@ -19,8 +19,6 @@ interface ProjectCardProps {
     isAdmin: boolean;
     onToggleVisibility: () => void;
     onTogglePrivacy: () => void;
-    onEdit: () => void;
-    onDelete: () => void;
     onViewDetails: () => void;
 }
 
@@ -29,8 +27,6 @@ export default function ProjectCard({
                                         isAdmin,
                                         onToggleVisibility,
                                         onTogglePrivacy,
-                                        onEdit,
-                                        onDelete,
                                         onViewDetails,
                                     }: ProjectCardProps) {
     // Determine status badge styles
@@ -86,9 +82,7 @@ export default function ProjectCard({
                             </button>
                         </>
                     )}
-                    <button className="p-1 bg-white rounded-full shadow-md hover:bg-gray-100">
-                        <MoreVertical size={18} className="text-gray-600" />
-                    </button>
+
                 </div>
                 <div className="absolute top-3 left-3 flex space-x-2">
                     <div
@@ -147,20 +141,20 @@ export default function ProjectCard({
                             >
                                 View Details
                             </button>
-                            <button
-                                onClick={onEdit}
-                                className="text-yellow-600 hover:text-yellow-800"
-                                title="Edit Project"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                onClick={onDelete}
-                                className="text-red-600 hover:text-red-800"
-                                title="Delete Project"
-                            >
-                                Delete
-                            </button>
+                            {/*<button*/}
+                            {/*    onClick={onEdit}*/}
+                            {/*    className="text-yellow-600 hover:text-yellow-800"*/}
+                            {/*    title="Edit Project"*/}
+                            {/*>*/}
+                            {/*    Edit*/}
+                            {/*</button>*/}
+                            {/*<button*/}
+                            {/*    onClick={onDelete}*/}
+                            {/*    className="text-red-600 hover:text-red-800"*/}
+                            {/*    title="Delete Project"*/}
+                            {/*>*/}
+                            {/*    Delete*/}
+                            {/*</button>*/}
                         </div>
                     )}
                 </div>

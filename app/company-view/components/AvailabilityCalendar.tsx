@@ -13,11 +13,17 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ occupiedDat
 
     return (
         <div className="grid grid-cols-7 gap-1 p-4 bg-white rounded-lg shadow-sm">
-            {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-                <div key={day} className="text-center text-sm font-semibold text-gray-600">
+            {/*{["S", "M", "T", "W", "T", "F", "S"].map((day) => (*/}
+            {/*    <div key={day} className="text-center text-sm font-semibold text-gray-600">*/}
+            {/*        {day}*/}
+            {/*    </div>*/}
+            {/*))}*/}
+            {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
+                <div key={`${day}-${index}`} className="text-center text-sm font-semibold text-gray-600">
                     {day}
                 </div>
             ))}
+
             {days.map((day) => {
                 // In the sample, occupied dates are hardcoded for March 2024.
                 const dayStr = day.toString().padStart(2, "0");

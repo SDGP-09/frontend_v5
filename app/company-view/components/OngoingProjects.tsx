@@ -1,7 +1,7 @@
-
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Info } from "lucide-react";
 
 interface Project {
@@ -19,9 +19,11 @@ const OngoingProjects: React.FC<OngoingProjectsProps> = ({ projects }) => {
         <div className="bg-white p-6 rounded-lg shadow-sm h-full">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Ongoing Projects</h2>
-                <button className="text-blue-500 hover:text-blue-600 transition-colors">
-                    View All
-                </button>
+                <Link href="/ongoing-user-view">
+                    <span className="text-blue-500 hover:text-blue-600 transition-colors cursor-pointer">
+                        View All
+                    </span>
+                </Link>
             </div>
             <div className="overflow-x-auto">
                 <div className="flex gap-4 pb-4">
@@ -38,10 +40,7 @@ const OngoingProjects: React.FC<OngoingProjectsProps> = ({ projects }) => {
                                     objectFit="cover"
                                 />
                                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button className="bg-white text-gray-900 px-4 py-2 rounded-md flex items-center gap-2">
-                                        <Info className="w-4 h-4" />
-                                        Details
-                                    </button>
+
                                 </div>
                             </div>
                             <h3 className="mt-2 font-semibold">{project.title}</h3>
