@@ -94,7 +94,7 @@ const allProjects = [
             "Multi-modal transportation center connecting subway, bus, and light rail systems with retail spaces and public plazas.",
         timeline: "Expected completion: November 2026",
         updates: [
-            { date: "2 days ago", text: "Underground tunnel excavation completed" },
+            { date: "5 days ago", text: "Underground tunnel excavation completed" },
             { date: "1 week ago", text: "Main terminal foundation poured" },
             { date: "3 weeks ago", text: "Utility relocation finished" },
         ],
