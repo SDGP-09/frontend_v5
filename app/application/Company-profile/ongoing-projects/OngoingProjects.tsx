@@ -175,9 +175,7 @@ export default function OngoingProjects() {
         router.push(`/projects/${id}`);
     };
 
-    const handleEdit = (id: number) => {
-        router.push(`/projects/${id}/edit`);
-    };
+
 
 
 
