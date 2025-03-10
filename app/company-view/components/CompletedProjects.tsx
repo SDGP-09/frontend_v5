@@ -1,8 +1,60 @@
-
+//
+// "use client";
+// import React from "react";
+// import Image from "next/image";
+//
+// interface Project {
+//     id: number;
+//     title: string;
+//     image: string;
+// }
+//
+// interface CompletedProjectsProps {
+//     projects: Project[];
+// }
+//
+// const CompletedProjects: React.FC<CompletedProjectsProps> = ({ projects }) => {
+//     return (
+//         <div className="bg-white p-6 rounded-lg shadow-sm">
+//             <div className="flex justify-between items-center mb-6">
+//                 <h2 className="text-xl font-semibold">Completed Projects</h2>
+//                 <button className="text-blue-500 hover:text-blue-600 transition-colors">
+//                     View All
+//                 </button>
+//             </div>
+//             <div className="overflow-x-auto">
+//                 <div className="flex gap-4 pb-4">
+//                     {projects.map((project) => (
+//                         <div
+//                             key={project.id}
+//                             className="flex-shrink-0 w-72 group hover:transform hover:-translate-y-1 transition-all duration-300"
+//                         >
+//                             <div className="relative aspect-video rounded-lg overflow-hidden">
+//                                 <Image
+//                                     src={project.image}
+//                                     alt={project.title}
+//                                     layout="fill"
+//                                     objectFit="cover"
+//                                 />
+//                                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+//
+//                                 </div>
+//                             </div>
+//                             <h3 className="mt-2 font-semibold">{project.title}</h3>
+//                         </div>
+//                     ))}
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+//
+// export default CompletedProjects;
 "use client";
 import React from "react";
 import Image from "next/image";
-import { Info } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Project {
     id: number;
@@ -15,13 +67,21 @@ interface CompletedProjectsProps {
 }
 
 const CompletedProjects: React.FC<CompletedProjectsProps> = ({ projects }) => {
+    const router = useRouter();
+
     return (
         <div className="bg-white p-6 rounded-lg shadow-sm">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Completed Projects</h2>
-                <button className="text-blue-500 hover:text-blue-600 transition-colors">
+                {/*<button*/}
+                {/*    className="text-blue-500 hover:text-blue-600 transition-colors"*/}
+                {/*    onClick={() => router.push("/completeprojects")}*/}
+                {/*>*/}
+                {/*    View All*/}
+                {/*</button>*/}
+                <Link href="/company-view/completeprojects" className="text-blue-500 hover:text-blue-600 transition-colors">
                     View All
-                </button>
+                </Link>
             </div>
             <div className="overflow-x-auto">
                 <div className="flex gap-4 pb-4">
@@ -38,7 +98,6 @@ const CompletedProjects: React.FC<CompletedProjectsProps> = ({ projects }) => {
                                     objectFit="cover"
                                 />
                                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-
                                 </div>
                             </div>
                             <h3 className="mt-2 font-semibold">{project.title}</h3>

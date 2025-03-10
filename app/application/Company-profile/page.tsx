@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-// Sample data - in a real app, this would come from an API
+
 const companyData = {
     name: "BuildMaster Construction",
     location: "New York, NY",
