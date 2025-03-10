@@ -3,7 +3,10 @@ export interface Ad{
     title: string;
     description: string;
     field: string;
-    price: number;
     images: string[];
     fullDescription: string;
+    prices: Partial<Record<PriceInterval, number>>;
 }
+
+
+export type PriceInterval = "hour" | "day" | "week" | "month" | "year";
