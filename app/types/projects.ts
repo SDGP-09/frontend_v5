@@ -6,8 +6,8 @@ export interface Projects {
     visibility: 'Visible' | 'Hidden';
     privacy: 'Public' | 'Private';
     imageUrl: string;
-    progress: number;
-    members: number;
+    // progress: number;
+    // members: number;
     duration: string;
     completedDate: string;
 }

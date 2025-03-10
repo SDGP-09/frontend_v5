@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface CompanyInfoProps {
     name: string;
@@ -25,8 +26,14 @@ const CompanyInfo: React.FC<CompanyInfoProps> = ({ name, location, profileImage 
                     <h1 className="text-2xl font-bold">{name}</h1>
                 </div>
                 <p className="text-gray-600 mb-4">{location}</p>
-                <button className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded-md hover:from-green-500 hover:to-blue-600 transition-all">
-                    Connect
+                {/*<button className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded-md hover:from-green-500 hover:to-blue-600 transition-all">*/}
+                {/*    Connect*/}
+                {/*</button>*/}
+                <button
+                    className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded-md hover:from-green-500 hover:to-blue-600 transition-all">
+                    <a href="/messenger" target="_self" rel="noopener noreferrer">
+                        Connect
+                    </a>
                 </button>
             </div>
         </div>

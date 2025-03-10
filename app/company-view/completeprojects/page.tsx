@@ -15,8 +15,6 @@ import {Projects} from "@/app/types/projects";
         visibility: 'Visible',
         privacy: 'Public',
         imageUrl: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-        progress: 100,
-        members: 32,
         duration: '18 months',
         completedDate: 'March 15, 2024'
     },
@@ -28,8 +26,6 @@ import {Projects} from "@/app/types/projects";
         visibility: 'Visible',
         privacy: 'Public',
         imageUrl: 'https://images.unsplash.com/photo-1584967918940-a7d51b064268?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-        progress: 100,
-        members: 24,
         duration: '12 months',
         completedDate: 'January 10, 2024'
     },
@@ -41,8 +37,6 @@ import {Projects} from "@/app/types/projects";
         visibility: 'Visible',
         privacy: 'Public',
         imageUrl: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80',
-        progress: 100,
-        members: 18,
         duration: '24 months',
         completedDate: 'November 5, 2023'
     },
@@ -54,8 +48,6 @@ import {Projects} from "@/app/types/projects";
         visibility: 'Hidden',
         privacy: 'Public',
         imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1453&q=80',
-        progress: 100,
-        members: 15,
         duration: '14 months',
         completedDate: 'October 20, 2023'
     },
@@ -67,9 +59,7 @@ import {Projects} from "@/app/types/projects";
         visibility: 'Visible',
         privacy: 'Public',
         imageUrl: 'https://images.unsplash.com/photo-1503095396549-807759245b35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
-        progress: 100,
-        members: 22,
-        duration: '30 months',
+         duration: '30 months',
         completedDate: 'August 3, 2023'
     },
     {
@@ -80,8 +70,6 @@ import {Projects} from "@/app/types/projects";
         visibility: 'Visible',
         privacy: 'Public',
         imageUrl: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80',
-        progress: 100,
-        members: 40,
         duration: '36 months',
         completedDate: 'June 15, 2023'
     }
