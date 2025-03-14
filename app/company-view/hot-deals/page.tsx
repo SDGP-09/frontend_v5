@@ -17,7 +17,13 @@ const sampleAds: Ad[] = [
         description:
             "Experienced operator available for construction projects. Specialized in excavators and bulldozers.",
         field: "logistics",
-        price: 150,
+        prices: {
+            "hour": 200,
+            "day": 190,
+            "week": 180,
+            "month": 170,
+            "year": 160,
+        },
         images: [
             "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&q=80&w=2070",
             "https://images.unsplash.com/photo-1578864669335-71f3f5ad4d1e?auto=format&fit=crop&q=80&w=2070",
@@ -32,7 +38,12 @@ const sampleAds: Ad[] = [
         description:
             "Professional electrical engineer offering consulting services for construction projects.",
         field: "power",
-        price: 200,
+        prices: {
+            "hour": 200,
+            "day": 190,
+            "week": 180,
+
+        },
         images: [
             "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070",
             "https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&q=80&w=2070",
