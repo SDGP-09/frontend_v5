@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "./components/BackButton";
 import ProjectImageGrid from "./components/ProjectImageGrid";
 import ProjectOverview from "./components/ProjectOverview";
@@ -11,9 +11,6 @@ interface Project {
     id: string;
     name: string;
     description: string;
-    client: string;
-    location: string;
-    budget: string;
     startDate: string;
     estimatedCompletion: string;
     images: string[];
@@ -21,15 +18,11 @@ interface Project {
     updates: Update[];
 }
 
-// Sample project data for demonstration purposes.
 const sampleProject: Project = {
     id: "proj-123",
     name: "Riverside Office Complex",
     description:
         "A modern 5-story office building with sustainable design features, including solar panels, rainwater collection, and energy-efficient systems. The complex includes underground parking, a rooftop garden, and collaborative workspaces.",
-    client: "Greenfield Developments",
-    location: "123 Riverside Drive, Portland, OR",
-    budget: "$12.5 million",
     startDate: "March 15, 2024",
     estimatedCompletion: "September 30, 2025",
     images: [
@@ -101,25 +94,41 @@ const sampleProject: Project = {
 };
 
 
+const fetchData = async (): Promise<Project | null> => {
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(sampleProject);
+        }, 1000);
+    });
+};
+
+
 const ProjectDetailsPage = () => {
+    const [project, setProject] = useState<Project | null>(null);
+
+    useEffect(() => {
+        fetchData().then(setProject);
+    }, []);
+
+    if (!project) {
+        return <div className="text-center py-10">Loading project details...</div>;
+    }
     return (
         <div className="min-h-screen bg-gray-50">
             <BackButton />
             <ProjectImageGrid
-                images={sampleProject.images}
-                name={sampleProject.name}
+                images={project.images}
+                name={project.name}
             />
             <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
                 <ProjectOverview
-                    description={sampleProject.description}
-                    client={sampleProject.client}
-                    location={sampleProject.location}
-                    budget={sampleProject.budget}
-                    startDate={sampleProject.startDate}
-                    estimatedCompletion={sampleProject.estimatedCompletion}
+                    description={project.description}
+                    startDate={project.startDate}
+                    estimatedCompletion={project.estimatedCompletion}
                 />
-                <ProjectTimeline timeline={sampleProject.timeline} />
-                <ProjectUpdates updates={sampleProject.updates} />
+                <ProjectTimeline timeline={project.timeline} />
+                <ProjectUpdates updates={project.updates} />
             </div>
         </div>
     );
