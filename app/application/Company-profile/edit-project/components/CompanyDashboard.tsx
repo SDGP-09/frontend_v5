@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ProfileSection from "./ProfileSection";
 import CalendarSection from "./CalendarSection";
 import HotDealsSection from "./HotDealsSection";
@@ -26,6 +27,7 @@ export default function CompanyDashboard() {
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     // State for holding company details
     const [companyDetails, setCompanyDetails] = useState({
+        id: "company1",
         name: "BuildMaster Construction",
         location: "New York, NY",
         rating: 4.4,
@@ -33,7 +35,14 @@ export default function CompanyDashboard() {
         profileImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=300&h=300",
     });
     // Form data to update company details
+    // const [formData, setFormData] = useState(companyDetails);
+    // Form data to update company details
     const [formData, setFormData] = useState(companyDetails);
+    // State to simulate saving process
+    const [isSaving, setIsSaving] = useState(false);
+
+    // useRef to skip saving simulation on initial mount
+    const isInitialMount = useRef(true);
 
     /**
      * toggleDateSelection
@@ -62,6 +71,20 @@ export default function CompanyDashboard() {
         setCompanyDetails(formData);
         setIsEditingProfile(false);
     };
+    // useEffect to simulate saving data to backend when companyDetails changes (except on initial mount)
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            setIsSaving(true);
+            // Simulate API call delay
+            const timer = setTimeout(() => {
+                console.log("Dummy data saved for id:", companyDetails.id, companyDetails);
+                setIsSaving(false);
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [companyDetails]);
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -188,6 +211,12 @@ export default function CompanyDashboard() {
                             </div>
                         </form>
                     </div>
+                </div>
+            )}
+            {/* Dummy Saving Indicator */}
+            {isSaving && (
+                <div className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg">
+                    Saving...
                 </div>
             )}
         </div>
