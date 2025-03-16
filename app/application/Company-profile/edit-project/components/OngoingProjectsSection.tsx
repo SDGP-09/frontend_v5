@@ -1,21 +1,31 @@
+//
 // "use client";
 // import React from "react";
+// import Link from "next/link";
 // import ProjectCard from "./ProjectCard";
-// import Image from 'next/image';
 //
 // /**
 //  * OngoingProjectsSection Component
 //  *
-//  * Displays the list of ongoing projects along with a header and an option to add a new project.
+//  * Displays the list of ongoing projects in a single-column layout,
+//  * giving each card (and its image) more space and thus larger image sizes.
 //  */
 // export default function OngoingProjectsSection() {
 //     return (
 //         <div className="bg-white rounded-xl shadow-sm p-6">
 //             <div className="flex justify-between items-center mb-6">
 //                 <h2 className="text-xl font-semibold">Ongoing Projects</h2>
-//                 <a href="#" className="text-blue-500 text-sm">View All</a>
+//                 <Link
+//                     href="/application/Company-profile/ongoing-projects"
+//                     className="text-blue-500 text-sm"
+//                 >
+//                     View All
+//                 </Link>
 //             </div>
-//             <div className="space-y-4">
+//
+//             {/* CHANGED: Render cards in a single column (grid-cols-1 on all screen sizes)
+//           to increase card width and hence image sizes */}
+//             <div className="grid grid-cols-1 gap-6">
 //                 <ProjectCard
 //                     title="City Center Mall"
 //                     status="ongoing"
@@ -32,24 +42,29 @@
 // }
 "use client";
 import React from "react";
-import ProjectCard from "./ProjectCard";
 import Link from "next/link";
+import ProjectCard from "./ProjectCard";
 
 /**
  * OngoingProjectsSection Component
  *
- * Displays the list of ongoing projects along with a header and an option to add a new project.
+ * Displays the list of ongoing projects side by side (2 columns on md+ screens).
  */
 export default function OngoingProjectsSection() {
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Ongoing Projects</h2>
-                <Link href="/application/Company-profile/ongoing-projects" className="text-blue-500 text-sm">
+                <Link
+                    href="/application/Company-profile/ongoing-projects"
+                    className="text-blue-500 text-sm"
+                >
                     View All
                 </Link>
             </div>
-            <div className="space-y-4">
+
+            {/* 2 columns on md screens and up, 1 column on smaller screens */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <ProjectCard
                     title="City Center Mall"
                     status="ongoing"
@@ -60,7 +75,6 @@ export default function OngoingProjectsSection() {
                     status="ongoing"
                     image="https://res.cloudinary.com/ddcbr53w0/image/upload/v1740427131/old-buildings-port-evening_1268-14340_j234y6.avif"
                 />
-
             </div>
         </div>
     );

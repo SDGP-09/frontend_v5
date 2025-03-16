@@ -2,7 +2,6 @@
 import React, { useState, useEffect} from "react";
 import ProjectList from "./components/ProjectList";
 import SearchBar from "./components/Searchbar";
-import FilterDropdown from "./components/FilterDropdown";
 import {Projects} from "@/app/types/projects";
 
  const projectsData: Projects[] = [
@@ -114,21 +113,9 @@ function App() {
 
                 </div>
 
-                {/* Search and Filters */}
                 <div className="flex flex-col md:flex-row gap-4 mb-6">
-                    <div className="md:w-2/3">
-                        <SearchBar
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
-                        />
-                    </div>
-                    <div className="md:w-1/3">
-                        <FilterDropdown
-                            value={categoryFilter}
-                            onChange={setCategoryFilter}
-                            options={categoryOptions}
-                            icon="filter"
-                        />
+                    <div className="md:w-full">
+                        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
                     </div>
                 </div>
 
