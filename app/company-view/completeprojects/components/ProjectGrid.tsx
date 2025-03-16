@@ -1,4 +1,4 @@
-
+"use client";
 import React from 'react';
 import ProjectCard from './ProjectCard';
 import { Projects } from '../../../types/projects'; // Corrected import path

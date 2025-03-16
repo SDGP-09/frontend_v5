@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, useEffect} from "react";
-//import { projectsData } from "@/data/projectsData";
 import ProjectList from "./components/ProjectList";
 import SearchBar from "./components/Searchbar";
 import FilterDropdown from "./components/FilterDropdown";
