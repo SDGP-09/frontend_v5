@@ -34,9 +34,10 @@ const dummyProjects: Project[] = [
             {
                 date: "March 15, 2024",
                 title: "Project Kickoff",
+                description: "ABCDefg",
                 status: "completed",
             }as any,
-        ]as any,
+        ],
 
     },
     {

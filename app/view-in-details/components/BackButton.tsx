@@ -9,7 +9,7 @@ const BackButton = () => {
         <div className="bg-white shadow-sm">
             <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
                 <Link
-                    href="/application/Company-profile/ongoing-projects"
+                    href="/ongoing-user-view"
                     className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
                 >
                     <ChevronLeft size={20} />
