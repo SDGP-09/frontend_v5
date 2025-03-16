@@ -141,20 +141,7 @@ export default function ProjectCard({
                             >
                                 View Details
                             </button>
-                            {/*<button*/}
-                            {/*    onClick={onEdit}*/}
-                            {/*    className="text-yellow-600 hover:text-yellow-800"*/}
-                            {/*    title="Edit Project"*/}
-                            {/*>*/}
-                            {/*    Edit*/}
-                            {/*</button>*/}
-                            {/*<button*/}
-                            {/*    onClick={onDelete}*/}
-                            {/*    className="text-red-600 hover:text-red-800"*/}
-                            {/*    title="Delete Project"*/}
-                            {/*>*/}
-                            {/*    Delete*/}
-                            {/*</button>*/}
+
                         </div>
                     )}
                 </div>

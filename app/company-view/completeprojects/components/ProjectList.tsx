@@ -136,16 +136,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
                         {/* Project Stats */}
                         <div className="flex items-center justify-between text-sm text-gray-600 mt-4">
                             {/*
-                ============================================
-                REMOVED the member icon block
-                ============================================
-                Original code:
 
-                <div className="flex items-center">
-                  <svg ... />
-                  <span>{project.members} members</span>
-                </div>
-              */}
                             <div />
                             {/* Duration Icon & Text */}
                             <div className="flex items-center">
