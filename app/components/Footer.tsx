@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import "../globals.css";
 import {Facebook, Instagram, Linkedin, Mail, Youtube} from "lucide-react";
 import React from "react";
@@ -22,7 +23,7 @@ export default function Footer() {
                 <ul className="space-y-2">
                     <li>
                         <a
-                            href="#"
+                            href="/about"
                             className="text-gray-400 hover:text-white transition-colors duration-300"
                         >
                             About Us
@@ -30,7 +31,7 @@ export default function Footer() {
                     </li>
                     <li>
                         <a
-                            href="#"
+                            href="/service"
                             className="text-gray-400 hover:text-white transition-colors duration-300"
                         >
                             Services
@@ -38,7 +39,7 @@ export default function Footer() {
                     </li>
                     <li>
                         <a
-                            href="#"
+                            href="/contact"
                             className="text-gray-400 hover:text-white transition-colors duration-300"
                         >
                             Contact
