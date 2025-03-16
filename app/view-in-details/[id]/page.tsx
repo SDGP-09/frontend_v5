@@ -6,7 +6,6 @@ import BackButton from "../components/BackButton";
 import ProjectImageGrid from "../components/ProjectImageGrid";
 import ProjectOverview from "../components/ProjectOverview";
 import ProjectTimeline, { TimelineItem } from "../components/ProjectTimeline";
-import ProjectUpdates, { Update } from "../components/ProjectUpdates";
 
 interface Project {
     id: string;
@@ -16,7 +15,6 @@ interface Project {
     estimatedCompletion: string;
     images: string[];
     timeline: TimelineItem[];
-    updates: Update[];
 }
 
 const dummyProjects: Project[] = [
@@ -36,21 +34,10 @@ const dummyProjects: Project[] = [
             {
                 date: "March 15, 2024",
                 title: "Project Kickoff",
-                description: "Initial planning and site preparation begins",
                 status: "completed",
-            },
+            }as any,
+        ]as any,
 
-        ],
-        updates: [
-            {
-                date: "August 2, 2024",
-                title: "Steel Framework 75% Complete",
-                description:
-                    "The structural steel framework is now 75% complete...",
-                author: "Michael Chen, Project Manager",
-            },
-
-        ],
     },
     {
         id: "2",
@@ -65,17 +52,20 @@ const dummyProjects: Project[] = [
             "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800&q=80",
         ],
         timeline: [],
-        updates: [],
+
     },
 ];
-
 async function fetchProjectById(id: string): Promise<Project | null> {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const foundProject = dummyProjects.find((proj) => proj.id === id) || null;
-            resolve(foundProject);
-        }, 1000);
-    });
+    let foundProject = dummyProjects.find((proj) => proj.id === id) || null;
+    // if (foundProject && foundProject.timeline && foundProject.timeline.length > 0) {
+    //     foundProject.timeline = foundProject.timeline.map((item: any) => ({
+    //         date: item.endDate,            // Use backend endDate as date
+    //         title: item.taskname,          // Use backend taskname as title
+    //         description: item.description || "",
+    //         status: item.status,
+    //     }));
+    // }
+    return foundProject;
 }
 
 export default function ProjectDetailsPage() {
@@ -105,7 +95,6 @@ export default function ProjectDetailsPage() {
                     estimatedCompletion={project.estimatedCompletion}
                 />
                 <ProjectTimeline timeline={project.timeline} />
-                <ProjectUpdates updates={project.updates} />
             </div>
         </div>
     );
