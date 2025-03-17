@@ -382,7 +382,7 @@ export default function CompanyDashboard() {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-lg max-w-md w-full p-6">
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-semibold">Edit Company Profile</h2>
+                            <h2 className="text-xl font-semibold">Company Profile</h2>
                             <button
                                 onClick={() => setIsEditingProfile(false)}
                                 className="text-gray-500 hover:text-gray-700"
@@ -415,34 +415,34 @@ export default function CompanyDashboard() {
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Rating
-                                </label>
-                                <input
-                                    type="number"
-                                    name="rating"
-                                    value={formData.rating}
-                                    onChange={handleInputChange}
-                                    step="0.1"
-                                    min="0"
-                                    max="5"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Number of Reviews
-                                </label>
-                                <input
-                                    type="number"
-                                    name="reviews"
-                                    value={formData.reviews}
-                                    onChange={handleInputChange}
-                                    min="0"
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                />
-                            </div>
+                            {/*<div>*/}
+                            {/*    /!*<label className="block text-sm font-medium text-gray-700 mb-1">*!/*/}
+                            {/*    /!*    Rating*!/*/}
+                            {/*    /!*</label>*!/*/}
+                            {/*    <input*/}
+                            {/*        type="number"*/}
+                            {/*        name="rating"*/}
+                            {/*        value={formData.rating}*/}
+                            {/*        onChange={handleInputChange}*/}
+                            {/*        step="0.1"*/}
+                            {/*        min="0"*/}
+                            {/*        max="5"*/}
+                            {/*        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"*/}
+                            {/*    />*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                            {/*    /!*<label className="block text-sm font-medium text-gray-700 mb-1">*!/*/}
+                            {/*    /!*    Number of Reviews*!/*/}
+                            {/*    /!*</label>*!/*/}
+                            {/*    <input*/}
+                            {/*        type="number"*/}
+                            {/*        name="reviews"*/}
+                            {/*        value={formData.reviews}*/}
+                            {/*        onChange={handleInputChange}*/}
+                            {/*        min="0"*/}
+                            {/*        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"*/}
+                            {/*    />*/}
+                            {/*</div>*/}
 
                             {/* NEW: Image Upload Field */}
                             <div>
@@ -469,7 +469,9 @@ export default function CompanyDashboard() {
                                 <button
                                     type="button"
                                     onClick={() => setIsEditingProfile(false)}
-                                    className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
+                                //     className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
+                                // >
+                                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:bg-blue-700 transition mt-2"
                                 >
                                     Cancel
                                 </button>
