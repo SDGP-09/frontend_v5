@@ -21,12 +21,6 @@ const CompletedProjects: React.FC<CompletedProjectsProps> = ({ projects }) => {
         <div className="bg-white p-6 rounded-lg shadow-sm">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Completed Projects</h2>
-                {/*<button*/}
-                {/*    className="text-blue-500 hover:text-blue-600 transition-colors"*/}
-                {/*    onClick={() => router.push("/completeprojects")}*/}
-                {/*>*/}
-                {/*    View All*/}
-                {/*</button>*/}
                 <Link href="/company-view/completeprojects" className="text-blue-500 hover:text-blue-600 transition-colors">
                     View All
                 </Link>
