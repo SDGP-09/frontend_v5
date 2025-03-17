@@ -1,16 +1,52 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
     Building2,
     Briefcase,
     Users,
     MessageCircle,
-    ChevronRight
+    ChevronRight,
+    Pencil,
+    Trash2
 } from 'lucide-react';
 import Head from 'next/head';
 
-export default function applicationhomepage() {
+export default function ApplicationHomepage() {
+    const [profileImage, setProfileImage] = useState('/profile-placeholder.jpg');
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleImageClick = () => {
+            fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                if(typeof reader.result === 'string') {
+                    setProfileImage(reader.result);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleDeleteImage = () => {
+        setProfileImage('/profile-placeholder.jpg');
+    };
+
+    const handlePencilClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation(); // Prevent event bubbling if needed.
+        handleImageClick();
+    };
+
+    const handleTrashClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        handleDeleteImage();
+    };
+
     return (
         <>
             <Head>
@@ -22,12 +58,36 @@ export default function applicationhomepage() {
                 {/* Extra Large Profile Section */}
                 <div className="flex flex-col items-center mb-16">
                     <img
-                        src="/profile-placeholder.jpg"
+                        src={profileImage}
                         alt="User Profile"
                         className="w-72 h-72 rounded-full border-8 border-white shadow-xl mb-6"
                     />
+                    <div className="absolute bottom-2 right-2 flex space-x-2">
+                        <button
+                            onClick={handlePencilClick}
+                            className="bg-white p-1 rounded-full shadow hover:bg-gray-200"
+                            title="Edit Image"
+                        >
+                            <Pencil className="w-5 h-5 text-gray-700" />
+                        </button>
+                        <button
+                            onClick={handleTrashClick}
+                            className="bg-white p-1 rounded-full shadow hover:bg-gray-200"
+                            title="Delete Image"
+                        >
+                            <Trash2 className="w-5 h-5 text-gray-700" />
+                        </button>
+                    </div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                    />
                     <h2 className="text-4xl font-bold text-white mb-2">John Doe</h2>
                     <p className="text-2xl text-white/90">Senior Developer</p>
+
                 </div>
 
                 {/* Cards Grid - with smaller cards */}
@@ -84,5 +144,4 @@ export default function applicationhomepage() {
             </div>
         </>
     );
-
 }
