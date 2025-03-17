@@ -1,7 +1,7 @@
-
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from 'next/link';
 
 interface Deal {
     id: number;
@@ -28,9 +28,9 @@ const HotDealsCarousel: React.FC<HotDealsCarouselProps> = ({ deals }) => {
         <div className="bg-white p-6 rounded-lg shadow-sm h-full">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold mb-6">Hot Deals</h2>
-                <button className="text-blue-500 hover:text-blue-600 transition-colors">
+                <Link href="/company-view/hot-deals" className="text-blue-500 hover:text-blue-600 transition-colors">
                     View All
-                </button>
+                </Link>
             </div>
 
             <div className="relative">
