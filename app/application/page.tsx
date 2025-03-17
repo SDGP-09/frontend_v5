@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     Building2,
     Briefcase,
@@ -8,7 +8,8 @@ import {
     MessageCircle,
     ChevronRight,
     Pencil,
-    Trash2
+    Trash2,
+    Calendar
 } from 'lucide-react';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation'
@@ -17,6 +18,38 @@ export default function ApplicationHomepage() {
     const [profileImage, setProfileImage] = useState('/profile-placeholder.jpg');
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
+
+    const [greeting, setGreeting] = useState('');
+    const [currentTime, setCurrentTime] = useState('');
+    const [date, setDate] = useState('');
+
+    useEffect(() => {
+        const hour = new Date().getHours();
+        if (hour < 12) setGreeting('Good Morning');
+        else if (hour < 18) setGreeting('Good Afternoon');
+        else setGreeting('Good Evening');
+
+        const updateTime = () => {
+            const now = new Date();
+            setCurrentTime(
+                now.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                })
+            );
+            setDate(
+                now.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                })
+            );
+        };
+
+        updateTime(); // Initialize immediately
+        const interval = setInterval(updateTime, 60000); // Update every minute
+        return () => clearInterval(interval);
+    }, []);
 
     const handleImageClick = () => {
             fileInputRef.current?.click();
@@ -69,52 +102,77 @@ export default function ApplicationHomepage() {
         <>
             <Head>
                 <title>Profile Dashboard</title>
-                <meta name="description" content="Interactive profile dashboard"/>
-                <link rel="icon" href="/favicon.ico"/>
+                <meta name="description" content="Interactive profile dashboard" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="flex flex-col min-h-screen">
-                {/* Top Section (replaces the old .bg-gradient with a "hero" style) */}
-                <div className="relative h-[40vh] overflow-hidden">
-                    {/* Gradient overlay filling the top section */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500"/>
-                    {/* Extra Large Profile Section */}
-                    <div className="relative z-10 flex flex-col items-center justify-center h-full">
-                        <div className="relative inline-block">
-                            <img
-                                src={profileImage}
-                                alt=" "
-                                className="w-48 h-48 rounded-full border-8 border-white shadow-xl mb-6"
-                            />
-                            <div className="absolute bottom-2 right-2 flex space-x-2">
-                                <button
-                                    onClick={handlePencilClick}
-                                    className="bg-white p-1 rounded-full shadow hover:bg-gray-200"
-                                    title="Edit Image"
-                                >
-                                    <Pencil className="w-5 h-5 text-gray-700"/>
-                                </button>
-                                <button
-                                    onClick={handleTrashClick}
-                                    className="bg-white p-1 rounded-full shadow hover:bg-gray-200"
-                                    title="Delete Image"
-                                >
-                                    <Trash2 className="w-5 h-5 text-gray-700"/>
-                                </button>
+
+            {/* Main container with two sections: Header and Cards */}
+            <div className="flex flex-col min-h-screen bg-gray-50">
+                {/* HEADER / HERO SECTION */}
+                <div className="relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 opacity-90"></div>
+
+                    {/* Header content */}
+                    <div className="relative px-8 py-12 z-10">
+                        <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+                            {/* Left side: Profile block */}
+                            <div className="flex items-start md:items-center space-x-6">
+                                <div className="relative group">
+                                    <div className="absolute -inset-0.5 bg-white rounded-full opacity-75 blur group-hover:opacity-100 transition duration-300"></div>
+                                    <img
+                                        src={profileImage}
+                                        alt=" "
+                                        className="relative h-28 w-28 rounded-full border-4 border-white shadow-lg transform group-hover:scale-105 transition duration-300"
+                                    />
+                                    <div className="absolute bottom-0 right-0 flex space-x-2 translate-x-1/4 translate-y-1/4">
+                                        <button
+                                            onClick={handlePencilClick}
+                                            className="bg-white p-1 rounded-full shadow hover:bg-gray-200"
+                                            title="Edit Image"
+                                        >
+                                            <Pencil className="w-4 h-4 text-gray-700" />
+                                        </button>
+                                        <button
+                                            onClick={handleTrashClick}
+                                            className="bg-white p-1 rounded-full shadow hover:bg-gray-200"
+                                            title="Delete Image"
+                                        >
+                                            <Trash2 className="w-4 h-4 text-gray-700" />
+                                        </button>
+                                    </div>
+                                    {/* Hidden file input remains unchanged */}
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
+                                        style={{ display: 'none' }}
+                                    />
+                                </div>
+                                <div className="text-white mt-4 md:mt-0">
+                                    <h1 className="text-4xl font-bold mb-2">John Doe</h1>
+                                    <div className="flex items-center space-x-6">
+                                        <div className="flex items-center space-x-2">
+                                            <span className="text-xl font-medium">{greeting}</span>
+                                        </div>
+                                        <div className="h-4 w-px bg-white/30"></div>
+                                        <div className="flex items-center space-x-2">
+                                            <span className="text-xl">{currentTime}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-center space-x-3 mt-6 md:mt-0">
+                                <Calendar className="h-6 w-6 text-white" />
+                                <p className="text-white text-lg font-medium">{date}</p>
                             </div>
                         </div>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            ref={fileInputRef}
-                            onChange={handleFileChange}
-                            style={{display: 'none'}}
-                        />
-                        <h2 className="text-4xl font-bold text-white mb-2">John Doe</h2>
-
                     </div>
                 </div>
 
-                    {/* Cards Grid - with smaller cards */}
+
+                {/* Cards Grid - with smaller cards */}
                     <div className="flex-grow bg-gray-50 pt-16 pb-8 px-6">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                             {/* Company Profile Card */}
@@ -183,7 +241,7 @@ export default function ApplicationHomepage() {
                         </button>
                     </div>
             </div>
-            </>
-            );
-            }
+        </>
+    );
+}
 
