@@ -14,18 +14,12 @@ const ProjectImageGrid: React.FC<ProjectImageGridProps> = ({ images, name }) => 
     return (
         <div className="relative">
             {hasImages ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-1 h-[35vh]">
+                <div
+                    className="grid gap-1 h-[35vh]"
+                    style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
+                >
                     {images.map((image, index) => (
-                        <div
-                            key={index}
-                            className={`relative overflow-hidden ${
-                                images.length === 1
-                                    ? "col-span-3"
-                                    : images.length === 2
-                                        ? "col-span-3 md:col-span-1.5"
-                                        : "col-span-3 md:col-span-1"
-                            }`}
-                        >
+                        <div key={index} className="relative overflow-hidden">
                             <img
                                 src={image}
                                 alt={`Project image ${index + 1}`}
@@ -43,7 +37,6 @@ const ProjectImageGrid: React.FC<ProjectImageGridProps> = ({ images, name }) => 
                 </div>
             )}
 
-            {/* Overlay: Display project name */}
             <div className="absolute bottom-0 right-0 bg-gradient-to-tl from-black/80 to-transparent p-6 text-white max-w-full">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">{name}</h1>
             </div>
