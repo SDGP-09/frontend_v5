@@ -8,49 +8,18 @@ import AvailabilityCalendar from "../components/AvailabilityCalendar";
 import HotDealsCarousel from "../components/HotDealsCarousel";
 import OngoingProjects from "../components/OngoingProjects";
 import CompletedProjects from "../components/CompletedProjects";
+import { convertBackendToFrontEnd, calculateOccupiedDates, CompanyData, BackendCompanyData } from "../../util/dataConversion";
 
-// Define a type for your company data
-interface CompanyData {
-    name: string;
-    location: string;
-    profileImage: string;
-    isApproved: boolean;
-    ratings: { [key: number]: number };
-    occupiedDates: string[];
-    hotDeals: {
-        id: number;
-        title: string;
-        description: string;
-        image: string;
-    }[];
-    ongoingProjects: {
-        id: number;
-        title: string;
-        image: string;
-    }[];
-    completedProjects: {
-        id: number;
-        title: string;
-        image: string;
-    }[];
-}
 
 // Type the dummyData object
 const dummyData: { [key: string]: CompanyData } = {
-    "1": {
+    "1":convertBackendToFrontEnd( {
         name: "BuildMaster Construction",
         location: "New York, NY",
         profileImage:
             "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800",
         isApproved: true,
         ratings: { 5: 150, 4: 80, 3: 20, 2: 5, 1: 2 },
-        occupiedDates: [
-            "2024-03-15",
-            "2024-03-16",
-            "2024-03-20",
-            "2024-03-21",
-            "2024-03-22",
-        ],
         hotDeals: [
             {
                 id: 1,
@@ -95,15 +64,16 @@ const dummyData: { [key: string]: CompanyData } = {
                     "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800",
             },
         ],
-    },
-    "2": {
+        occupiedStartDate: "2024-03-15",
+        occupiedEndDate: "2024-03-22",
+    }),
+    "2": convertBackendToFrontEnd({
         name: "Redwood Interiors",
         location: "Los Angeles, CA",
         profileImage:
             "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800",
         isApproved: false,
         ratings: { 5: 75, 4: 40, 3: 15, 2: 2, 1: 1 },
-        occupiedDates: ["2024-05-10", "2024-05-12", "2024-05-18"],
         hotDeals: [
             {
                 id: 1,
@@ -148,7 +118,10 @@ const dummyData: { [key: string]: CompanyData } = {
                     "https://images.unsplash.com/photo-1571941708172-3f8f58f6eb36?auto=format&fit=crop&w=800",
             },
         ],
-    },
+        occupiedStartDate: "2024-03-10",
+        occupiedEndDate: "2024-03-18",
+
+    }),
 };
 
 export default function CompanyProfileByIdPage() {
@@ -173,6 +146,7 @@ export default function CompanyProfileByIdPage() {
         setIsLoading(true);
         const timer = setTimeout(() => {
             if (dummyData[id]) {
+                const company = dummyData[id];
                 setCompanyData(dummyData[id]);
                 setFormData(dummyData[id]);
             } else {
