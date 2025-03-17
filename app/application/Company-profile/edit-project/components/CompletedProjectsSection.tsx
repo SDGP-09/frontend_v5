@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import CompletedProjectCard from "./CompletedProjectCard";
-import Image from 'next/image';
 
 /**
  * CompletedProjectsSection Component
@@ -13,10 +13,13 @@ export default function CompletedProjectsSection() {
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Completed Projects</h2>
-                <button className="text-sm text-blue-600 hover:text-blue-700">
-                    View All
-                </button>
+                <Link href="/application/Company-profile/completed-projects">
+                    <button className="text-sm text-blue-600 hover:text-blue-700">
+                        View All
+                    </button>
+                </Link>
             </div>
+
             <div className="grid grid-cols-4 gap-6">
                 <CompletedProjectCard
                     title="Downtown Plaza"

@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 
 interface ProjectCountProps {
@@ -25,15 +24,16 @@ export default function ProjectCount({
             {isAdmin && (
                 <div className="text-sm text-gray-600">
           <span className="mr-4">
-            <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-1"></span>{" "}
-              Visible: {visibleCount}
+            <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-1"></span>
+            Visible: {visibleCount}
           </span>
                     <span>
-            <span className="inline-block w-3 h-3 bg-gray-400 rounded-full mr-1"></span>{" "}
-                        Hidden: {hiddenCount}
+            <span className="inline-block w-3 h-3 bg-gray-400 rounded-full mr-1"></span>
+            Hidden: {hiddenCount}
           </span>
                 </div>
             )}
         </div>
     );
 }
+
