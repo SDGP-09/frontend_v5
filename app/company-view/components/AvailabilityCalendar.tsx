@@ -1,4 +1,3 @@
-
 "use client";
 import React from "react";
 
@@ -45,3 +44,4 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ occupiedDat
 };
 
 export default AvailabilityCalendar;
+

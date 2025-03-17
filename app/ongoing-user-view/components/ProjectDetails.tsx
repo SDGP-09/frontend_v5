@@ -1,4 +1,3 @@
-
 "use client";
 import React from "react";
 import { Clock } from "lucide-react";
@@ -70,28 +69,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ project }) => {
                         </div>
                     </div>
 
-                    <div className="md:w-1/3 mt-6 md:mt-0">
-                        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                            <div className="flex items-center justify-center mb-4">
-                                <div className="relative w-32 h-32">
-                                    <svg className="w-full h-full" viewBox="0 0 36 36">
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none"
-                                            stroke="#E5E7EB"
-                                            strokeWidth="3"
-                                        />
-                                        <path
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none"
-                                            stroke="#10B981"
-                                            strokeWidth="3"
-                                        />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
