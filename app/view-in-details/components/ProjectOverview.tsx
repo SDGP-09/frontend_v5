@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, Clock } from "lucide-react";
 
 interface ProjectOverviewProps {
@@ -14,6 +14,16 @@ const ProjectOverview: React.FC<ProjectOverviewProps> = ({
                                                              startDate,
                                                              estimatedCompletion,
                                                          }) => {
+    const [desc, setDesc] = useState(description);
+    const [start, setStart] = useState(startDate);
+    const [completion, setCompletion] = useState(estimatedCompletion);
+
+    useEffect(() => {
+        setDesc(description);
+        setStart(startDate);
+        setCompletion(estimatedCompletion);
+    }, [description, startDate, estimatedCompletion]);
+
     return (
         <div className="mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Project Overview</h2>

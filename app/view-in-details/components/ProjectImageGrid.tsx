@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AlertCircle } from "lucide-react";
 
 interface ProjectImageGridProps {
@@ -9,6 +9,17 @@ interface ProjectImageGridProps {
 }
 
 const ProjectImageGrid: React.FC<ProjectImageGridProps> = ({ images, name }) => {
+    const [imgList, setImgList] = useState<string[]>(images);
+
+    // Update the local state if the incoming images prop changes.
+    useEffect(() => {
+        // Optionally, if images come as relative paths, you could transform them here.
+        // For example:
+        // const updatedImages = images.map(img => img.startsWith("http") ? img : `https://your-backend.com/${img}`);
+        // setImgList(updatedImages);
+        setImgList(images);
+    }, [images]);
+
     const hasImages = images && images.length > 0;
 
     return (

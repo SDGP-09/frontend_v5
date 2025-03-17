@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export interface TimelineItem {
     date: string;
@@ -14,6 +14,12 @@ interface ProjectTimelineProps {
 }
 
 const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ timeline }) => {
+    const [items, setItems] = useState<TimelineItem[]>(timeline);
+
+    useEffect(() => {
+        setItems(timeline);
+    }, [timeline]);
+
     return (
         <div className="mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Project Timeline</h2>
