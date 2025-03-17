@@ -7,7 +7,6 @@ interface ProjectListProps {
     projects: Projects[];
     isAdmin: boolean;
     onToggleVisibility: (id: string) => void;
-    onTogglePrivacy: () => void;
     onViewDetails: (id: string) => void;
 }
 
@@ -15,7 +14,6 @@ export default function ProjectList({
                                         projects,
                                         isAdmin,
                                         onToggleVisibility,
-                                        onTogglePrivacy,
                                         onViewDetails,
                                     }: ProjectListProps) {
     return (
@@ -26,7 +24,6 @@ export default function ProjectList({
                     project={project}
                     isAdmin={isAdmin}
                     onToggleVisibility={onToggleVisibility}
-                    onTogglePrivacy={onTogglePrivacy}
                     onViewDetails={() => onViewDetails(project.id)}
                 />
             ))}

@@ -5,6 +5,7 @@ import ProjectCount from "./components/ProjectCount";
 import ProjectList from "./components/ProjectList";
 import { Projects } from "@/app/types/projects";
 
+// Dummy data with privacy removed and visibility as boolean
 const projectsData: Projects[] = [
     {
         id: "1",
@@ -12,8 +13,7 @@ const projectsData: Projects[] = [
         description:
             "Revitalization of downtown area with mixed-use developments, pedestrian-friendly streets, and green spaces, completed under budget.",
         status: "Completed",
-        visibility: "Visible",
-        privacy: "Public",
+        visibility: true,
         imageUrl:
             "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1470&q=80",
         duration: "18 months",
@@ -25,8 +25,7 @@ const projectsData: Projects[] = [
         description:
             "Complete overhaul of the riverside park including new recreational facilities, landscaping, and flood protection measures.",
         status: "Completed",
-        visibility: "Visible",
-        privacy: "Public",
+        visibility: true,
         imageUrl:
             "https://images.unsplash.com/photo-1584967918940-a7d51b064268?auto=format&fit=crop&w=1470&q=80",
         duration: "12 months",
@@ -38,8 +37,7 @@ const projectsData: Projects[] = [
         description:
             "Award-winning eco-friendly residential complex featuring solar power, rainwater harvesting, and energy-efficient design.",
         status: "Completed",
-        visibility: "Visible",
-        privacy: "Public",
+        visibility: true,
         imageUrl:
             "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1473&q=80",
         duration: "24 months",
@@ -51,8 +49,7 @@ const projectsData: Projects[] = [
         description:
             "Modern healthcare facility serving underrepresented communities with state-of-the-art medical equipment and telehealth capabilities.",
         status: "Completed",
-        visibility: "Hidden",
-        privacy: "Public",
+        visibility: false, // hidden project
         imageUrl:
             "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1453&q=80",
         duration: "14 months",
@@ -64,8 +61,7 @@ const projectsData: Projects[] = [
         description:
             "Careful restoration of a 1920s theater, preserving historical elements while upgrading technical systems and accessibility.",
         status: "Completed",
-        visibility: "Visible",
-        privacy: "Public",
+        visibility: true,
         imageUrl:
             "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1471&q=80",
         duration: "30 months",
@@ -77,8 +73,7 @@ const projectsData: Projects[] = [
         description:
             "Implementation of IoT sensors, smart traffic management, and digital public services across the metropolitan area.",
         status: "Completed",
-        visibility: "Visible",
-        privacy: "Public",
+        visibility: true,
         imageUrl:
             "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=1469&q=80",
         duration: "36 months",
@@ -87,27 +82,45 @@ const projectsData: Projects[] = [
 ];
 
 export default function CompletedProjectsPage() {
-    const [projects] = useState<Projects[]>(projectsData);
+    const [projects, setProjects] = useState<Projects[]>(projectsData);
     const [searchQuery, setSearchQuery] = useState("");
     const [filter, setFilter] = useState("All Projects");
     const [visibilityFilter, setVisibilityFilter] = useState("all"); // "all", "visible", "hidden"
-    const isAdmin = true; // Admin view is enabled
+    const isAdmin = true; // Admin view enabled
 
-    // Filter projects based on search and filter criteria
+    // Filter projects based on search and visibility criteria
     const filteredProjects = projects.filter((project) => {
         const matchesSearch =
             project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             project.description.toLowerCase().includes(searchQuery.toLowerCase());
+
         let matchesVisibility = true;
         if (visibilityFilter !== "all") {
             matchesVisibility =
                 visibilityFilter === "visible"
-                    ? project.visibility === "Visible"
-                    : project.visibility !== "Visible";
+                    ? project.visibility === true
+                    : project.visibility === false;
         }
+
         const matchesStatus = filter === "All Projects" || project.status === filter;
         return matchesSearch && matchesVisibility && matchesStatus;
     });
+
+    // Toggle visibility (admin function)
+    const toggleVisibility = (id: string) => {
+        setProjects((prevProjects) =>
+            prevProjects.map((project) =>
+                project.id === id
+                    ? { ...project, visibility: !project.visibility }
+                    : project
+            )
+        );
+    };
+
+    // Dummy view details function (update as needed)
+    const onViewDetails = (id: string) => {
+        console.log("View details for project id:", id);
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -133,8 +146,8 @@ export default function CompletedProjectsPage() {
                     filteredCount={filteredProjects.length}
                     totalCount={projects.length}
                     isAdmin={isAdmin}
-                    visibleCount={projects.filter((p) => p.visibility === "Visible").length}
-                    hiddenCount={projects.filter((p) => p.visibility !== "Visible").length}
+                    visibleCount={projects.filter((p) => p.visibility).length}
+                    hiddenCount={projects.filter((p) => !p.visibility).length}
                 />
 
                 {/* Project Cards Grid */}
@@ -142,16 +155,8 @@ export default function CompletedProjectsPage() {
                     <ProjectList
                         projects={filteredProjects}
                         isAdmin={isAdmin}
-                        onToggleVisibility={(id) => {
-                            // Toggle visibility in state (update as needed)
-                            console.log("Toggling visibility for id:", id);
-                        }}
-                        onTogglePrivacy={() => {
-                            console.log("Toggling privacy");
-                        }}
-                        onViewDetails={(id) => {
-                            console.log("View details for id:", id);
-                        }}
+                        onToggleVisibility={toggleVisibility}
+                        onViewDetails={onViewDetails}
                     />
                 ) : (
                     <div className="text-center py-12">

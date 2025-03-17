@@ -7,7 +7,6 @@ interface ProjectCardProps {
     project: Projects;
     isAdmin?: boolean;
     onToggleVisibility?: (id: string) => void;
-    onTogglePrivacy?: () => void;
     onViewDetails?: () => void;
 }
 
@@ -15,7 +14,6 @@ export default function ProjectCard({
                                         project,
                                         isAdmin,
                                         onToggleVisibility,
-                                        onTogglePrivacy,
                                         onViewDetails,
                                     }: ProjectCardProps) {
     return (
@@ -33,9 +31,9 @@ export default function ProjectCard({
                     <button
                         onClick={() => onToggleVisibility(project.id)}
                         className="absolute top-3 left-3 p-1 bg-white rounded-full shadow-md hover:bg-gray-100"
-                        title={project.visibility === "Visible" ? "Hide Project" : "Show Project"}
+                        title={project.visibility ? "Hide Project" : "Show Project"}
                     >
-                        {project.visibility === "Visible" ? "Hide" : "Show"}
+                        {project.visibility ? "Hide" : "Show"}
                     </button>
                 )}
             </div>
