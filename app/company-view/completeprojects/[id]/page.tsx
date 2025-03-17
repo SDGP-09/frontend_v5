@@ -12,8 +12,8 @@ interface CompletedProject {
     imageUrl: string;
     duration: string;
     completedDate: string;
-    privacy: string;
-    visibility: string;
+    // privacy: string;
+    // visibility: string;
 }
 
 // Dummy data for completed projects
@@ -28,8 +28,8 @@ const dummyCompletedProjects: CompletedProject[] = [
             "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1470&q=80",
         duration: "18 months",
         completedDate: "March 15, 2024",
-        privacy: "Public",
-        visibility: "Visible",
+        // privacy: "Public",
+        // visibility: "Visible",
     },
     {
         id: "2",
@@ -41,8 +41,8 @@ const dummyCompletedProjects: CompletedProject[] = [
             "https://images.unsplash.com/photo-1584967918940-a7d51b064268?auto=format&fit=crop&w=1470&q=80",
         duration: "12 months",
         completedDate: "January 10, 2024",
-        privacy: "Public",
-        visibility: "Visible",
+        // privacy: "Public",
+        // visibility: "Visible",
     },
     // ... add more dummy projects as needed
 ];
