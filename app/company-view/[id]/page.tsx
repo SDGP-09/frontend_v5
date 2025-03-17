@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 
-// Import your components from the components folder
 import CompanyInfo from "../components/CompanyInfo";
 import CompanyRatings from "../components/CompanyRatings";
 import AvailabilityCalendar from "../components/AvailabilityCalendar";
