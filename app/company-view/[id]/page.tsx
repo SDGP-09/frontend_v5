@@ -1,3 +1,247 @@
+// "use client";
+// import React, { useState, useEffect, useRef } from "react";
+// import { useParams } from "next/navigation";
+//
+// // Import your components from the components folder
+// import CompanyInfo from "../components/CompanyInfo";
+// import CompanyRatings from "../components/CompanyRatings";
+// import AvailabilityCalendar from "../components/AvailabilityCalendar";
+// import HotDealsCarousel from "../components/HotDealsCarousel";
+// import OngoingProjects from "../components/OngoingProjects";
+// import CompletedProjects from "../components/CompletedProjects";
+//
+// // Dummy data store with two company entries (keys "1" and "2")
+// const dummyData: { [key: string]: any } = {
+//     "1": {
+//         name: "BuildMaster Construction",
+//         location: "New York, NY",
+//         profileImage:
+//             "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+//         isApproved: true,
+//         ratings: { 5: 150, 4: 80, 3: 20, 2: 5, 1: 2 },
+//         occupiedDates: [
+//             "2024-03-15",
+//             "2024-03-16",
+//             "2024-03-20",
+//             "2024-03-21",
+//             "2024-03-22",
+//         ],
+//         hotDeals: [
+//             {
+//                 id: 1,
+//                 title: "Spring Special Offer",
+//                 description: "20% off on all residential projects",
+//                 image:
+//                     "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800",
+//             },
+//             {
+//                 id: 2,
+//                 title: "Commercial Package",
+//                 description: "Complete office renovation package",
+//                 image:
+//                     "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=800",
+//             },
+//         ],
+//         ongoingProjects: [
+//             {
+//                 id: 1,
+//                 title: "City Center Mall",
+//                 image:
+//                     "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800",
+//             },
+//             {
+//                 id: 2,
+//                 title: "Riverside Apartments",
+//                 image:
+//                     "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800",
+//             },
+//         ],
+//         completedProjects: [
+//             {
+//                 id: 1,
+//                 title: "Downtown Plaza",
+//                 image:
+//                     "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+//             },
+//             {
+//                 id: 2,
+//                 title: "Harbor Bridge",
+//                 image:
+//                     "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800",
+//             },
+//         ],
+//     },
+//
+//     // *********************************
+//     // NEW DUMMY DATA ENTRY (key: "2")
+//     // *********************************
+//     "2": {
+//         name: "Redwood Interiors",
+//         location: "Los Angeles, CA",
+//         profileImage:
+//             "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800",
+//         isApproved: false,
+//         ratings: { 5: 75, 4: 40, 3: 15, 2: 2, 1: 1 },
+//         occupiedDates: ["2024-05-10", "2024-05-12", "2024-05-18"],
+//         hotDeals: [
+//             {
+//                 id: 1,
+//                 title: "Summer Renovation Special",
+//                 description: "15% off on kitchen redesigns",
+//                 image:
+//                     "https://images.unsplash.com/photo-1584986800933-0a6c9747b2ce?auto=format&fit=crop&q=80&w=800",
+//             },
+//             {
+//                 id: 2,
+//                 title: "Office Makeover",
+//                 description: "Complete office interior for a flat rate",
+//                 image:
+//                     "https://images.unsplash.com/photo-1618223155391-1fa1b8c70e07?auto=format&fit=crop&q=80&w=800",
+//             },
+//         ],
+//         ongoingProjects: [
+//             {
+//                 id: 1,
+//                 title: "Bayside Loft",
+//                 image:
+//                     "https://images.unsplash.com/photo-1607603321898-dc02fe5fbbb0?auto=format&fit=crop&q=80&w=800",
+//             },
+//             {
+//                 id: 2,
+//                 title: "Downtown Penthouse",
+//                 image:
+//                     "https://images.unsplash.com/photo-1607007059515-46e9b12fef47?auto=format&fit=crop&q=80&w=800",
+//             },
+//         ],
+//         completedProjects: [
+//             {
+//                 id: 1,
+//                 title: "Sunset Boulevard Office",
+//                 image:
+//                     "https://images.unsplash.com/photo-1598300050211-4f03f6bbcb6e?auto=format&fit=crop&q=80&w=800",
+//             },
+//             {
+//                 id: 2,
+//                 title: "Historic Villa Remodel",
+//                 image:
+//                     "https://images.unsplash.com/photo-1571941708172-3f8f58f6eb36?auto=format&fit=crop&q=80&w=800",
+//             },
+//         ],
+//     },
+// };
+//
+// // *********************************
+// // Main Page Component: CompanyProfileByIdPage
+// // *********************************
+// export default function CompanyProfileByIdPage() {
+//     // Retrieve the dynamic "id" parameter from the URL
+//     const params = useParams();
+//     let id: string;
+//     if (Array.isArray(params.id)) {
+//         id = params.id[0];
+//     } else if (params.id) {
+//         id = params.id;
+//     } else {
+//         id = "1"; // Default to "1" if no id is provided
+//     }
+//
+//     // Set up state for dummy data retrieval and editing
+//     const [companyData, setCompanyData] = useState<any>(null);
+//     const [isLoading, setIsLoading] = useState(true);
+//     const [isEditing, setIsEditing] = useState(false);
+//     const [formData, setFormData] = useState<any>(null);
+//     const isInitialMount = useRef(true);
+//
+//     // Simulate fetching dummy data based on the "id" parameter
+//     useEffect(() => {
+//         setIsLoading(true);
+//         const timer = setTimeout(() => {
+//             if (dummyData[id]) {
+//                 setCompanyData(dummyData[id]);
+//                 setFormData(dummyData[id]);
+//             } else {
+//                 setCompanyData(null);
+//             }
+//             setIsLoading(false);
+//         }, 1000); // Simulated network delay
+//         return () => clearTimeout(timer);
+//     }, [id]);
+//
+//     // Simulate saving updated data (skip initial mount)
+//     useEffect(() => {
+//         if (isInitialMount.current) {
+//             isInitialMount.current = false;
+//         } else {
+//             console.log("Saving updated data for id:", id, companyData);
+//         }
+//     }, [companyData, id]);
+//
+//     // Handle changes in the edit form inputs
+//     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//         const { name, value } = e.target;
+//         setFormData((prev: any) => ({
+//             ...prev,
+//             [name]: name === "rating" || name === "reviews" ? Number(value) : value,
+//         }));
+//     };
+//
+//     // Handle submission of the edit form
+//     const handleSubmit = (e: React.FormEvent) => {
+//         e.preventDefault();
+//         setCompanyData(formData);
+//         setIsEditing(false);
+//     };
+//
+//     if (isLoading) return <div>Loading...</div>;
+//     if (!companyData) return <div>No company data found for id: {id}</div>;
+//
+//     return (
+//         <div className="min-h-screen bg-gray-50 p-6">
+//             {/* Main container */}
+//             <div className="max-w-7xl mx-auto space-y-6">
+//                 {/* *********************************
+//             FIRST ROW: Three columns on large screens
+//             - Company Info
+//             - Company Ratings
+//             - Availability Calendar (wrapped in a white card)
+//         ********************************* */}
+//                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+//                     <CompanyInfo
+//                         name={companyData.name}
+//                         location={companyData.location}
+//                         profileImage={companyData.profileImage}
+//                     />
+//                     <CompanyRatings
+//                         ratings={companyData.ratings}
+//                         isApproved={companyData.isApproved}
+//                     />
+//                     <div className="bg-white p-6 rounded-lg shadow-sm">
+//                         <h2 className="text-xl font-semibold mb-4">Availability</h2>
+//                         <AvailabilityCalendar occupiedDates={companyData.occupiedDates} />
+//                     </div>
+//                 </div>
+//
+//                 {/* *********************************
+//             SECOND ROW: Two columns on large screens
+//             - Hot Deals Carousel
+//             - Ongoing Projects
+//         ********************************* */}
+//                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+//                     <HotDealsCarousel deals={companyData.hotDeals} />
+//                     <OngoingProjects projects={companyData.ongoingProjects} />
+//                 </div>
+//
+//                 {/* *********************************
+//             THIRD ROW: Completed Projects spanning full width
+//         ********************************* */}
+//                 <CompletedProjects projects={companyData.completedProjects} />
+//
+//
+//
+//             </div>
+//         </div>
+//     );
+// }
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
@@ -10,13 +254,39 @@ import HotDealsCarousel from "../components/HotDealsCarousel";
 import OngoingProjects from "../components/OngoingProjects";
 import CompletedProjects from "../components/CompletedProjects";
 
-// Dummy data store with two company entries (keys "1" and "2")
-const dummyData: { [key: string]: any } = {
+// Define a type for your company data
+interface CompanyData {
+    name: string;
+    location: string;
+    profileImage: string;
+    isApproved: boolean;
+    ratings: { [key: number]: number };
+    occupiedDates: string[];
+    hotDeals: {
+        id: number;
+        title: string;
+        description: string;
+        image: string;
+    }[];
+    ongoingProjects: {
+        id: number;
+        title: string;
+        image: string;
+    }[];
+    completedProjects: {
+        id: number;
+        title: string;
+        image: string;
+    }[];
+}
+
+// Type the dummyData object
+const dummyData: { [key: string]: CompanyData } = {
     "1": {
         name: "BuildMaster Construction",
         location: "New York, NY",
         profileImage:
-            "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800",
         isApproved: true,
         ratings: { 5: 150, 4: 80, 3: 20, 2: 5, 1: 2 },
         occupiedDates: [
@@ -32,14 +302,14 @@ const dummyData: { [key: string]: any } = {
                 title: "Spring Special Offer",
                 description: "20% off on all residential projects",
                 image:
-                    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800",
             },
             {
                 id: 2,
                 title: "Commercial Package",
                 description: "Complete office renovation package",
                 image:
-                    "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800",
             },
         ],
         ongoingProjects: [
@@ -47,13 +317,13 @@ const dummyData: { [key: string]: any } = {
                 id: 1,
                 title: "City Center Mall",
                 image:
-                    "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800",
             },
             {
                 id: 2,
                 title: "Riverside Apartments",
                 image:
-                    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800",
             },
         ],
         completedProjects: [
@@ -61,7 +331,7 @@ const dummyData: { [key: string]: any } = {
                 id: 1,
                 title: "Downtown Plaza",
                 image:
-                    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800",
             },
             {
                 id: 2,
@@ -71,15 +341,11 @@ const dummyData: { [key: string]: any } = {
             },
         ],
     },
-
-    // *********************************
-    // NEW DUMMY DATA ENTRY (key: "2")
-    // *********************************
     "2": {
         name: "Redwood Interiors",
         location: "Los Angeles, CA",
         profileImage:
-            "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800",
         isApproved: false,
         ratings: { 5: 75, 4: 40, 3: 15, 2: 2, 1: 1 },
         occupiedDates: ["2024-05-10", "2024-05-12", "2024-05-18"],
@@ -89,14 +355,14 @@ const dummyData: { [key: string]: any } = {
                 title: "Summer Renovation Special",
                 description: "15% off on kitchen redesigns",
                 image:
-                    "https://images.unsplash.com/photo-1584986800933-0a6c9747b2ce?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1584986800933-0a6c9747b2ce?auto=format&fit=crop&w=800",
             },
             {
                 id: 2,
                 title: "Office Makeover",
                 description: "Complete office interior for a flat rate",
                 image:
-                    "https://images.unsplash.com/photo-1618223155391-1fa1b8c70e07?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1618223155391-1fa1b8c70e07?auto=format&fit=crop&w=800",
             },
         ],
         ongoingProjects: [
@@ -104,13 +370,13 @@ const dummyData: { [key: string]: any } = {
                 id: 1,
                 title: "Bayside Loft",
                 image:
-                    "https://images.unsplash.com/photo-1607603321898-dc02fe5fbbb0?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1607603321898-dc02fe5fbbb0?auto=format&fit=crop&w=800",
             },
             {
                 id: 2,
                 title: "Downtown Penthouse",
                 image:
-                    "https://images.unsplash.com/photo-1607007059515-46e9b12fef47?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1607007059515-46e9b12fef47?auto=format&fit=crop&w=800",
             },
         ],
         completedProjects: [
@@ -118,23 +384,19 @@ const dummyData: { [key: string]: any } = {
                 id: 1,
                 title: "Sunset Boulevard Office",
                 image:
-                    "https://images.unsplash.com/photo-1598300050211-4f03f6bbcb6e?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1598300050211-4f03f6bbcb6e?auto=format&fit=crop&w=800",
             },
             {
                 id: 2,
                 title: "Historic Villa Remodel",
                 image:
-                    "https://images.unsplash.com/photo-1571941708172-3f8f58f6eb36?auto=format&fit=crop&q=80&w=800",
+                    "https://images.unsplash.com/photo-1571941708172-3f8f58f6eb36?auto=format&fit=crop&w=800",
             },
         ],
     },
 };
 
-// *********************************
-// Main Page Component: CompanyProfileByIdPage
-// *********************************
 export default function CompanyProfileByIdPage() {
-    // Retrieve the dynamic "id" parameter from the URL
     const params = useParams();
     let id: string;
     if (Array.isArray(params.id)) {
@@ -145,12 +407,11 @@ export default function CompanyProfileByIdPage() {
         id = "1"; // Default to "1" if no id is provided
     }
 
-    // Set up state for dummy data retrieval and editing
-    const [companyData, setCompanyData] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState<any>(null);
-    const isInitialMount = useRef(true);
+    const [companyData, setCompanyData] = useState<CompanyData | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    // Removed unused variables: isEditing, handleInputChange, and handleSubmit
+    const [formData, setFormData] = useState<CompanyData | null>(null);
+    const isInitialMount = useRef<boolean>(true);
 
     // Simulate fetching dummy data based on the "id" parameter
     useEffect(() => {
@@ -176,35 +437,13 @@ export default function CompanyProfileByIdPage() {
         }
     }, [companyData, id]);
 
-    // Handle changes in the edit form inputs
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev: any) => ({
-            ...prev,
-            [name]: name === "rating" || name === "reviews" ? Number(value) : value,
-        }));
-    };
-
-    // Handle submission of the edit form
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setCompanyData(formData);
-        setIsEditing(false);
-    };
-
     if (isLoading) return <div>Loading...</div>;
     if (!companyData) return <div>No company data found for id: {id}</div>;
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
-            {/* Main container */}
             <div className="max-w-7xl mx-auto space-y-6">
-                {/* *********************************
-            FIRST ROW: Three columns on large screens
-            - Company Info
-            - Company Ratings
-            - Availability Calendar (wrapped in a white card)
-        ********************************* */}
+                {/* FIRST ROW: Company Info, Ratings, Calendar */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <CompanyInfo
                         name={companyData.name}
@@ -221,23 +460,14 @@ export default function CompanyProfileByIdPage() {
                     </div>
                 </div>
 
-                {/* *********************************
-            SECOND ROW: Two columns on large screens
-            - Hot Deals Carousel
-            - Ongoing Projects
-        ********************************* */}
+                {/* SECOND ROW: Hot Deals and Ongoing Projects */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <HotDealsCarousel deals={companyData.hotDeals} />
                     <OngoingProjects projects={companyData.ongoingProjects} />
                 </div>
 
-                {/* *********************************
-            THIRD ROW: Completed Projects spanning full width
-        ********************************* */}
+                {/* THIRD ROW: Completed Projects */}
                 <CompletedProjects projects={companyData.completedProjects} />
-
-
-
             </div>
         </div>
     );

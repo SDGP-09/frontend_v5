@@ -1,14 +1,11 @@
-
 // "use client";
 // import React, { useState } from "react";
 // import SearchBar from "./components/Searchbar";
-// import ProjectCard from "./components/ProjectCard";
-//
-// import ProjectList from "./components/ProjectList";
+// import ProjectFilterBar from "./components/ProjectFilterBar";
 // import ProjectCount from "./components/ProjectCount";
+// import ProjectList from "./components/ProjectList";
 // import { Projects } from "@/app/types/projects";
 //
-// // Dummy data for completed projects
 // const projectsData: Projects[] = [
 //     {
 //         id: "1",
@@ -93,13 +90,24 @@
 // export default function CompletedProjectsPage() {
 //     const [projects] = useState<Projects[]>(projectsData);
 //     const [searchQuery, setSearchQuery] = useState("");
+//     const [filter, setFilter] = useState("All Projects");
+//     const [visibilityFilter, setVisibilityFilter] = useState("all"); // "all", "visible", "hidden"
+//     const isAdmin = true; // For this example, admin view is enabled
 //
-//     // Filter projects based on search term and only include visible projects
+//     // Filter projects based on search and filter criteria
 //     const filteredProjects = projects.filter((project) => {
 //         const matchesSearch =
 //             project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
 //             project.description.toLowerCase().includes(searchQuery.toLowerCase());
-//         return matchesSearch && project.visibility === "Visible";
+//         let matchesVisibility = true;
+//         if (visibilityFilter !== "all") {
+//             matchesVisibility =
+//                 visibilityFilter === "visible"
+//                     ? project.visibility === "Visible"
+//                     : project.visibility !== "Visible";
+//         }
+//         let matchesStatus = filter === "All Projects" || project.status === filter;
+//         return matchesSearch && matchesVisibility && matchesStatus;
 //     });
 //
 //     return (
@@ -110,30 +118,43 @@
 //                     <h1 className="text-2xl font-bold text-gray-900">Completed Projects</h1>
 //                 </div>
 //
-//                 {/* Search Bar */}
-//                 <div className="flex flex-col md:flex-row gap-4 mb-6">
-//                     <div className="md:w-full">
-//                         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-//                     </div>
-//                 </div>
+//                 {/* Search and Filter */}
+//                 <ProjectFilterBar
+//                     filter={filter}
+//                     setFilter={setFilter}
+//                     searchTerm={searchQuery}
+//                     setSearchTerm={setSearchQuery}
+//                     isAdmin={isAdmin}
+//                     visibilityFilter={visibilityFilter}
+//                     setVisibilityFilter={setVisibilityFilter}
+//                 />
 //
 //                 {/* Project Count */}
-//                 {/* Make sure ProjectCount component accepts these props */}
+//                 {/* (Ensure ProjectCount is imported correctly) */}
 //                 <ProjectCount
 //                     filteredCount={filteredProjects.length}
 //                     totalCount={projects.length}
-//                     isAdmin={true}
+//                     isAdmin={isAdmin}
 //                     visibleCount={projects.filter((p) => p.visibility === "Visible").length}
 //                     hiddenCount={projects.filter((p) => p.visibility !== "Visible").length}
 //                 />
 //
 //                 {/* Project Cards Grid */}
 //                 {filteredProjects.length > 0 ? (
-//                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-//                         {filteredProjects.map((project) => (
-//                             <ProjectCard key={project.id} project={project} />
-//                         ))}
-//                     </div>
+//                     <ProjectList
+//                         projects={filteredProjects}
+//                         isAdmin={isAdmin}
+//                         onToggleVisibility={(id) => {
+//                             // Toggle visibility in state (update as needed)
+//                             console.log("Toggling visibility for id:", id);
+//                         }}
+//                         onTogglePrivacy={() => {
+//                             console.log("Toggling privacy");
+//                         }}
+//                         onViewDetails={(id) => {
+//                             console.log("View details for id:", id);
+//                         }}
+//                     />
 //                 ) : (
 //                     <div className="text-center py-12">
 //                         <svg
@@ -161,7 +182,6 @@
 // }
 "use client";
 import React, { useState } from "react";
-import SearchBar from "./components/Searchbar";
 import ProjectFilterBar from "./components/ProjectFilterBar";
 import ProjectCount from "./components/ProjectCount";
 import ProjectList from "./components/ProjectList";
@@ -253,7 +273,7 @@ export default function CompletedProjectsPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [filter, setFilter] = useState("All Projects");
     const [visibilityFilter, setVisibilityFilter] = useState("all"); // "all", "visible", "hidden"
-    const isAdmin = true; // For this example, admin view is enabled
+    const isAdmin = true; // Admin view is enabled
 
     // Filter projects based on search and filter criteria
     const filteredProjects = projects.filter((project) => {
@@ -267,7 +287,7 @@ export default function CompletedProjectsPage() {
                     ? project.visibility === "Visible"
                     : project.visibility !== "Visible";
         }
-        let matchesStatus = filter === "All Projects" || project.status === filter;
+        const matchesStatus = filter === "All Projects" || project.status === filter;
         return matchesSearch && matchesVisibility && matchesStatus;
     });
 
@@ -291,7 +311,6 @@ export default function CompletedProjectsPage() {
                 />
 
                 {/* Project Count */}
-                {/* (Ensure ProjectCount is imported correctly) */}
                 <ProjectCount
                     filteredCount={filteredProjects.length}
                     totalCount={projects.length}
