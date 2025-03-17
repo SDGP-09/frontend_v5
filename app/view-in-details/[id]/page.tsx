@@ -36,7 +36,7 @@ const dummyProjects: Project[] = [
                 title: "Project Kickoff",
                 description: "ABCDefg",
                 status: "completed",
-            }as any,
+            },
         ],
 
     },
@@ -57,15 +57,7 @@ const dummyProjects: Project[] = [
     },
 ];
 async function fetchProjectById(id: string): Promise<Project | null> {
-    let foundProject = dummyProjects.find((proj) => proj.id === id) || null;
-    // if (foundProject && foundProject.timeline && foundProject.timeline.length > 0) {
-    //     foundProject.timeline = foundProject.timeline.map((item: any) => ({
-    //         date: item.endDate,            // Use backend endDate as date
-    //         title: item.taskname,          // Use backend taskname as title
-    //         description: item.description || "",
-    //         status: item.status,
-    //     }));
-    // }
+    const foundProject = dummyProjects.find((proj) => proj.id === id) || null;
     return foundProject;
 }
 
