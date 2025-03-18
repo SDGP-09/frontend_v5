@@ -5,6 +5,9 @@ import { Plus,  X, Image as ImageIcon } from 'lucide-react';
 import { Project, ProjectImage } from '@/app/types/project';
 import { v4 as uuidv4 } from 'uuid';
 import { GanttChart } from '@/app/application/project-management/components/GanttChart';
+import axios from 'axios';
+import api from "@/app/util/api";
+
 
 export function MainForm() {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -45,7 +48,6 @@ export function MainForm() {
     };
 
 
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newProject.name || !newProject.startDate || !newProject.endDate || !selectedContractor) return;
@@ -60,21 +62,52 @@ export function MainForm() {
             expanded: false,
             tasks: [],
             contractorId: selectedContractor,
-            images: projectImages, // Add images to the new project
+            images: projectImages ?? [],// Add images to the new project
         };
 
-        setProjects([...projects, newProjectComplete]);
-        setShowForm(false);
-        setNewProject({
-            name: '',
-            status: 'New',
-            startDate: new Date(),
-            endDate: new Date(),
-            description: '',
-        });
-        setSelectedContractor(null);
-        setProjectImages([]);
+        try {
+            // **Retrieve the token from localStorage, sessionStorage, or cookies**
+            //const token = localStorage.getItem('token'); // Adjust based on how you store the token
+
+            // Prepare request payload
+            const params = {
+                taskname: newProjectComplete.name,
+                status: newProjectComplete.status,
+                startDate: newProjectComplete.startDate.toISOString(),
+                endDate: newProjectComplete.endDate.toISOString(),
+                description: newProjectComplete.description,
+                contractorId: newProjectComplete.contractorId,
+                images: (newProjectComplete.images ?? []).map(img => img.url)
+            };
+
+            const response = await api.post(
+                `http://35.193.219.136:4040/api/v1/main/create-main-task`,
+                params.toString(),
+                {
+                    headers: { "Content-Type": "application/x-www-form-urlencoded", "X-Require-Auth": "true" }
+                }
+            );
+
+            if (response.status === 201) {
+                setProjects([...projects, newProjectComplete]);
+                setShowForm(false);
+                setNewProject({
+                    name: '',
+                    status: 'New',
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    description: '',
+                });
+                setSelectedContractor(null);
+                setProjectImages([]);
+            }
+        } catch (error) {
+            console.error('Error creating project:', error);
+            alert('Failed to create the project. Please try again.');
+        }
     };
+
+
 
 
 
