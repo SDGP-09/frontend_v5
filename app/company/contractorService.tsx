@@ -1,61 +1,60 @@
-const API_BASE_URL = "http://localhost:7071/contractor";
+// contractorService.tsx
 
-// Fetch all contractors
-export const fetchContractors = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/find-all`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({}),
-        });
+export interface Contractor {
+    id: string;
+    name: string;
+    profilePicture?: string;
+    rating?: number;
+    projects?: number;
+}
 
-        if (!response.ok) {
-             new Error(`HTTP error! Status: ${response.status}`);
-        }
+// Dummy data to mimic backend response
+const DUMMY_CONTRACTORS: Contractor[] = [
+    {
+        id: "1",
+        name: "BuildMaster Pro",
+        profilePicture: "/placeholder.jpg",
+        rating: 4.8,
+        projects: 127,
+    },
+    {
+        id: "2",
+        name: "Urban Developers",
+        profilePicture: "/placeholder.jpg",
+        rating: 4.7,
+        projects: 90,
+    },
+    {
+        id: "3",
+        name: "Skyline Constructions",
+        profilePicture: "/placeholder.jpg",
+        rating: 4.9,
+        projects: 165,
+    },
+    {
+        id: "4",
+        name: "GreenBuild Solutions",
+        profilePicture: "/placeholder.jpg",
+        rating: 4.5,
+        projects: 70,
+    },
+];
 
-        const result = await response.json();
-        console.log("Contractor API Response:", result);
+// Simulate an async function returning all contractors
+export async function fetchContractors(): Promise<Contractor[]> {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(DUMMY_CONTRACTORS);
+        }, 200);
+    });
+}
 
-        if (!result || !result.data || !Array.isArray(result.data.contractors)) {
-            console.error("Unexpected response format", result);
-            return [];
-        }
-
-        return result.data.contractors;
-    } catch (error) {
-        console.error("Error fetching contractors:", error);
-        return [];
-    }
-};
-
-// Fetch contractor by ID
-export const fetchContractorById = async (id: string) => {
-    try {
-        const response = await fetch("http://localhost:7071/contractor/find-by-id", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id }),
-        });
-
-        if (!response.ok) {
-             new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log("Fetched Contractor by ID:", result); // Debugging log
-
-        if (!result || !result.data || !result.data.contractor) {
-            console.warn("Contractor data is missing in response:", result);
-            return null;
-        }
-
-        return result.data.contractor; // Ensure correct data structure
-    } catch (error) {
-        console.error("Error fetching contractor by ID:", error);
-        return null; // Return null to prevent app crashes
-    }
-};
-
-
-
-
+// Simulate an async function returning a contractor by ID
+export async function fetchContractorById(id: string): Promise<Contractor | null> {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const contractor = DUMMY_CONTRACTORS.find((c) => c.id === id) || null;
+            resolve(contractor);
+        }, 200);
+    });
+}
