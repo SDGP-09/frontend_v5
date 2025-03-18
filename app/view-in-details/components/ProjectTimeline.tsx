@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export interface TimelineItem {
     date: string;
@@ -14,12 +14,17 @@ interface ProjectTimelineProps {
 }
 
 const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ timeline }) => {
+    const [items, setItems] = useState<TimelineItem[]>(timeline);
+
+    useEffect(() => {
+        setItems(timeline);
+    }, [timeline]);
+
     return (
         <div className="mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Project Timeline</h2>
             <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="relative">
-                    {/* Vertical timeline line */}
                     <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2"></div>
 
                     <div className="space-y-8">
@@ -30,7 +35,6 @@ const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ timeline }) => {
                                         index % 2 === 0 ? "md:flex-row-reverse" : ""
                                     }`}
                                 >
-                                    {/* Timeline dot with conditional styling */}
                                     <div
                                         className={`absolute left-4 md:left-1/2 w-8 h-8 rounded-full border-4 transform -translate-x-1/2 flex items-center justify-center ${
                                             item.status === "completed"
@@ -60,7 +64,6 @@ const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ timeline }) => {
                                         )}
                                     </div>
 
-                                    {/* Timeline content */}
                                     <div
                                         className={`w-full md:w-1/2 ${
                                             index % 2 === 0

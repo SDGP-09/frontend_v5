@@ -175,9 +175,7 @@ export default function OngoingProjects() {
         router.push(`/projects/${id}`);
     };
 
-    const handleEdit = (id: number) => {
-        router.push(`/projects/${id}/edit`);
-    };
+
 
 
 
@@ -242,12 +240,12 @@ export default function OngoingProjects() {
                             </div>
                         )}
                     </div>
-                    <button
-                        onClick={() => setIsAdmin(prevState => !prevState)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                    >
-                        {isAdmin ? "Switch to User View" : "Switch to Admin View"}
-                    </button>
+                    {/*<button*/}
+                    {/*    onClick={() => setIsAdmin(prevState => !prevState)}*/}
+                    {/*    className="bg-blue-500 text-white px-4 py-2 rounded-md"*/}
+                    {/*>*/}
+                    {/*    {isAdmin ? "Switch to User View" : "Switch to Admin View"}*/}
+                    {/*</button>*/}
 
 
                 </div>
@@ -286,8 +284,6 @@ export default function OngoingProjects() {
                                 isAdmin={true}
                                 onToggleVisibility={() => toggleVisibility(project.id)}
                                 onTogglePrivacy={() => togglePrivacy(project.id)}
-                                onEdit={() => { handleEdit(project.id) }}
-                                onDelete={() => { handleDelete(project.id) }}
                                 onViewDetails={() => { handleViewDetails(project.id)}}
                             />
                         ))}

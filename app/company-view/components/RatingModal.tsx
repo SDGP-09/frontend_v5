@@ -154,4 +154,4 @@ bg-gradient-to-r from-green-400 to-blue-500
     );
 };
 
-export default RatingModal
+export default RatingModal;

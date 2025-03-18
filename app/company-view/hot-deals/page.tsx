@@ -6,6 +6,43 @@ import FilterDropdown from "./components/FilterDropdown";
 import AdsList from "./components/AdsList";
 import { Ad } from "@/app/types";
 
+interface BackendDealPortable {
+    id: number;
+    ownerId: number;
+    title: string;
+    description: string;
+    dealField: string;
+    imageLinks: string[];
+    fullDescription: string;
+    show: boolean;
+    perHour: number;
+    perDay: number;
+    perWeek: number;
+    perMonth: number;
+    perYear: number;
+    price: number;
+}
+
+function convertDealPortableToAd(backendDeal: BackendDealPortable): Ad {
+    return {
+        id: backendDeal.id,
+        ownerId: backendDeal.ownerId,
+        title: backendDeal.title,
+        description: backendDeal.description,
+        field: backendDeal.dealField,
+        images: backendDeal.imageLinks,
+        fullDescription: backendDeal.fullDescription,
+        prices: {
+            hour: backendDeal.perHour,
+            day: backendDeal.perDay,
+            week: backendDeal.perWeek,
+            month: backendDeal.perMonth,
+            year: backendDeal.perYear,
+        },
+        visibility: backendDeal.show,
+    };
+}
+
 /**
  * 1) We have some sample data to demonstrate the functionality.
  *    In a real app, you might fetch this data from an API or server.
@@ -13,11 +50,19 @@ import { Ad } from "@/app/types";
 const sampleAds: Ad[] = [
     {
         id: 1,
+        ownerId: 1,
         title: "Heavy Equipment Operator",
         description:
             "Experienced operator available for construction projects. Specialized in excavators and bulldozers.",
         field: "logistics",
-        price: 150,
+        prices: {
+            "hour": 200,
+            "day": 190,
+            "week": 180,
+            "month": 170,
+            "year": 160,
+        },
+        visibility: true,
         images: [
             "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&q=80&w=2070",
             "https://images.unsplash.com/photo-1578864669335-71f3f5ad4d1e?auto=format&fit=crop&q=80&w=2070",
@@ -28,11 +73,18 @@ const sampleAds: Ad[] = [
     },
     {
         id: 2,
+        ownerId: 2,
         title: "Electrical Engineering Consultant",
         description:
             "Professional electrical engineer offering consulting services for construction projects.",
         field: "power",
-        price: 200,
+        prices: {
+            "hour": 200,
+            "day": 190,
+            "week": 180,
+
+        },
+        visibility: true,
         images: [
             "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070",
             "https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&q=80&w=2070",

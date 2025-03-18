@@ -2,6 +2,7 @@
 import React from "react";
 import PromotionCard from "./PromotionCard";
 
+
 /**
  * HotDealsSection Component
  *
@@ -21,13 +22,13 @@ export default function HotDealsSection() {
                     title="Spring Special Offer"
                     discount="20%"
                     description="off on all residential projects"
-                    active={true}
+
                 />
                 <PromotionCard
                     title="Early Bird Discount"
                     discount="15%"
                     description="for bookings made 3 months in advance"
-                    active={false}
+
                 />
             </div>
         </div>
