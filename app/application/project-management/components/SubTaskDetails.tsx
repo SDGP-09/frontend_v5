@@ -45,6 +45,7 @@ export function SubTaskDetails({ taskId }: SubTaskDetailsProps) {
                 description: 'Creating a mobile application with an intuitive design and robust functionality.',
                 tasks: [mockTask],
                 expanded: true,
+                contractorId: 1,
             };
 
             setTask(mockTask);

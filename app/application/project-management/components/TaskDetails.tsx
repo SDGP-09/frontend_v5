@@ -1,11 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, ArrowLeft, Calendar, CheckCircle, Clock,  FileText } from 'lucide-react';
+import { Plus, ArrowLeft, Calendar, CheckCircle, Clock, FileText, User } from 'lucide-react';
 import { SubtaskForm } from './SubtaskForm';
 import { Task, Project } from '@/app/types/project';
 import { GanttChart } from './GanttChart';
 import Link from 'next/link';
+
+// Add contractor interface
+interface Contractor {
+    id: number;
+    name: string;
+    image: string;
+}
 
 interface TaskDetailsProps {
     projectId: string;
@@ -16,6 +23,7 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
     const [projects, setProjects] = useState<Project[]>([]);
     const [currentProject, setCurrentProject] = useState<Project | null>(null);
     const [loading, setLoading] = useState(true);
+    const [contractor, setContractor] = useState<Contractor | null>(null);
 
     // Simulated API call
     useEffect(() => {
@@ -33,13 +41,24 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
                     'The final stages include landscaping and exterior finishing, ensuring the building is visually appealing and functional. After inspection and approval, the apartments are ready for occupancy, providing a comfortable and secure living environment for residents.',
                 tasks: [],
                 expanded: true,
+                contractorId: 1,
+            };
+
+            // Simulated contractor data
+            const contractorData: Contractor = {
+                id: 1,
+                name: 'Alex Johnson',
+                image: '/api/placeholder/150/150',
             };
 
             setCurrentProject(project);
             setProjects([project]);
+            setContractor(contractorData);
             setLoading(false);
         }, 500);
     }, [projectId]);
+
+
 
     // Calculate remaining days
     const calculateRemainingDays = () => {
@@ -65,6 +84,7 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
         }
     };
 
+
     //handle subtask details in frontend
     const handleAddSubtask = (subtask: Task) => {
         if (!currentProject) return;
@@ -79,11 +99,14 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
         setShowSubtaskForm(false);
     };
 
+
     const handleProjectToggle = (projectId: string) => {
         setProjects(projects.map(project =>
             project.id === projectId ? { ...project, expanded: !project.expanded } : project
         ));
     };
+
+
 
     // Update project details in frontend
     const handleUpdateProject = (updatedProject: Project) => {
@@ -100,12 +123,16 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
         }
     };
 
+
+
     // Delete project from frontend
     const handleDeleteProject = (projectId: string) => {
         setProjects(prevProjects =>
             prevProjects.filter(project => project.id !== projectId)
         );
     };
+
+
 
     //Update task in frontend
     const handleUpdateTask = (updatedTask: Task) => {
@@ -136,6 +163,7 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
         }
     };
 
+
     //Delete task from frontend
     const handleDeleteTask = (taskId: string, projectId: string) => {
         if (!projects) return; // Check that projects is defined
@@ -160,6 +188,7 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
             setCurrentProject(updatedProject);
         }
     };
+
 
     if (loading) {
         return (
@@ -242,6 +271,37 @@ export function TaskDetails({ projectId }: TaskDetailsProps) {
 
                     {/* Timeline & Status Cards */}
                     <div className="space-y-4">
+                        {/* Contractor Card - NEW */}
+                        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                            <div className="border-b border-gray-100 p-5">
+                                <div className="flex items-center">
+                                    <User className="w-5 h-5 text-blue-600 mr-3" />
+                                    <h3 className="text-xl font-bold text-gray-800">Assigned Contractor</h3>
+                                </div>
+                            </div>
+                            {contractor ? (
+                                <div className="p-5">
+                                    <div className="flex items-center">
+                                        <div className="mr-4">
+                                            <img
+                                                src={contractor.image}
+                                                alt={contractor.name}
+                                                className="w-16 h-16 rounded-full object-cover border-2 border-blue-100"
+                                            />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-800">{contractor.name}</h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="p-5">
+                                    <p className="text-gray-500 italic">No contractor assigned</p>
+                                </div>
+                            )}
+                        </div>
+
                         {/* Timeline Card */}
                         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                             <div className="border-b border-gray-100 p-5">
