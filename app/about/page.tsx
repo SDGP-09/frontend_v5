@@ -47,7 +47,7 @@ export default function About() {
                         <div>
                             <h2 className="text-3xl font-bold mb-6 text-gray-800">Our Mission</h2>
                             <p className="text-lg text-gray-700 mb-6">
-                                At CiviLink, we're revolutionizing the construction industry by creating a
+                                At CiviLink, we&apos;re revolutionizing the construction industry by creating a
                                 comprehensive platform that connects contractors, consultants, and clients
                                 in one seamless ecosystem.
                             </p>

@@ -167,7 +167,7 @@ export default function Services() {
                     </h2>
                     <p className="text-xl mb-8">
                         Join thousands of construction professionals who are already
-                        benefiting from CiviLink's comprehensive platform.
+                        benefiting from CiviLink&apos;s comprehensive platform.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <button className="px-8 py-3 bg-white text-blue-600 font-bold rounded-md hover:bg-gray-100 transition-colors duration-300">

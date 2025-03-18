@@ -61,7 +61,7 @@ export default function Contact() {
                 <div className="max-w-6xl mx-auto px-6 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
                     <p className="text-xl max-w-3xl mx-auto">
-                        Have questions or need assistance? We're here to help!
+                        Have questions or need assistance? We&apos;re here to help!
                     </p>
                 </div>
             </div>
@@ -74,8 +74,8 @@ export default function Contact() {
                         <div>
                             <h2 className="text-3xl font-bold text-gray-800 mb-6">Get in Touch</h2>
                             <p className="text-gray-700 mb-8">
-                                We'd love to hear from you. Whether you have a question about our services,
-                                need a demo, or want to join our team, we're ready to answer your questions.
+                                We&apos;d love to hear from you. Whether you have a question about our services,
+                                need a demo, or want to join our team, we&apos;re ready to answer your questions.
                             </p>
 
                             <div className="space-y-6">
@@ -146,7 +146,7 @@ export default function Contact() {
                                     </h3>
                                     <p className="text-gray-700">
                                         CiviLink is an online-only platform designed to connect
-                                        construction professionals across the globe. We don't
+                                        construction professionals across the globe. We don&apos;t
                                         maintain a physical office as our services are delivered
                                         entirely through our digital platform.
                                     </p>
