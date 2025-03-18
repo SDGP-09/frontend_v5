@@ -1,9 +1,11 @@
 'use client';
 
-import { ChevronDown, ChevronRight, Trash, Pencil } from 'lucide-react';
-import { Project,Task} from '@/app/types/project';
+import { ChevronDown, ChevronRight, Trash, Pencil,X, Image as ImageIcon } from 'lucide-react';
+import { Project,Task,ProjectImage} from '@/app/types/project';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState ,useRef} from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 
@@ -38,6 +40,15 @@ export function GanttChart({
     const [deleteTaskModalOpen, setDeleteTaskModalOpen] = useState(false);
     const [currentProject, setCurrentProject] = useState<Project| null>(null);
     const [currentTask, setCurrentTask] = useState<Task | null>(null);
+
+    //  state for contractor selection
+    const [contractors, setContractors] = useState<{ id: number; name: string }[]>([]);
+    const [contractorQuery, setContractorQuery] = useState('');
+    const [selectedContractor, setSelectedContractor] = useState<number | null>(null);
+
+    //state for images
+    const [projectImages, setProjectImages] = useState<ProjectImage[]>([]);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
 
 
@@ -137,6 +148,61 @@ export function GanttChart({
     };
 
 
+    // Fetch contractors
+    const fetchContractors = async (query: string) => {
+        if (query.length < 2) {
+            setContractors([]); // Hide dropdown if query is too short
+            return;
+        }
+        // Temporary mock data - same as in MainForm
+        const mockContractors = [
+            { id: 1, name: "John Doe" },
+            { id: 2, name: "Jane Smith" },
+            { id: 3, name: "Michael Johnson" }
+        ];
+        // Filter mock contractors
+        const filteredContractors = mockContractors.filter(c =>
+            c.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setContractors(filteredContractors);
+    };
+
+
+
+    const handleImageUploadClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+
+        Array.from(files).forEach(file => {
+            const newImage: ProjectImage = {
+                id: uuidv4(),
+                url: URL.createObjectURL(file),
+            };
+            setProjectImages(prevImages => [...prevImages, newImage]); // Add new images
+        });
+
+        // Reset file input
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
+
+
+
+    const handleRemoveImage = (id: string) => {
+        setProjectImages(prevImages => prevImages.filter(image => image.id !== id));
+    };
+
+
+
+
     // open modal to edit project
     const handleEditProject = (project: Project) => {
         setCurrentProject({
@@ -147,18 +213,52 @@ export function GanttChart({
             status: project.status,
             description: project.description,
             tasks: project.tasks,
-            expanded: project.expanded
+            expanded: project.expanded,
+            contractorId: project.contractorId,
+            images:project.images|| []
         });
+        setProjectImages(project.images || []);
+
+        // Set contractor query to the contractor name if available
+        if (project.contractorId) {
+            // In a real app, you'd fetch the contractor name from the ID
+            const mockContractors = [
+                { id: 1, name: "John Doe" },
+                { id: 2, name: "Jane Smith" },
+                { id: 3, name: "Michael Johnson" }
+            ];
+
+            const contractor = mockContractors.find(c => c.id === project.contractorId);
+            if (contractor) {
+                setContractorQuery(contractor.name);
+            }
+            setSelectedContractor(project.contractorId);
+        } else {
+            setContractorQuery('');
+            setSelectedContractor(null);
+        }
+
         setEditProjectModalOpen(true);
     };
+
+
 
     // Save updated project data (API)
     const handleProjectUpdate = () => {
         if (currentProject && onUpdateProject) {
-            onUpdateProject(currentProject);
+            // Include the selected contractor ID in the update
+            onUpdateProject({
+                ...currentProject,
+                contractorId: selectedContractor || currentProject.contractorId,
+                images: projectImages
+            });
         }
         setEditProjectModalOpen(false);
     };
+
+
+
+
 
     // open modal to Delete project
     const handleDeleteProject = (project: Project) => {
@@ -170,10 +270,13 @@ export function GanttChart({
             status: project.status,
             description: project.description,
             tasks: project.tasks,
-            expanded: project.expanded
+            expanded: project.expanded,
+            contractorId: project.contractorId
         });
         setDeleteProjectModalOpen(true);
     };
+
+
 
     //delete project confirm (API)
     const confirmDeleteProject = () => {
@@ -206,6 +309,7 @@ export function GanttChart({
         }
         setEditTaskModalOpen(false);
     };
+
 
     // open modal to Delete task
     const handleDeleteTask = (task: Task, projectId: string) => {
@@ -373,19 +477,18 @@ export function GanttChart({
             {/* Edit Project Modal */}
             {editProjectModalOpen && currentProject && (
                 <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-xl shadow-lg p-4 w-full max-w-lg sm:max-w-md">
-                        <h3 className="text-2xl font-bold mb-4 text-gray-800">Edit Project</h3>
+                    <div className="bg-white rounded-xl shadow-lg p-4 w-full max-w-xl max-h-[90vh] overflow-y-auto">
+                        <h3 className="text-2xl font-bold mb-4 text-black text-center">Edit Project</h3>
                         <form onSubmit={(e) => {
                             e.preventDefault();
                             handleProjectUpdate();
                         }}>
-
                             {/* Project Name */}
                             <div className="mb-1">
-                                <label className="block text-sm font-medium mb-1 text-gray-700">Project Name</label>
+                                <label className="block text-sm font-medium mb-1 text-black">Project Name</label>
                                 <input
                                     type="text"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full p-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
                                     value={currentProject.name}
                                     onChange={(e) => setCurrentProject({...currentProject, name: e.target.value})}
                                     placeholder="Enter project name"
@@ -395,10 +498,10 @@ export function GanttChart({
                             {/* Start and End Date */}
                             <div className="grid grid-cols-2 gap-6 mb-1">
                                 <div>
-                                    <label className="block text-sm font-medium mb-1 text-gray-700">Start Date</label>
+                                    <label className="block text-sm font-medium mb-1 text-black">Start Date</label>
                                     <input
                                         type="date"
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                        className="w-full p-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
                                         value={currentProject.startDate.toISOString().split('T')[0]}
                                         onChange={(e) => setCurrentProject({
                                             ...currentProject,
@@ -407,10 +510,10 @@ export function GanttChart({
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium mb-1 text-gray-700">End Date</label>
+                                    <label className="block text-sm font-medium mb-1 text-black">End Date</label>
                                     <input
                                         type="date"
-                                        className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                        className="w-full p-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
                                         value={currentProject.endDate.toISOString().split('T')[0]}
                                         onChange={(e) => setCurrentProject({
                                             ...currentProject,
@@ -420,25 +523,58 @@ export function GanttChart({
                                 </div>
                             </div>
 
-                            {/* Status Dropdown */}
-                            <div className="mb-1">
-                                <label className="block text-sm font-medium mb-1 text-gray-700">Status</label>
-                                <select
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
-                                    value={currentProject.status}
-                                    onChange={(e) => setCurrentProject({...currentProject, status: e.target.value as "New" | "In Progress" | "Completed"})}>
-                                    <option value="New">New</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Completed">Completed</option>
-                                </select>
+                            <div className="grid grid-cols-2 gap-6 mb-1">
+                                {/* Status Dropdown */}
+                                <div>
+                                    <label className="block text-sm font-medium mb-1 text-black">Status</label>
+                                    <select
+                                        className="w-full p-2 border border-gray-400 rounded-md focus:ring-2 focus:ring-gray-600"
+                                        value={currentProject.status}
+                                        onChange={(e) => setCurrentProject({...currentProject, status: e.target.value as "New" | "In Progress" | "Completed"})}>
+                                        <option value="New">New</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                </div>
+
+                                {/* Contractor Selection */}
+                                <div className="mb-1 relative">
+                                    <label className="block text-sm font-medium mb-1 text-black">Assign Contractor</label>
+                                    <input
+                                        type="text"
+                                        className="w-full p-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-600"
+                                        value={contractorQuery}
+                                        onChange={(e) => {
+                                            setContractorQuery(e.target.value);
+                                            fetchContractors(e.target.value);
+                                        }}
+                                        placeholder="Type contractor name..."
+                                    />
+                                    {contractors.length > 0 && (
+                                        <ul className="absolute left-0 w-full bg-white border border-gray-400 shadow-md rounded-lg z-10 max-h-48 overflow-y-auto">
+                                            {contractors.map((contractor) => (
+                                                <li
+                                                    key={contractor.id}
+                                                    className="p-2 cursor-pointer hover:bg-gray-200"
+                                                    onClick={() => {
+                                                        setSelectedContractor(contractor.id);
+                                                        setContractorQuery(contractor.name);
+                                                        setContractors([]);
+                                                    }}
+                                                >
+                                                    {contractor.name}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
                             </div>
 
                             {/* Project Description */}
                             <div className="mb-5">
-                                <label className="block text-sm font-medium mb-2 text-gray-700">Project
-                                    Description</label>
+                                <label className="block text-sm font-medium mb-2 text-black">Project Description</label>
                                 <textarea
-                                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full p-3 border border-gray-400 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600"
                                     rows={4}
                                     placeholder="Enter a brief project description"
                                     value={currentProject.description || ""}
@@ -448,6 +584,63 @@ export function GanttChart({
                                     })}
                                 />
                             </div>
+
+                            {/* Project Images */}
+                            <div className="mb-5">
+                                <label className="block text-sm font-medium mb-2 text-black">Project Images</label>
+
+                                <div
+                                    onClick={handleImageUploadClick}
+                                    className="w-full p-6 h-40 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer hover:bg-gray-50 transition flex flex-col items-center justify-center gap-2 relative"
+                                >
+                                    {/* Display Uploaded Images */}
+                                    {projectImages.length > 0 ? (
+                                        <div className="flex flex-wrap gap-2 justify-center">
+                                            {projectImages.map((image) => (
+                                                <div key={image.id} className="relative w-16 h-16">
+                                                    <img
+                                                        src={image.url}
+                                                        alt="Uploaded"
+                                                        className="w-full h-full object-cover rounded-lg border shadow-sm"
+                                                    />
+                                                    <button
+                                                        className="absolute top-0 right-0 bg-red-500 rounded-full p-1 text-white"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleRemoveImage(image.id);
+                                                        }}
+                                                    >
+                                                        <X className="w-3 h-3"/>
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col items-center text-gray-500 text-center">
+                                            <ImageIcon className="w-12 h-12 text-gray-400 mb-2"/>
+                                            <p className="text-sm font-semibold">Drag & Drop Images Here</p>
+                                            <p className="text-xs text-gray-400">or click to browse</p>
+                                            <p className="text-xs text-gray-400">JPG, PNG, GIF (Max 5MB each)</p>
+                                        </div>
+                                    )}
+
+                                    {/* Small Attachment Icon in Bottom Right */}
+                                    <div className="absolute bottom-2 right-2 text-gray-500">
+                                        <ImageIcon className="w-5 h-5"/>
+                                    </div>
+
+                                    {/* File Input */}
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleImageUpload}
+                                        className="hidden"
+                                        accept="image/*"
+                                        multiple
+                                    />
+                                </div>
+                            </div>
+
 
                             {/* Action Buttons */}
                             <div className="flex justify-end space-x-4">
@@ -469,6 +662,7 @@ export function GanttChart({
                     </div>
                 </div>
             )}
+
 
             {/* Delete Project Modal */}
             {deleteProjectModalOpen && currentProject && (

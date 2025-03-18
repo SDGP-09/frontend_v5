@@ -6,6 +6,13 @@ export interface Task {
     startDate: Date;
     endDate: Date;
     description?: string;
+
+}
+
+export interface ProjectImage {
+    id: string;
+    url: string;
+
 }
 
 export interface Project {
@@ -15,12 +22,10 @@ export interface Project {
     startDate: Date;
     endDate: Date;
     description: string;
-    //contractor: string;
     tasks: Task[];
     expanded: boolean;
-}
-export interface ProjectFormData extends Omit<Project, 'tasks' | 'expanded'> {
-    status: 'New' | 'In Progress' | 'Completed'; // Ensures strict typing
+    contractorId: number;
+    images?: ProjectImage[];
 }
 
 
