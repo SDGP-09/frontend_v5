@@ -1,4 +1,4 @@
-
+"use client";
 import React from "react";
 import Image from "next/image";
 
@@ -45,3 +45,4 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isSelected, onSelect
 };
 
 export default ProjectCard;
+
