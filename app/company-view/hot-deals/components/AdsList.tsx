@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Ad } from "@/app/types"; // adjust the import path if needed
 import AdCard from "./AdCard";
 import AdModal from "./AdModal";
@@ -12,12 +13,25 @@ interface AdsListProps {
 }
 
 export default function AdsList({ ads, selectedField }: AdsListProps) {
+    const searchParams = useSearchParams();
+
     // Store the currently selected Ad (for detail modal)
     const [selectedAd, setSelectedAd] = useState<Ad | null>(null);
     // Store the currently enlarged image URL (for image modal)
     const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
 
-    // Filter logic: if "all" is selected, show all. Otherwise match the `field`.
+    useEffect(() => {
+        const idParam = searchParams.get("id");
+        if (idParam) {
+            const adId = Number(idParam);
+            const ad = ads.find((ad) => ad.id === adId);
+            if (ad) {
+                setSelectedAd(ad);
+            }
+        }
+    }, [searchParams, ads]);
+
+    // Filter logic: if "all" is selected, show all. Otherwise, match the `field`.
     const filteredAds = selectedField === "all"
         ? ads
         : ads.filter((ad) => ad.field === selectedField);
@@ -26,11 +40,13 @@ export default function AdsList({ ads, selectedField }: AdsListProps) {
     // on the card except the "Make a deal!" button.
     const handleCardClick = (ad: Ad) => {
         setSelectedAd(ad);
+        window.history.pushState(null, "", `/company-view/hot-deals/${ad.id}`);
     };
 
     // This closes the detail modal by setting selectedAd to null.
     const handleCloseAdModal = () => {
         setSelectedAd(null);
+        window.history.pushState(null, "", `/company-view/hot-deals`);
     };
 
     // This opens the image modal for a specific image.
@@ -44,6 +60,7 @@ export default function AdsList({ ads, selectedField }: AdsListProps) {
     };
 
     return (
+        <Suspense fallback={<div>Loading ads...</div>}>
         <>
             {/*
         Grid layout of Ad Cards
@@ -79,5 +96,6 @@ export default function AdsList({ ads, selectedField }: AdsListProps) {
                 />
             )}
         </>
+        </Suspense>
     );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import FilterDropdown from "./components/FilterDropdown";
 import AdsList from "./components/AdsList";
 import { Ad } from "@/app/types";
@@ -131,8 +131,10 @@ export default function HotDealsPage() {
              - We pass the sampleAds and the current selectedField.
              - The AdsList will handle filtering and the modals internally.
         */}
+                <Suspense fallback={<div>Loading ads...</div>}>
                 <AdsList ads={sampleAds} selectedField={selectedField} />
-            </main>
+                </Suspense>
+                </main>
         </div>
     );
 }
