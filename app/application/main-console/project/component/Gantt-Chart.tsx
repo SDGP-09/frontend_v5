@@ -126,7 +126,7 @@ const GanttChart = () => {
                     language: "en",
                     on_click: (task: any) => {
                         console.log("Task Clicked:", task);
-                        router.push('/task'); // Navigate to task view
+                        router.push('/application/main-console/project/task'); // Navigate to task view
                     },
                 });
             }
@@ -141,7 +141,7 @@ const GanttChart = () => {
     }, [pathname]);
 
     return (
-        <div className="w-full h-3/4 overflow-auto p- bg-gray-100">
+        <div className="w-full h-[400px] overflow-auto  bg-gray-100">
             <div ref={ganttContainer} className="w-full h-full  bg-white shadow-lg rounded-lg" />
         </div>
     );
