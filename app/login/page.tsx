@@ -11,7 +11,7 @@ interface LoginProps {
     onLoginSuccess: () => void;
 }
 
-export default function Login({ onClose, onLoginSuccess }: LoginProps) {
+function Login({ onClose, onLoginSuccess }: LoginProps) {
     const router = useRouter();
     const [formData, setFormData] = useState({ username: "", password: "" });
     const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
@@ -37,10 +37,13 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
             });
 
             const response = await api.post(
-                `http://35.193.219.136:4040/api/v1/users/login`,
+                "http://35.193.219.136:4040/api/v1/users/login",
                 params.toString(),
                 {
-                    headers: { "Content-Type": "application/x-www-form-urlencoded", "X-Require-Auth": "false" }
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-Require-Auth": "false",
+                    },
                 }
             );
 
@@ -50,6 +53,7 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
             onLoginSuccess();
             onClose();
 
+            // Decode token payload to determine user roles and redirect accordingly.
             const decodedPayload = JSON.parse(atob(data.access_token.split(".")[1]));
             const userRoles = decodedPayload.realm_access?.roles || [];
             router.push(userRoles.includes("group_member") ? "/application" : "/");
@@ -60,17 +64,18 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
     };
 
     return (
-        // <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white rounded-lg shadow-xl w-full max-w-md relative">
-                <button onClick={onClose}
-                        className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 transition-colors">
-                    <X className="h-6 w-6"/>
+                <button
+                    onClick={onClose}
+                    className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                    <X className="h-6 w-6" />
                 </button>
 
                 <div className="p-8">
                     <div className="flex items-center justify-center space-x-2 mb-8">
-                        <Building2 className="h-10 w-10 text-green-500"/>
+                        <Building2 className="h-10 w-10 text-green-500" />
                         <h1 className="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
                             CiviLink
                         </h1>
@@ -126,4 +131,20 @@ export default function Login({ onClose, onLoginSuccess }: LoginProps) {
             </div>
         </div>
     );
+}
+
+export default function LoginPage() {
+    const router = useRouter();
+
+    const handleLoginSuccess = () => {
+        // Redirect to home page or application page after a successful login.
+        router.push("/");
+    };
+
+    const handleClose = () => {
+        // For a standalone page, you might redirect or handle closing differently.
+        router.push("/");
+    };
+
+    return <Login onClose={handleClose} onLoginSuccess={handleLoginSuccess} />;
 }
