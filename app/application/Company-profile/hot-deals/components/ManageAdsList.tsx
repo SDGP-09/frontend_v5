@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import ManageAdCard from "./ManageAdCard";
 import ManageAdModal from "./ManageAdModal";
 import { Ad } from "@/app/types/advertisement.hot-deals";
@@ -17,14 +18,42 @@ export default function ManageAdsList({
                                           onUpdateAd,
                                           onCreateAd,
                                       }: ManageAdsListProps) {
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
     // Track the selected Ad (for editing in modal)
     const [selectedAd, setSelectedAd] = useState<Ad | null>(null);
+
+    // On mount or when searchParams/ads change, check if there's an id in the URL.
+    useEffect(() => {
+        const idParam = searchParams.get("id");
+        if (idParam) {
+            const adId = Number(idParam);
+            const foundAd = ads.find((ad) => ad.id === adId);
+            if (foundAd) {
+                setSelectedAd(foundAd);
+            }
+        }
+    }, [searchParams, ads]);
 
     // Filter by field
     const filteredAds =
         selectedField === "all"
             ? ads
             : ads.filter((ad) => ad.field === selectedField);
+
+    // When an ad card is clicked, select that ad and update the URL with its id
+    const handleSelectAd = (ad: Ad) => {
+        console.log("Ad selected:", ad);
+        setSelectedAd(ad);
+        window.history.pushState(null, "", `/application/Company-profile/hot-deals/${ad.id}`);
+    };
+
+    // When the modal is closed, clear the selected ad and remove the id from the URL
+    const handleCloseModal = () => {
+        setSelectedAd(null);
+        window.history.pushState(null, "", `/application/Company-profile/hot-deals`);
+    };
 
     // Create a new blank ad (on click of the black card)
     const handleCreateNew = () => {
@@ -39,16 +68,18 @@ export default function ManageAdsList({
             visibility: true,
         };
         setSelectedAd({ ...newAd, id: 0 }); // Temporarily use 0
+        window.history.pushState(null, "", `/application/Company-profile/hot-deals/0`);
     };
 
     return (
+        <Suspense fallback={<div>Loading ads...</div>}>
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredAds.map((ad) => (
                     <ManageAdCard
                         key={ad.id}
                         ad={ad}
-                        onSelectAd={(selected) => setSelectedAd(selected)}
+                        onSelectAd={handleSelectAd}
                         onUpdateAd={onUpdateAd}
                     />
                 ))}
@@ -75,11 +106,12 @@ export default function ManageAdsList({
             {selectedAd && (
                 <ManageAdModal
                     ad={selectedAd}
-                    onClose={() => setSelectedAd(null)}
+                    onClose={handleCloseModal}
                     onUpdateAd={onUpdateAd}
                     onCreateAd={onCreateAd}
                 />
             )}
         </>
+        </Suspense>
     );
 }

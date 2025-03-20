@@ -3,7 +3,7 @@
  * This file is the Next.js 13+ route for "/application/Company-profile/hot-deals".
  * It replaces your old "ManageAds.tsx" from the separate React project.
  */
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { Building2, ChevronDown } from "lucide-react";
 import ManageAdsList from "./components/ManageAdsList";
 // import your Ad type from whichever file you are storing it in.
@@ -32,7 +32,7 @@ const sampleAds: Ad[] = [
     },
     {
         id: 2,
-        ownerId: 1,
+        ownerId: 2,
         title: "Electrical Engineering Consultant",
         description: "Professional electrical engineer offering...",
         field: "power",
@@ -79,31 +79,6 @@ export default function ManageHotDealsPage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-50">
-            {/*
-        Nav section.
-        If you already have a global NavBar in layout.tsx,
-        remove or replace this block.
-      */}
-            <nav className="bg-white shadow-lg">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16 items-center">
-                        <div className="flex items-center">
-                            <Building2 className="h-8 w-8 text-green-500" />
-                            <span className="ml-2 text-xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
-                BuildConnect
-              </span>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <button className="px-4 py-2 text-blue-500 hover:text-blue-600 font-medium">
-                                Login
-                            </button>
-                            <button className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300">
-                                Sign Up
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
 
             <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="relative mb-8">
@@ -140,12 +115,14 @@ export default function ManageHotDealsPage() {
                 </div>
 
                 {/* The main listing of Ads */}
+                <Suspense fallback={<div>Loading ads...</div>}>
                 <ManageAdsList
                     ads={ads}
                     selectedField={selectedField}
                     onUpdateAd={handleUpdateAd}
                     onCreateAd={handleCreateAd}
                 />
+                </Suspense>
             </main>
         </div>
     );
