@@ -1,4 +1,5 @@
 "use client"
+import axios from "axios";
 
 import { useState } from "react";
 
@@ -11,16 +12,26 @@ export default function Addtask() {
     const [dependencies, setDependencies] = useState("");
     const [description, setDescription] = useState("");
 
-    const handleSave = () => {
+    const handleSave =async () => {
         const projectData = {
             id: projectId,
             name,
             startDate,
             endDate,
-            progress,
+            progress:progress.toString(),
             dependencies,
             description,
         };
+        try {
+            const response = await axios.post("http://localhost:7878/api/project/add-task", projectData,{
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            console.log("Task added successfully!", response.data);
+        } catch (error) {
+            console.error("Error adding task:", error);
+        }
 
         console.log("Saved project:", projectData);
         // You can replace this with an API call or other logic.
