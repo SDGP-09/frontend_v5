@@ -1,14 +1,14 @@
 import {Text} from "lucide-react";
 
+
+
+
 export default function Task (){
     return(
        <div className=" w-full h-full ">
            <div className="w-full h-10 flex">
                <div className="w-full text-xl ml-5">
                    <p>task: task view</p>
-               </div>
-               <div className="w-full h-full flex justify-end">
-                   <button className=" px-5 boder border-white rounded-full cursor-pointer">add task</button>
                </div>
            </div>
            <div className="  flex w-full h-1/6">
