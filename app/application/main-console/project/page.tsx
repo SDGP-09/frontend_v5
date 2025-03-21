@@ -18,10 +18,8 @@ export default function Project(){
                         </button>
                     </div>
                 </div>
-
             </div>
             <div className="w-full h-4/5  flex flex-col mt-4">
-
                 <div className="w-full h-2/3 ">
                     <GanttChart/>
                 </div>

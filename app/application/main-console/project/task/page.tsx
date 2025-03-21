@@ -2,13 +2,16 @@
 
 import { useSearchParams, useParams } from "next/navigation";
 import {useRouter} from "next/navigation";
-
+import axios from "axios";
+import { useState } from "react";
 
 
 export default function Task (){
     const router = useRouter();
     const params = useParams();
     const searchParams = useSearchParams();
+    const [isDeleting, setIsDeleting] = useState(false);
+
 
     const task = {
         id: searchParams.get("id"),
@@ -20,6 +23,24 @@ export default function Task (){
         description: searchParams.get("description"),
     };
 
+    const handleDelete = async () => {
+        if (!task.id) return;
+
+        try {
+            setIsDeleting(true);
+            await axios.delete(`http://localhost:7075/api/tasks/${task.id}`);
+            router.push("/application/main-console/project");
+        } catch (error) {
+            console.error("Error deleting task:", error);
+            setIsDeleting(false);
+        }
+    };
+
+    const handleUpdate = () => {
+        router.push(`/application/main-console/project/addtask?id=${task.id}&name=${task.name}&start=${task.start}&end=${task.end}&progress=${task.progress}&dependencies=${task.dependencies}&description=${task.description}`);
+    };
+
+
     return(
        <div className=" w-full h-full ">
            <div className="w-full h-10 flex">
@@ -29,7 +50,7 @@ export default function Task (){
                <div className="flex gap-4">
                    <button
                        className="py-1 px-5 border border-white rounded-full flex items-center gap-2 cursor-pointer"
-                       onClick={() => router.push("/application/main-console/project/addtask")}
+                       onClick={handleUpdate}
                    >
                        <i className="ri-pencil-line"></i>
                        <span>Update</span>
@@ -37,10 +58,11 @@ export default function Task (){
 
                    <button
                        className="py-1 px-5 border border-white rounded-full flex items-center gap-2 cursor-pointer"
-                       onClick={() => router.push("/application/main-console/project/component/Gantt-chart")}
+                       onClick={handleDelete}
+                       disabled={isDeleting}
                    >
                        <i className="ri-delete-bin-7-line"></i>
-                       <span>Delete</span>
+                       <span>{isDeleting ? "Deleting..." : "Delete"}</span>
                    </button>
                </div>
 
