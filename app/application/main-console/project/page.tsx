@@ -9,12 +9,12 @@ export default function Project(){
             <div className="w-full h-14 ">
                 <div className= "w-full h-full  flex">
                     <div className="h-full flex-1  flex items-center">
-                        <p className= "text-4xl font-bold"> Task Manager</p>
+                        <p className= "text-4xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text"> Task Manager</p>
                     </div>
                     <div className="h-full flex-1  text-xl flex justify-end items-center" >
-                        <button className= "py-1 px-10 border border-white rounded-full mr-5 cursor-pointer" onClick={()=>router.push("/application/main-console/project/addtask")}>
+                        <button className= "py-1 px-10   rounded-full mr-5 cursor-pointer bg-gradient-to-r from-green-400 to-blue-500 text-white" onClick={()=>router.push("/application/main-console/project/addtask")}>
                             <i className="ri-sticky-note-add-line"></i>
-                            <span >add task</span>
+                            <span >Add Task</span>
                         </button>
                     </div>
                 </div>

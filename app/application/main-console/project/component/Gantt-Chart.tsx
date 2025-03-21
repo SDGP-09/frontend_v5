@@ -16,7 +16,6 @@ interface Task {
 }
 
 
-
 const GanttChart = () => {
     const ganttContainer = useRef<HTMLDivElement>(null);
     const ganttInstance = useRef<any>(null);
