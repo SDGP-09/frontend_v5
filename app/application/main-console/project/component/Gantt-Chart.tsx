@@ -5,13 +5,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 interface Task {
-     id:String;
-     name:String;
-     startDate:String;
-     endDate:String;
-     progress:String;
-     dependencies:String;
-     description:String;
+     id:string;
+     name:string;
+     startDate:string;
+     endDate:string;
+     progress:string;
+     dependencies:string;
+     description:string;
 
 }
 
@@ -27,8 +27,19 @@ const GanttChart = () => {
     const fetchTasks = async () => {
         try {
             const response = await axios.get("http://localhost:7878/api/project");
-            setTasks(response.data);
-            console.log("Tasks fetched:", response.data);
+    
+            const formattedTasks = response.data.map((task: any) => ({
+                id: task.id,
+                name: task.name,
+                start: task.startDate,  // Rename startDate -> start
+                end: task.endDate,      // Rename endDate -> end
+                progress: Number(task.progress) || 0, // Ensure progress is a number
+                dependencies: task.dependencies || "", // Default to empty if undefined
+                description: task.description || "No description available", // Prevent undefined values
+            }));
+    
+            setTasks(formattedTasks);
+            console.log("Tasks fetched and formatted:", formattedTasks);
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
@@ -49,7 +60,7 @@ const GanttChart = () => {
             if (ganttContainer.current) {
                 ganttContainer.current.innerHTML = "";
 
-
+                
 
                 ganttInstance.current = new (Gantt as any)(ganttContainer.current, tasks, {
                     view_mode: "Day",
@@ -68,7 +79,7 @@ const GanttChart = () => {
                 ganttContainer.current.innerHTML = ""; // Ensure element exists before modifying
             }
         };
-    }, [tasks]);
+    }, [pathname,tasks]);
 
     return (
         <div className="w-full h-[400px] overflow-auto  bg-gray-100">
