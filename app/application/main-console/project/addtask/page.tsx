@@ -1,61 +1,127 @@
 "use client"
-import {useRouter} from "next/navigation";
+
+import { useState } from "react";
 
 export default function Addtask() {
-    //const router = useRouter();
+    const [projectId] = useState("6541");
+    const [name, setName] = useState("project A");
+    const [startDate, setStartDate] = useState("2023-10-02");
+    const [endDate, setEndDate] = useState("2023-10-02");
+    const [progress, setProgress] = useState(20);
+    const [dependencies, setDependencies] = useState("");
+    const [description, setDescription] = useState("");
+
+    const handleSave = () => {
+        const projectData = {
+            id: projectId,
+            name,
+            startDate,
+            endDate,
+            progress,
+            dependencies,
+            description,
+        };
+
+        console.log("Saved project:", projectData);
+        // You can replace this with an API call or other logic.
+    };
+
     return (
-        <div className=" w-full h-full ">
-            <div className="w-full h-10 flex">
-                <div className="w-full text-2xl font-bold ml-5 ">
+        <div className="w-full h-full p-4">
+            {/* Header */}
+            <div className="w-full h-10 flex items-center justify-between">
+                <div className="text-2xl font-bold ml-2">
                     <p>Project Overview</p>
                 </div>
-                <div className="w-full h-full flex justify-end">
-                    <button className= "py-1 px-5 border border-white rounded-full mr-5 cursor-pointer" >
+                <div>
+                    <button
+                        onClick={handleSave}
+                        className="py-1 px-5 border border-white rounded-full flex items-center gap-2 cursor-pointer"
+                    >
                         <i className="ri-sticky-note-add-line"></i>
-                        <span>add subtask</span>
+                        <span>Save</span>
                     </button>
                 </div>
             </div>
-            <div className="  flex w-full h-1/6">
-                <div className="  flex-1 flex h-full text-2xl items-center pl-5">
-                    <div className="mr-4"><p>id:</p></div>
-                    <div className="flex-1 bg-gray-700 pl-10 py-2 mr-2 rounded-full"><p>6541</p></div>
+
+            {/* Row 1 */}
+            <div className="flex w-full mt-6 space-x-6">
+                <div className="flex-1 flex items-center text-xl">
+                    <label className="mr-4">ID:</label>
+                    <div className="flex-1 bg-gray-700 px-6 py-2 rounded-full">{projectId}</div>
                 </div>
-                <div className="  flex-1 flex h-full text-2xl items-center pl-5">
-                    <div className="mr-4"><p>name:</p></div>
-                    <p className="flex-1 bg-gray-700 pl-10 py-2 mr-2 rounded-full">Project A</p>
+
+                <div className="flex-1 flex items-center text-xl">
+                    <label className="mr-4">Name:</label>
+                    <input
+                        className="flex-1 bg-gray-700 px-6 py-2 rounded-full"
+                        type="text"
+                        value={name}
+                        placeholder="Enter project name"
+                        onChange={(e) => setName(e.target.value)}
+                    />
                 </div>
             </div>
 
-            <div className="   flex w-full h-1/6">
-                <div className=" 0 flex-1 flex h-full text-2xl items-center pl-5">
-                    <div className="mr-4"><p> start:</p></div>
-                    <div className="flex-1 bg-gray-700 pl-10 py-2 mr-2 rounded-full"><p>11111</p></div>
+            {/* Row 2 */}
+            <div className="flex w-full mt-6 space-x-6">
+                <div className="flex-1 flex items-center text-xl">
+                    <label className="mr-4">Start:</label>
+                    <input
+                        className="flex-1 bg-gray-700 px-6 py-2 rounded-full"
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                    />
                 </div>
-                <div className="  flex-1 flex h-full text-2xl items-center pl-5">
-                    <div className="mr-4"><p>end:</p></div>
-                    <div className="flex-1 bg-gray-700 pl-10 py-2 mr-2 rounded-full"><p>3541</p></div>
+
+                <div className="flex-1 flex items-center text-xl">
+                    <label className="mr-4">End:</label>
+                    <input
+                        className="flex-1 bg-gray-700 px-6 py-2 rounded-full"
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                    />
                 </div>
             </div>
 
-            <div className="  flex w-full h-1/6">
-                <div className=" flex-1 flex h-full text-2xl items-center pl-5">
-                    <div className="mr-4"><p>progress:</p></div>
-                    <div className="flex-1 bg-gray-700 pl-10 py-2 mr-2 rounded-full"><p>New</p></div>
+            {/* Row 3 */}
+            <div className="flex w-full mt-6 space-x-6">
+                <div className="flex-1 flex items-center text-xl">
+                    <label className="mr-4">Progress:</label>
+                    <input
+                        className="flex-1 bg-gray-700 px-6 py-2 rounded-full"
+                        type="number"
+                        value={progress}
+                        min={0}
+                        max={100}
+                        onChange={(e) => setProgress(Number(e.target.value))}
+                    />
                 </div>
-                <div className=" flex-1 flex h-full text-2xl items-center pl-5">
-                    <div className="mr-4"><p> dependencies:</p></div>
-                    <div className="flex-1 bg-gray-700 pl-10 py-2 mr-2 rounded-full"><p>xxx</p></div>
+
+                <div className="flex-1 flex items-center text-xl">
+                    <label className="mr-4">Dependencies:</label>
+                    <input
+                        className="flex-1 bg-gray-700 px-6 py-2 rounded-full"
+                        type="text"
+                        value={dependencies}
+                        placeholder="Enter dependencies"
+                        onChange={(e) => setDependencies(e.target.value)}
+                    />
                 </div>
             </div>
 
-            <div className=" flex flex-col w-full h-[250px]">
-                <div className=" flex h-10 text-2xl items-center pl-5">
-                    <div className="mr-4"><p>description:</p></div>
-                </div>
-                <div className=" bg-gray-700 flex-1 flex h-[400px] text-2xl items-center pl-5 rounded-xl"></div>
+            {/* Description */}
+            <div className="flex flex-col w-full mt-6">
+                <label className="text-xl mb-2 pl-1">Description:</label>
+                <textarea
+                    className="w-full h-[100px] bg-gray-700 text-xl p-4 rounded-xl resize-none"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Write a short project description..."
+                ></textarea>
             </div>
-
         </div>
     );
 }
