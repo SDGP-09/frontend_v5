@@ -1,8 +1,9 @@
 "use client";
 
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
 
 
 
@@ -11,6 +12,8 @@ const GanttChart = () => {
     const ganttInstance = useRef<any>(null);
     const router = useRouter();
     const pathname = usePathname();
+
+    const [selectedTask, setSelectedTask] = useState<any>(null);
 
 
     useEffect(() => {
@@ -126,7 +129,7 @@ const GanttChart = () => {
                     language: "en",
                     on_click: (task: any) => {
                         console.log("Task Clicked:", task);
-                        router.push('/application/main-console/project/task'); // Navigate to task view
+                        router.push(`/application/main-console/project/task?id=${task.id}&name=${task.name}&start=${task.start}&end=${task.end}&progress=${task.progress}&dependencies=${task.dependencies}&description=${task.description}`);
                     },
                 });
             }
@@ -143,6 +146,7 @@ const GanttChart = () => {
     return (
         <div className="w-full h-[400px] overflow-auto  bg-gray-100">
             <div ref={ganttContainer} className="w-full h-full  bg-white shadow-lg rounded-lg" />
+            
         </div>
     );
 };
