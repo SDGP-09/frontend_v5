@@ -34,7 +34,7 @@ export default function Addtask() {
         }
 
         console.log("Saved project:", projectData);
-        // You can replace this with an API call or other logic.
+
     };
 
     return (

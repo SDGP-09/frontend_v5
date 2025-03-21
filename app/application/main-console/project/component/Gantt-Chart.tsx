@@ -1,9 +1,19 @@
 "use client";
 
-
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
+interface Task {
+     id:String;
+     name:String;
+     startDate:String;
+     endDate:String;
+     progress:String;
+     dependencies:String;
+     description:String;
+
+}
 
 
 
@@ -13,10 +23,24 @@ const GanttChart = () => {
     const router = useRouter();
     const pathname = usePathname();
 
-    const [selectedTask, setSelectedTask] = useState<any>(null);
+    const [tasks, setTasks] = useState<Array<Task>>([]);
+    const fetchTasks = async () => {
+        try {
+            const response = await axios.get("http://localhost:7878/api/project");
+            setTasks(response.data);
+            console.log("Tasks fetched:", response.data);
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTasks(); // Load once on mount
+    }, []);
 
 
     useEffect(() => {
+
         const loadGantt = async () => {
             const { default: Gantt } = await import("frappe-gantt");
 
@@ -24,105 +48,8 @@ const GanttChart = () => {
 
             if (ganttContainer.current) {
                 ganttContainer.current.innerHTML = "";
-                const tasks = [
-                    {
-                        id: "Task 1",
-                        name: "Redesign website",
-                        start: "2025-03-20",
-                        end: "2025-03-25",
-                        progress: 20,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 2",
-                        name: "Write blog post",
-                        start: "2025-03-22",
-                        end: "2025-03-24",
-                        progress: 50,
-                        dependencies: "Task 1",
-                    },
-                    {
-                        id: "Task 3",
-                        name: "Write blog post",
-                        start: "2025-03-22",
-                        end: "2025-03-24",
-                        progress: 50,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 4",
-                        name: "Redesign website",
-                        start: "2025-03-20",
-                        end: "2025-03-25",
-                        progress: 20,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 5",
-                        name: "Redesign website",
-                        start: "2025-03-20",
-                        end: "2025-03-25",
-                        progress: 20,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 6",
-                        name: "Write blog post",
-                        start: "2025-03-22",
-                        end: "2025-03-24",
-                        progress: 50,
-                        dependencies: "Task 1",
-                    },
-                    {
-                        id: "Task 7",
-                        name: "Write blog post",
-                        start: "2025-03-22",
-                        end: "2025-03-24",
-                        progress: 50,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 8",
-                        name: "Redesign website",
-                        start: "2025-03-20",
-                        end: "2025-03-25",
-                        progress: 20,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 1",
-                        name: "Redesign website",
-                        start: "2025-03-20",
-                        end: "2025-03-25",
-                        progress: 20,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 2",
-                        name: "Write blog post",
-                        start: "2025-03-22",
-                        end: "2025-03-24",
-                        progress: 50,
-                        dependencies: "Task 1",
-                    },
-                    {
-                        id: "Task 3",
-                        name: "Write blog post",
-                        start: "2025-03-22",
-                        end: "2025-03-24",
-                        progress: 50,
-                        dependencies: "",
-                    },
-                    {
-                        id: "Task 4",
-                        name: "Redesign website",
-                        start: "2025-03-20",
-                        end: "2025-03-25",
-                        progress: 20,
-                        dependencies: "",
-                    },
 
-                ];
+
 
                 ganttInstance.current = new (Gantt as any)(ganttContainer.current, tasks, {
                     view_mode: "Day",
@@ -141,7 +68,7 @@ const GanttChart = () => {
                 ganttContainer.current.innerHTML = ""; // Ensure element exists before modifying
             }
         };
-    }, [pathname]);
+    }, [tasks]);
 
     return (
         <div className="w-full h-[400px] overflow-auto  bg-gray-100">
