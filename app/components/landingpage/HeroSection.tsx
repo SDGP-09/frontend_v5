@@ -422,7 +422,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
                                             className="flex flex-wrap gap-4 mt-8"
                                         >
                                             <motion.a
-                                                href="/service"
+                                                href="/company"
                                                 className="inline-block px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold text-sm tracking-wider rounded-md shadow-lg shadow-blue-900/20 border border-white/10"
                                                 whileHover={{
                                                     scale: 1.05,
@@ -435,7 +435,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
 
                                             </motion.a>
                                             <motion.a
-                                                href="/about"
+                                                href="/login"
                                                 className="inline-block px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold text-sm tracking-wider rounded-md hover:bg-white/20 transition-all"
                                                 whileHover={{
                                                     scale: 1.05,

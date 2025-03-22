@@ -11,7 +11,6 @@ const NavBarWrapper: React.FC = () => {
     const navItems: string[] = [
         'HOME',
         'SERVICES',
-        // 'PROJECTS',
         'ABOUT',
         'CONTACT'
     ];
