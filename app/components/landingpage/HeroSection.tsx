@@ -58,7 +58,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
             title: "Build Better, Together",
             subtitle: "Project Management Simplified",
             description: "Our innovative platform enables company based authentication, project management, real-time collaboration and inter-platform messaging.",
-            image: "https://images.unsplash.com/photo-1535732759880-bbd5c7265e3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
+            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1742633254/landscape-with-plane-flying-sky_23-2149553591_lixd8b.jpg",
+            // image: "https://images.unsplash.com/photo-1535732759880-bbd5c7265e3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
             ctaText: "EXPLORE SERVICES",
             // stats: [
             //   { value: "30%", label: "Time Saved" },
@@ -72,7 +73,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
             title: "Construction Excellence",
             subtitle: "Your Vision, Our Expertise",
             description: "Find the perfect partners for your construction projects with our intelligent matching algorithm and verified professional network.",
-            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1740427233/bridge-water-blue-sky-daytime_417767-125_yiq7ck.avif",
+            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1742633254/construction-works-frankfurt-downtown-germany_1268-20907_gcslcr.avif",
             ctaText: "VIEW PROJECTS",
             // stats: [
             //   { value: "8,500+", label: "Verified Professionals" },
