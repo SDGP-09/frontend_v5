@@ -170,26 +170,26 @@ const Navbar: React.FC<NavbarProps> = ({
                                             className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300 flex items-center space-x-2"
                                         >
                                             <User className="h-5 w-5" />
-                                            <span>Profile</span>
+                                            <span>PROFILE</span>
                                         </button>
                                         <button
                                             onClick={handleLogout}
                                             className="px-4 py-2 text-red-600 hover:text-red-700 font-medium transition-all duration-200 flex items-center space-x-2"
                                         >
                                             <LogOut className="h-5 w-5" />
-                                            <span>Logout</span>
+                                            <span>LOGOUT</span>
                                         </button>
                                     </div>
                                 ) : (
                                     <>
                                         <button
                                             onClick={() => setShowLogin(true)}
-                                            className="px-4 py-2 text-green-600 hover:text-green-700 font-medium transition-all duration-200"
+                                            className="px-4 py-2 text-white hover:text-green-700 font-medium transition-all duration-200"
                                         >
-                                            Login
+                                            LOGIN
                                         </button>
                                         <button className="px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:from-green-500 hover:to-blue-600 transition-all duration-300">
-                                            Sign Up
+                                            SIGN UP
                                         </button>
                                     </>
                                 )}

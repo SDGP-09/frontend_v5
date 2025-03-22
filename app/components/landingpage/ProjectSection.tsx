@@ -281,7 +281,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                         Our Portfolio
                     </motion.span>
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        Inspiring{" "}
+                        Build the{" "}
                         <motion.span
                             className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500"
                             animate={{
@@ -290,14 +290,12 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                             transition={{ duration: 5, repeat: Infinity }}
                             style={{ backgroundSize: "200% auto" }}
                         >
-                            Spaces
+                            Future
                         </motion.span>{" "}
-                        We&apos;ve Created
+                        of Construction
                     </h2>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Explore our showcase of exceptional architecture and design that
-                        transforms visions into reality, each project reflecting our
-                        commitment to innovation and excellence.
+                        Explore the innovative solutions we offer to help small and large-scale construction companies connect with investors, professionals, and clients. Our platform is designed to empower the construction industry by providing easy access to portfolios, contract management, and collaborative tools to bring your projects to life.
                     </p>
                 </motion.div>
 
