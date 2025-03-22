@@ -32,16 +32,16 @@ export default function Tender (){
         //try {
            // setIsDeleting(true);
             //await axios.delete(`http://localhost:7075/api/tasks/${task.id}`);
-            //router.push("/application/main-console/project");
+            router.push("/application/main-console/tender-management/addtender");
         //} catch (error) {
            // console.error("Error deleting task:", error);
             //setIsDeleting(false);
         //}
     //};
 
-    //const handleUpdate = () => {
-      //  router.push(`/application/main-console/project/addtask?id=${task.id}&name=${task.name}&start=${task.start}&end=${task.end}&progress=${task.progress}&dependencies=${task.dependencies}&description=${task.description}`);
-    //};
+    const handleUpdate = () => {
+      router.push(`/application/main-console/tender-management/addtender?id=${tender.id}&name=${tender.name}&start=${tender.open}&end=${tender.close}&progress=${tender.progress}&dependencies=${tender.dependencies}&description=${tender.description}`);
+    };
 
     // Calculate the duration in days
     const calculateDuration = () => {
