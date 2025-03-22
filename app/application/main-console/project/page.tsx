@@ -24,7 +24,7 @@ export default function Project(){
                             <CalendarClock className="h-7 w-7 text-white"/>
                         </div>
                         <h1 className="text-3xl font-bold bg-gradient-to-r from-green-500 to-blue-600 text-transparent bg-clip-text">
-                            Projects Timeline
+                            Project Timeline
                         </h1>
                     </div>
                     <div>

@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import axios from "axios";
 import { useState } from "react";
 import { Hash, FileTextIcon, PercentSquare, Link2, Pencil, Trash2, AlertCircle, Calendar, Clock } from 'lucide-react';
-import ProjectLayout from "@/app/components/ProjectLayout";
+import TenderLayout from "@/app/components/TenderLayout";
 
 
 
@@ -32,7 +32,7 @@ export default function Tender (){
         //try {
            // setIsDeleting(true);
             //await axios.delete(`http://localhost:7075/api/tasks/${task.id}`);
-            router.push("/application/main-console/tender-management/addtender");
+            //router.push("/application/main-console/tender-management/addtender");
         //} catch (error) {
            // console.error("Error deleting task:", error);
             //setIsDeleting(false);
@@ -108,8 +108,8 @@ export default function Tender (){
 
 
     return(
-        <ProjectLayout
-            title={tender.name || "Task Details"}
+        <TenderLayout
+            title={tender.name || "Tender Details"}
             subtitle={`Duration: ${calculateDuration()}`}
             status={{
                 text: getTaskStatus(),
@@ -120,13 +120,13 @@ export default function Tender (){
             <div className="p-6">
                 {/* Task Details Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    {/* ID */}
+
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-500 mb-1 flex items-center font-sans">
                             <Hash className="h-4 w-4 mr-1" />
                             Tender ID
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {tender.id || "N/A"}
                         </div>
                     </div>
@@ -137,10 +137,10 @@ export default function Tender (){
                             <PercentSquare className="h-4 w-4 mr-1" />
                             Progress
                         </label>
-                        <div className="flex items-center font-sans bg-gray-50 border border-gray-100 rounded-full px-4 py-2">
-                            <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                        <div className="flex items-center font-sans bg-white border border-white rounded-full px-4 py-2">
+                            <div className="w-full bg-gray-200 rounded-full h-4 mr-2">
                                 <div
-                                    className="bg-blue-600 h-2.5 rounded-full"
+                                    className="bg-blue-600 h-4 rounded-full"
                                     style={{ width: `${tender.progress || 0}%` }}
                                 ></div>
                             </div>
@@ -154,7 +154,7 @@ export default function Tender (){
                             <Calendar className="h-4 w-4 mr-1" />
                             open Date
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {formatDate(tender.open)}
                         </div>
                     </div>
@@ -165,7 +165,7 @@ export default function Tender (){
                             <Clock className="h-4 w-4 mr-1" />
                             close Date
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {formatDate(tender.close)}
                         </div>
                     </div>
@@ -176,7 +176,7 @@ export default function Tender (){
                             <Link2 className="h-4 w-4 mr-1" />
                             Dependencies
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {tender.dependencies ? tender.dependencies.split(',').map((dep, i) => (
                                 <span key={i} className="inline-block bg-blue-50 text-blue-600 rounded-full px-2 py-1 text-xs mr-2">
                                     {dep.trim()}
@@ -192,7 +192,7 @@ export default function Tender (){
                         <FileTextIcon className="h-4 w-4 mr-1" />
                         Description
                     </label>
-                    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-4 text-gray-700 min-h-[200px] whitespace-pre-wrap font-sans">
+                    <div className="bg-white border border-gray-300 rounded-2xl p-4 text-gray-700 min-h-[200px] whitespace-pre-wrap font-sans">
                         {tender.description ||
                             <div className="flex items-center text-gray-500">
                                 <AlertCircle className="h-4 w-4 mr-2" />
@@ -202,7 +202,7 @@ export default function Tender (){
                     </div>
                 </div>
             </div>
-        </ProjectLayout>
+        </TenderLayout>
 
     );
 }

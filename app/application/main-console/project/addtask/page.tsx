@@ -157,7 +157,7 @@ export default function Addtask() {
 
     return (
         <ProjectLayout
-            title={isEditMode ? "Update Task Details" : "Create New Task"}
+            title={isEditMode ? "Update Task Details" : "Create Your Latest Project With Us"}
             actions={saveButton}
         >
             {/* Status message */}

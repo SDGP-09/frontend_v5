@@ -126,7 +126,7 @@ export default function Task (){
                             <Hash className="h-4 w-4 mr-1" />
                             Task ID
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {task.id || "N/A"}
                         </div>
                     </div>
@@ -137,10 +137,10 @@ export default function Task (){
                             <PercentSquare className="h-4 w-4 mr-1" />
                             Progress
                         </label>
-                        <div className="flex items-center font-sans bg-gray-50 border border-gray-100 rounded-full px-4 py-2">
-                            <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                        <div className="flex items-center font-sans bg-white  border-white rounded-full px-4 py-2">
+                            <div className="w-full bg-gray-200 rounded-full h-4 mr-2">
                                 <div
-                                    className="bg-blue-600 h-2.5 rounded-full"
+                                    className="bg-blue-600 h-4 rounded-full"
                                     style={{ width: `${task.progress || 0}%` }}
                                 ></div>
                             </div>
@@ -154,7 +154,7 @@ export default function Task (){
                             <Calendar className="h-4 w-4 mr-1" />
                             Start Date
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {formatDate(task.start)}
                         </div>
                     </div>
@@ -165,7 +165,7 @@ export default function Task (){
                             <Clock className="h-4 w-4 mr-1" />
                             End Date
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {formatDate(task.end)}
                         </div>
                     </div>
@@ -176,7 +176,7 @@ export default function Task (){
                             <Link2 className="h-4 w-4 mr-1" />
                             Dependencies
                         </label>
-                        <div className="bg-gray-50 border border-gray-100 rounded-full px-4 py-2 text-gray-800 font-sans">
+                        <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-800 font-sans">
                             {task.dependencies ? task.dependencies.split(',').map((dep, i) => (
                                 <span key={i} className="inline-block bg-blue-50 text-blue-600 rounded-full px-2 py-1 text-xs mr-2">
                                     {dep.trim()}
@@ -192,7 +192,7 @@ export default function Task (){
                         <FileTextIcon className="h-4 w-4 mr-1" />
                         Description
                     </label>
-                    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-4 text-gray-700 min-h-[200px] whitespace-pre-wrap font-sans">
+                    <div className="bg-white border border-gray-300 rounded-2xl p-4 text-gray-700 min-h-[200px] whitespace-pre-wrap font-sans">
                         {task.description ||
                             <div className="flex items-center text-gray-500">
                                 <AlertCircle className="h-4 w-4 mr-2" />
