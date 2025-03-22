@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from 'next/link';
+import { motion } from "framer-motion";
 import { ClipboardList, MessageSquare, FileText, Shield } from "lucide-react";
 
 export default function Services() {
@@ -16,10 +18,10 @@ export default function Services() {
         },
         {
             icon: <MessageSquare className="h-12 w-12 text-white" />,
-            title: "Interplatform Messaging",
+            title: "Inter-platform Messaging",
             shortDesc: "Keep your team connected with real-time messaging across all platforms.",
             longDesc:
-                "Our Interplatform Messaging system ensures your team stays connected across web and mobile. Share updates instantly, exchange critical project files, and collaborate seamlessly in real-time. With features like read receipts, file sharing, and group conversations, communication barriers are eliminated, keeping everyone on the same page regardless of their location or device.",
+                "Our Inter-platform Messaging system ensures your team stays connected across web and mobile. Share updates instantly, exchange critical project files, and collaborate seamlessly in real-time. With features like read receipts, file sharing, and group conversations, communication barriers are eliminated, keeping everyone on the same page regardless of their location or device.",
             bgColor: "from-blue-400 to-blue-600",
             iconBg: "bg-blue-500",
         },
@@ -47,14 +49,53 @@ export default function Services() {
     return (
         <div className="min-h-screen bg-gray-50" id="top">
             {/* Hero Section */}
-            <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white py-20">
-                <div className="max-w-6xl mx-auto px-6 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
-                    <p className="text-xl max-w-3xl mx-auto">
-                        Comprehensive solutions designed for the construction industry
-                    </p>
+            {/*<div className="bg-gradient-to-r from-green-500 to-blue-600 text-white py-20">*/}
+            {/*    <div className="max-w-6xl mx-auto px-6 text-center">*/}
+            {/*        <h1 className="text-4xl md:text-5xl font-bold mb-6"> Services</h1>*/}
+            {/*        <p className="text-xl max-w-3xl mx-auto">*/}
+            {/*          Bridging innovation, collaboration, and efficiency in every construction project*/}
+            {/*        </p>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+            {/* Hero Section */}
+
+            {/* <div*/}
+            {/*     className="bg-cover bg-center text-white py-20"*/}
+            {/*     style={{*/}
+            {/*       backgroundImage:*/}
+            {/*             "url('https://res.cloudinary.com/ddcbr53w0/image/upload/v1742633254/landscape-with-plane-flying-sky_23-2149553591_lixd8b.jpg')",*/}
+            {/*    }}>*/}
+            {/*    <div className="bg-black bg-opacity-50 py-20">*/}
+            {/*        <div className="max-w-6xl mx-auto px-6 text-center">*/}
+            {/*           <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>*/}
+            {/*            <p className="text-xl max-w-3xl mx-auto">*/}
+            {/*                Comprehensive solutions designed for the construction industry*/}
+            {/*            </p>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+            <motion.div
+                className="bg-cover bg-center text-white py-20"
+                style={{
+                    backgroundImage:
+                        "url('https://res.cloudinary.com/ddcbr53w0/image/upload/v1742633254/landscape-with-plane-flying-sky_23-2149553591_lixd8b.jpg')",
+                }}
+                // Animate from transparent & slightly shifted down to fully visible & aligned
+                initial={{opacity: 0, y: 50}}
+                whileInView={{opacity: 1, y: 0}}
+                // Only animate once when scrolled into view
+                viewport={{once: true}}
+                transition={{duration: 0.8, ease: "easeOut"}}
+            >
+                <div className="bg-black bg-opacity-50 py-20">
+                    <div className="max-w-6xl mx-auto px-6 text-center">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
+                        <p className="text-xl max-w-3xl mx-auto">
+                            Comprehensive solutions designed for the construction industry
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Services Overview */}
             <div className="py-16 px-6">
@@ -170,12 +211,33 @@ export default function Services() {
                         benefiting from CiviLink&apos;s comprehensive platform.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <button className="px-8 py-3 bg-white text-blue-600 font-bold rounded-md hover:bg-gray-100 transition-colors duration-300">
-                            Get Started
-                        </button>
-                        <button className="px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded-md hover:bg-white/10 transition-colors duration-300">
-                            Request Demo
-                        </button>
+                        <Link href="/service">
+                            <motion.div
+                                className="cursor-pointer block"
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
+                            >
+                                Get Started
+                            </motion.div>
+                        </Link>
+                        {/*<button className="px-8 py-3 bg-white text-blue-600 font-bold rounded-md hover:bg-gray-100 transition-colors duration-300">*/}
+                        {/*    Get Started*/}
+                        {/*</button>*/}
+
+
+                        {/*<button className="px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded-md hover:bg-white/10 transition-colors duration-300">*/}
+                        {/*    Request Demo*/}
+                        {/*</button>*/}
+                        <Link href="/service">
+                            <motion.div
+                                className="cursor-pointer block"
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
+                            >
+                                Get More
+                            </motion.div>
+                        </Link>
+
                     </div>
                 </div>
             </div>

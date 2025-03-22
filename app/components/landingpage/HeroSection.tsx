@@ -45,41 +45,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
             subtitle: "Streamlining Collaboration",
             description: "CiviLink bridges the gap between contractors and clients, creating a seamless ecosystem for successful project delivery.",
             image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
-            ctaText: "GET A QUOTE",
-            // stats: [
-            //   { value: "5,000+", label: "Active Users" },
-            //   { value: "1,200+", label: "Projects Completed" },
-            //   { value: "98%", label: "Satisfaction Rate" },
-            // ],
-            // tags: ["Contractors", "Subcontractors", "Project Management"]
+            ctaText: "",
+
         },
         {
             id: 2,
             title: "Build Better, Together",
             subtitle: "Project Management Simplified",
             description: "Our innovative platform enables company based authentication, project management, real-time collaboration and inter-platform messaging.",
-            image: "https://images.unsplash.com/photo-1535732759880-bbd5c7265e3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
-            ctaText: "EXPLORE SERVICES",
-            // stats: [
-            //   { value: "30%", label: "Time Saved" },
-            //   { value: "25%", label: "Cost Reduction" },
-            //   { value: "45%", label: "Efficiency Increase" },
-            // ],
-            // tags: ["Project Tracking", "Team Collaboration", "Resource Management"]
+            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1742633254/landscape-with-plane-flying-sky_23-2149553591_lixd8b.jpg",
+            ctaText: "",
+
         },
         {
             id: 3,
             title: "Construction Excellence",
             subtitle: "Your Vision, Our Expertise",
             description: "Find the perfect partners for your construction projects with our intelligent matching algorithm and verified professional network.",
-            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1740427233/bridge-water-blue-sky-daytime_417767-125_yiq7ck.avif",
-            ctaText: "VIEW PROJECTS",
-            // stats: [
-            //   { value: "8,500+", label: "Verified Professionals" },
-            //   { value: "4.8/5", label: "Average Rating" },
-            //   { value: "3,200+", label: "Successful Matches" },
-            // ],
-            // tags: ["Partner Matching", "Verified Network", "Quality Assurance"]
+            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1742633254/construction-works-frankfurt-downtown-germany_1268-20907_gcslcr.avif",
+            ctaText: "",
+
         }
     ];
 
@@ -90,12 +75,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
             title: "For General Contractors",
             subtitle: "Streamline Your Projects",
             description: "Access a network of qualified subcontractors, manage projects efficiently, and reduce administrative overhead.Find new opportunities, showcase your expertise, and build lasting relationships with top contractors.",
-            image: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
-            ctaText: "JOIN AS CONTRACTOR",
-            //   stats: [
-            //     { value: "35%", label: "Faster Hiring" },
-            //     { value: "20%", label: "Budget Savings" },
-            //   ]
+            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1740421412/civil-engineer-construction-worker-manager-holding-digital-tablet-blueprints-talking-planing-about-construction-site-cooperation-teamwork-concept_jw7skb.jpg",
+            ctaText: "",
+
         },
         {
             id: 2,
@@ -104,24 +86,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
             description: "Accelerate your success by exploring fresh opportunities, highlighting your unique strengths, and forging enduring partnerships with leading contractors.",
             image: "https://images.unsplash.com/photo-1553028826-f4804a6dba3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
             ctaText: "",
-            // stats: [
-            //   { value: "40%", label: "More Projects" },
-            //   { value: "27%", label: "Revenue Increase" },
-            // ]
+
         },
         {
             id: 3,
             title: "For Consultants",
             subtitle: "Streamline Your Projects",
             description: "Access a network of top construction professionals, manage client engagements efficiently, and simplify administrative tasks. Discover new opportunities, showcase your specialized expertise, and build lasting partnerships with industry leaders.",
-            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80",
+            image: "https://res.cloudinary.com/ddcbr53w0/image/upload/v1740422118/smiling-entrepreneurs-discussing-business-document-folder_xeqsjk.jpg",
 
+            ctaText: "",
 
-            ctaText: "JOIN AS CONSULTANT",
-            // stats: [
-            //   { value: "50%", label: "Better Oversight" },
-            //   { value: "30%", label: "Fewer Delays" },
-            // ]
         }
     ];
 
@@ -421,7 +396,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
                                             className="flex flex-wrap gap-4 mt-8"
                                         >
                                             <motion.a
-                                                href="/service"
+                                                href="/company"
                                                 className="inline-block px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold text-sm tracking-wider rounded-md shadow-lg shadow-blue-900/20 border border-white/10"
                                                 whileHover={{
                                                     scale: 1.05,
@@ -434,7 +409,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
 
                                             </motion.a>
                                             <motion.a
-                                                href="/about"
+                                                href="/"
                                                 className="inline-block px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold text-sm tracking-wider rounded-md hover:bg-white/20 transition-all"
                                                 whileHover={{
                                                     scale: 1.05,
