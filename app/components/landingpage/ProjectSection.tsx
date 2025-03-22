@@ -1,29 +1,22 @@
+
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Project {
     id: string;
-    title: string;
-    description: string;
-    location: string;
     category: string;
-    year: string;
     image: string;
     link: string;
     featured?: boolean;
 }
 
-// interface ProjectsSectionProps {
-//   projectsRef: React.RefObject<HTMLDivElement>;
-// }
 interface ProjectsSectionProps {
     projectsRef: React.RefObject<HTMLDivElement | null>;
 }
 
-
 const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
-    const [activeCategory, setActiveCategory] = useState('all');
+    const [activeCategory, setActiveCategory] = useState("all");
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isInView, setIsInView] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
@@ -32,66 +25,56 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
     const projects: Project[] = [
         {
             id: 'p1',
-            title: 'Azure Sky Residence',
-            description: 'A breathtaking cliffside residence with floor-to-ceiling windows, infinity pool, and sustainable energy systems integrated seamlessly into the natural landscape.',
-            location: 'Malibu, CA',
             category: 'residential',
-            year: '2023',
             image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
             link: '/projects/azure-sky-residence',
-            featured: true
+            featured: true,
         },
+
         {
             id: 'p2',
-            title: 'Obsidian Tower',
-            description: 'A striking 40-story commercial tower featuring a dramatic glass façade, rooftop garden terraces, and LEED Platinum certification for its innovative sustainability features.',
-            location: 'Chicago, IL',
             category: 'commercial',
-            year: '2023',
-            image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-            link: '/projects/obsidian-tower'
+            image: 'https://res.cloudinary.com/ddcbr53w0/image/upload/v1742647992/3d-electric-car-building_23-2148972401_sormws.avif',
+            link: '/projects/obsidian-tower',
         },
         {
             id: 'p3',
-            title: 'Heritage Lofts',
-            description: 'Meticulous restoration of a 19th-century textile factory into luxury residential lofts, preserving historic brick and timber elements while introducing modern amenities.',
-            location: 'Boston, MA',
             category: 'renovation',
-            year: '2022',
             image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-            link: '/projects/heritage-lofts'
+            link: '/projects/heritage-lofts',
         },
         {
             id: 'p4',
-            title: 'Oceanic Pavilion',
-            description: 'A beachfront masterpiece designed with curved glass walls that mirror the ocean waves, featuring storm-resistant construction and panoramic views from every room.',
-            location: 'Miami, FL',
             category: 'residential',
-            year: '2022',
             image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
             link: '/projects/oceanic-pavilion',
-            featured: true
+            featured: true,
         },
         {
             id: 'p5',
-            title: 'The Promenade Complex',
-            description: 'An award-winning mixed-use development integrating retail, dining, and luxury apartments around a central courtyard with interactive water features and native landscaping.',
-            location: 'Portland, OR',
             category: 'commercial',
-            year: '2023',
             image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-            link: '/projects/promenade-complex'
+            link: '/projects/promenade-complex',
         },
         {
             id: 'p6',
-            title: 'Palm Springs Oasis',
-            description: 'Stunning renovation of an iconic mid-century modern home, restoring original architectural elements while integrating cutting-edge smart home technology and desert landscaping.',
-            location: 'Palm Springs, CA',
             category: 'renovation',
-            year: '2021',
             image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-            link: '/projects/palm-springs-oasis'
-        }
+            link: '/projects/palm-springs-oasis',
+        },
+        {
+            id: 'p7',
+            category: 'renovation',
+            image: 'https://res.cloudinary.com/ddcbr53w0/image/upload/v1742648128/istockphoto-1448386210-612x612_aliqge.jpg',
+            link: '/projects/palm-springs-oasis',
+        },
+        {
+            id: 'p8',
+            category: 'commercial',
+            image: 'https://res.cloudinary.com/ddcbr53w0/image/upload/v1742649223/istockphoto-578830714-612x612_kxbmlb.jpg',
+            link: '/projects/palm-springs-oasis',
+        },
+
     ];
 
     // Set up intersection observer for scroll animations
@@ -117,23 +100,24 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
     }, [projectsRef]);
 
     // Get unique categories for filter tabs
-    const categories = ['all', ...Array.from(new Set(projects.map(project => project.category)))];
+    const categories = ["all", ...Array.from(new Set(projects.map((project) => project.category)))];
 
     // Filter projects based on active category
-    const filteredProjects = activeCategory === 'all'
-        ? projects
-        : projects.filter(project => project.category === activeCategory);
+    const filteredProjects =
+        activeCategory === "all"
+            ? projects
+            : projects.filter((project) => project.category === activeCategory);
 
     // Open project modal
     const openProjectModal = (project: Project) => {
         setSelectedProject(project);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
     };
 
     // Close project modal
     const closeProjectModal = () => {
         setSelectedProject(null);
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = "auto";
     };
 
     // Handle click outside modal to close
@@ -151,9 +135,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
             transition: {
                 when: "beforeChildren",
                 staggerChildren: 0.1,
-                duration: 0.8
-            }
-        }
+                duration: 0.8,
+            },
+        },
     };
 
     const headerVariants = {
@@ -164,9 +148,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
             transition: {
                 type: "spring",
                 stiffness: 100,
-                damping: 15
-            }
-        }
+                damping: 15,
+            },
+        },
     };
 
     const tabsVariants = {
@@ -178,9 +162,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                 type: "spring",
                 stiffness: 100,
                 damping: 15,
-                delay: 0.2
-            }
-        }
+                delay: 0.2,
+            },
+        },
     };
 
     const projectVariants = {
@@ -191,24 +175,24 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
             transition: {
                 type: "spring",
                 stiffness: 50,
-                damping: 15
-            }
+                damping: 15,
+            },
         },
         hover: {
             y: -10,
             transition: {
                 type: "spring",
                 stiffness: 400,
-                damping: 10
-            }
-        }
+                damping: 10,
+            },
+        },
     };
 
     const imageVariants = {
         hover: {
             scale: 1.05,
-            transition: { duration: 0.5 }
-        }
+            transition: { duration: 0.5 },
+        },
     };
 
     const buttonVariants = {
@@ -217,12 +201,12 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
             boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
             transition: {
                 type: "spring",
-                stiffness: 400
-            }
+                stiffness: 400,
+            },
         },
         tap: {
-            scale: 0.95
-        }
+            scale: 0.95,
+        },
     };
 
     const modalVariants = {
@@ -234,14 +218,14 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
             transition: {
                 type: "spring",
                 stiffness: 300,
-                damping: 25
-            }
+                damping: 25,
+            },
         },
         exit: {
             opacity: 0,
             y: 30,
-            transition: { duration: 0.2 }
-        }
+            transition: { duration: 0.2 },
+        },
     };
 
     return (
@@ -262,24 +246,24 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                     className="absolute top-1/4 right-1/4 w-20 h-20 bg-gradient-to-r from-green-300 to-blue-300 rounded-full mix-blend-multiply"
                     animate={{
                         y: [0, 30, 0],
-                        opacity: [0.4, 0.6, 0.4]
+                        opacity: [0.4, 0.6, 0.4],
                     }}
                     transition={{
                         duration: 8,
                         repeat: Infinity,
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                     }}
                 />
                 <motion.div
                     className="absolute bottom-1/3 left-1/3 w-12 h-12 bg-gradient-to-r from-green-300 to-blue-300 rounded-full mix-blend-multiply"
                     animate={{
                         y: [0, -20, 0],
-                        opacity: [0.3, 0.5, 0.3]
+                        opacity: [0.3, 0.5, 0.3],
                     }}
                     transition={{
                         duration: 6,
                         repeat: Infinity,
-                        ease: "easeInOut"
+                        ease: "easeInOut",
                     }}
                 />
             </div>
@@ -297,18 +281,23 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                         Our Portfolio
                     </motion.span>
                     <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                        Inspiring <motion.span
-                        className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500"
-                        animate={{
-                            backgroundPosition: ['0% center', '100% center', '0% center'],
-                        }}
-                        transition={{ duration: 5, repeat: Infinity }}
-                        style={{ backgroundSize: '200% auto' }}
-                    >Spaces</motion.span> We&apos;ve Created
+                        Inspiring{" "}
+                        <motion.span
+                            className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500"
+                            animate={{
+                                backgroundPosition: ["0% center", "100% center", "0% center"],
+                            }}
+                            transition={{ duration: 5, repeat: Infinity }}
+                            style={{ backgroundSize: "200% auto" }}
+                        >
+                            Spaces
+                        </motion.span>{" "}
+                        We&apos;ve Created
                     </h2>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Explore our showcase of exceptional architecture and design that transforms visions into reality,
-                        each project reflecting our commitment to innovation and excellence.
+                        Explore our showcase of exceptional architecture and design that
+                        transforms visions into reality, each project reflecting our
+                        commitment to innovation and excellence.
                     </p>
                 </motion.div>
 
@@ -325,7 +314,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                             type: "spring",
                             stiffness: 100,
                             damping: 15,
-                            delay: 0.3
+                            delay: 0.3,
                         }}
                     >
                         {categories.map((category) => (
@@ -333,11 +322,15 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                 key={category}
                                 onClick={() => setActiveCategory(category)}
                                 className={`px-6 py-3 rounded-lg font-medium transition-all 
-                  ${activeCategory === category
-                                    ? 'bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-md'
-                                    : 'text-gray-700 hover:bg-gray-100'
+                  ${
+                                    activeCategory === category
+                                        ? "bg-gradient-to-r from-green-500 to-blue-500 text-white shadow-md"
+                                        : "text-gray-700 hover:bg-gray-100"
                                 }`}
-                                whileHover={{ scale: 1.05, boxShadow: "0px 5px 15px rgba(0,0,0,0.1)" }}
+                                whileHover={{
+                                    scale: 1.05,
+                                    boxShadow: "0px 5px 15px rgba(0,0,0,0.1)",
+                                }}
                                 whileTap={{ scale: 0.95 }}
                                 aria-pressed={activeCategory === category}
                                 initial={{ opacity: 0 }}
@@ -363,7 +356,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                         {filteredProjects.map((project, index) => (
                             <motion.div
                                 key={project.id}
-                                className={`${project.featured ? 'md:col-span-2 lg:col-span-2' : ''}`}
+                                // REMOVED: no md:col-span-2 / lg:col-span-2
+                                className="" // ensures uniform card size
                                 variants={projectVariants}
                                 whileHover="hover"
                                 custom={index}
@@ -373,9 +367,10 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                     className="h-full rounded-xl overflow-hidden bg-white shadow-xl cursor-pointer transform transition-all border border-gray-100"
                                     onClick={() => openProjectModal(project)}
                                     whileHover={{
-                                        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                                        boxShadow:
+                                            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
                                         y: -10,
-                                        borderColor: "#0EA5E9"
+                                        borderColor: "#0EA5E9",
                                     }}
                                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                 >
@@ -383,7 +378,6 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                     <div className="relative overflow-hidden aspect-[16/10]">
                                         <motion.img
                                             src={project.image}
-                                            alt={project.title}
                                             className="w-full h-full object-cover"
                                             variants={imageVariants}
                                         />
@@ -398,7 +392,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: 0.2 }}
                                         >
-                                            {project.category.charAt(0).toUpperCase() + project.category.slice(1)}
+                                            {project.category.charAt(0).toUpperCase() +
+                                                project.category.slice(1)}
                                         </motion.div>
 
                                         {/* Featured Badge */}
@@ -421,29 +416,21 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.5 }}
-                                        >
-                                            {project.title}
-                                        </motion.h3>
+                                        ></motion.h3>
 
                                         <motion.div
                                             className="flex items-center gap-2 text-gray-500 text-sm mb-3"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.5, delay: 0.1 }}
-                                        >
-                                            <span>{project.location}</span>
-                                            <span className="w-1 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full"></span>
-                                            <span>{project.year}</span>
-                                        </motion.div>
+                                        ></motion.div>
 
                                         <motion.p
                                             className="text-gray-600 line-clamp-2 mb-4"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.5, delay: 0.2 }}
-                                        >
-                                            {project.description}
-                                        </motion.p>
+                                        ></motion.p>
 
                                         <motion.div
                                             className="inline-flex items-center font-medium text-teal-600 hover:text-blue-600 transition-colors"
@@ -452,9 +439,20 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.5, delay: 0.3 }}
                                         >
-                                            View Details
-                                            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                            Get in Touch
+                                            <svg
+                                                className="w-4 h-4 ml-2"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                                ></path>
                                             </svg>
                                         </motion.div>
                                     </div>
@@ -471,61 +469,17 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ delay: 0.6, duration: 0.6 }}
                 >
-                    {/*<motion.a*/}
-                    {/*    // href="/projects"*/}
-                    {/*    className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white font-medium rounded-xl shadow-lg hover:from-green-600 hover:to-blue-600 transition-colors"*/}
-                    {/*    whileHover={{*/}
-                    {/*      scale: 1.05,*/}
-                    {/*      boxShadow: "0px 15px 25px rgba(0,0,0,0.1)",*/}
-                    {/*    }}*/}
-                    {/*    whileTap={{scale: 0.95}}*/}
-                    {/*    initial={{opacity: 0, y: 20}}*/}
-                    {/*    animate={{opacity: 1, y: 0}}*/}
-                    {/*    transition={{*/}
-                    {/*      type: "spring",*/}
-                    {/*      stiffness: 300,*/}
-                    {/*      damping: 15,*/}
-                    {/*      delay: 0.5*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*<span>Explore Our Full Portfolio</span>*/}
-                    {/*<a href="https://project-civilink.netlify.app/">*/}
-                    {/*  <span>Explore Our Full Portfolio</span>*/}
-                    {/*</a>*/}
-                    {/*  <motion.a*/}
-                    {/*      href="https://project-civilink.netlify.app/"*/}
-                    {/*      className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500"*/}
-                    {/*  >*/}
-                    {/*    <span>Explore Our Full Portfolio</span>*/}
-                    {/*  </motion.a>*/}
-
-
-                    {/*  <motion.svg*/}
-                    {/*      className="w-5 h-5"*/}
-                    {/*      fill="none"*/}
-                    {/*      stroke="currentColor"*/}
-                    {/*      viewBox="0 0 24 24"*/}
-                    {/*      xmlns="http://www.w3.org/2000/svg"*/}
-                    {/*      animate={{x: [0, 5, 0]}}*/}
-                    {/*      transition={{*/}
-                    {/*        duration: 1.5,*/}
-                    {/*        repeat: Infinity,*/}
-                    {/*        repeatType: "loop",*/}
-                    {/*        ease: "easeInOut",*/}
-                    {/*        delay: 1*/}
-                    {/*      }}*/}
-                    {/*  >*/}
-                    {/*    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>*/}
-                    {/*  </motion.svg>*/}
-                    {/*</motion.a>*/}
                     <motion.a
                         href="https://project-civilink.netlify.app/"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white font-medium rounded-xl shadow-lg hover:from-green-600 hover:to-blue-600 transition-colors"
-                        whileHover={{scale: 1.05, boxShadow: "0px 15px 25px rgba(0,0,0,0.1)"}}
-                        whileTap={{scale: 0.95}}
-                        initial={{opacity: 0, y: 20}}
-                        animate={{opacity: 1, y: 0}}
-                        transition={{type: "spring", stiffness: 300, damping: 15, delay: 0.5}}
+                        whileHover={{
+                            scale: 1.05,
+                            boxShadow: "0px 15px 25px rgba(0,0,0,0.1)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 15, delay: 0.5 }}
                     >
                         <span>Explore Our Full Portfolio</span>
                         <motion.svg
@@ -534,20 +488,27 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                             stroke="currentColor"
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
-                            animate={{x: [0, 5, 0]}}
+                            animate={{ x: [0, 5, 0] }}
                             transition={{
                                 duration: 1.5,
                                 repeat: Infinity,
                                 repeatType: "loop",
                                 ease: "easeInOut",
-                                delay: 1
+                                delay: 1,
                             }}
                         >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                            ></path>
                         </motion.svg>
                     </motion.a>
 
-                    <p className="mt-4 text-gray-500">Discover more of our award-winning designs</p>
+                    <p className="mt-4 text-gray-500">
+                        Discover more of our award-winning designs
+                    </p>
                 </motion.div>
             </div>
 
@@ -556,9 +517,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                 {selectedProject && (
                     <motion.div
                         className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         onClick={handleOutsideClick}
                     >
                         <motion.div
@@ -580,7 +541,6 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                 >
                                     <motion.img
                                         src={selectedProject.image}
-                                        alt={selectedProject.title}
                                         className="w-full h-full object-cover"
                                         initial={{ scale: 1.2 }}
                                         animate={{ scale: 1 }}
@@ -598,8 +558,19 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                     initial={{ opacity: 0, scale: 0.5 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                 >
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    <svg
+                                        className="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        ></path>
                                     </svg>
                                 </motion.button>
 
@@ -617,63 +588,47 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projectsRef }) => {
                                             animate={{ opacity: 1, scale: 1 }}
                                             transition={{ duration: 0.3, delay: 0.4 }}
                                         >
-                                            {selectedProject.category.charAt(0).toUpperCase() + selectedProject.category.slice(1)}
+                                            {selectedProject.category.charAt(0).toUpperCase() +
+                                                selectedProject.category.slice(1)}
                                         </motion.span>
-                                        <span>•</span>
-                                        <span>{selectedProject.location}</span>
-                                        <span>•</span>
-                                        <span>{selectedProject.year}</span>
                                     </div>
                                     <motion.h3
                                         className="text-3xl font-bold text-white"
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.5, delay: 0.3 }}
-                                    >
-                                        {selectedProject.title}
-                                    </motion.h3>
+                                    ></motion.h3>
                                 </motion.div>
                             </div>
 
                             {/* Modal Content */}
                             <div className="p-8">
-                                <h4 className="text-xl font-bold text-gray-900 mb-4">Project Overview</h4>
-                                <p className="text-gray-600 mb-8">{selectedProject.description}</p>
-
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                                     <motion.div
                                         className="bg-gradient-to-r from-green-50 to-cyan-50 p-5 rounded-xl border border-green-100"
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
-                                        whileHover={{ y: -5, boxShadow: "0px 8px 15px rgba(0,0,0,0.05)" }}
-                                    >
-                                        <h5 className="font-medium text-gray-900 mb-2">Location</h5>
-                                        <p className="text-gray-600">{selectedProject.location}</p>
-                                    </motion.div>
+                                    ></motion.div>
+
                                     <motion.div
                                         className="bg-gradient-to-r from-green-50 to-cyan-50 p-5 rounded-xl border border-green-100"
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.5, delay: 0.3 }}
-                                        whileHover={{ y: -5, boxShadow: "0px 8px 15px rgba(0,0,0,0.05)" }}
-                                    >
-                                        <h5 className="font-medium text-gray-900 mb-2">Project Type</h5>
-                                        <p className="text-gray-600">{selectedProject.category.charAt(0).toUpperCase() + selectedProject.category.slice(1)}</p>
-                                    </motion.div>
+                                    ></motion.div>
+
                                     <motion.div
                                         className="bg-gradient-to-r from-green-50 to-cyan-50 p-5 rounded-xl border border-green-100"
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5, delay: 0.4 }}
-                                        whileHover={{ y: -5, boxShadow: "0px 8px 15px rgba(0,0,0,0.05)" }}
-                                    >
-                                        <h5 className="font-medium text-gray-900 mb-2">Completion Year</h5>
-                                        <p className="text-gray-600">{selectedProject.year}</p>
-                                    </motion.div>
+                                        whileHover={{
+                                            y: -5,
+                                            boxShadow: "0px 8px 15px rgba(0,0,0,0.05)",
+                                        }}
+                                    ></motion.div>
                                 </div>
-
-
                             </div>
                         </motion.div>
                     </motion.div>

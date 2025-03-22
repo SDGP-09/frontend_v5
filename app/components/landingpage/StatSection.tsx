@@ -304,7 +304,7 @@ const StatsSection: React.FC = () => {
                                         transition={{ duration: 0.6, delay: 0.8 }}
                                     >
                                         <motion.a
-                                            href="/about"
+                                            href="/service"
                                             className="inline-flex items-center px-6 py-3 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-colors group relative overflow-hidden"
                                             whileHover={{ scale: 1.03 }}
                                             whileTap={{ scale: 0.98 }}
@@ -357,7 +357,7 @@ const StatsSection: React.FC = () => {
                                 </div>
                                 <div>
                                     <motion.a
-                                        href="/home-page"
+                                        href="/company"
                                         className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 hover:from-green-600 hover:to-blue-600 transition-colors relative overflow-hidden group"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.98 }}
