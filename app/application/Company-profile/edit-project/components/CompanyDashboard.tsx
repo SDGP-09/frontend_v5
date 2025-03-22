@@ -43,8 +43,8 @@ export default function CompanyDashboard() {
     useEffect(() => {
         const fetchCompanyDetails = async () => {
             try {
-                const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contractors/company1`,
+                const response = await axios.post(
+                    `http://35.193.219.136:4040/api/contractors/Company-details`,
                     {
                         headers: { "X-Require-Auth": "true" },
                     }
@@ -153,7 +153,7 @@ export default function CompanyDashboard() {
 
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contractors/update`,
+                `http://35.193.219.136:4040/api/contractors/update`,
                 payload,
                 {
                     headers: {
