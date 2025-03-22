@@ -1,12 +1,13 @@
-import {Conversation} from "@/app/types/conversation.messenger";
-import MessengerInterface from "../messenger/MessengerInterface";
+import { Conversation } from "@/app/types/conversation.messenger";
+import MessengerInterface from "../MessengerInterface";
 
-// Example: Suppose we fetch conversation data from some API or database.
-async function fetchConversations() {
-    // In a real app, you’d do a fetch or DB call here.
-    // For now, we'll return the same dummy data used before:
+type PageProps = {
+    params: { id: string };
+    searchParams: { [key: string]: string | string[] | undefined };
+};
 
-
+// Reuse the same fetchConversations function (or import it if defined elsewhere)
+async function fetchConversations(): Promise<Conversation[]>{
     const dummyConversations: Conversation[] = [
         {
             id: 1,
@@ -32,19 +33,19 @@ async function fetchConversations() {
             sender: "Alice",
             profilePicture: new Blob(["more dummy image data"], { type: "image/png" }),
             lastMessage: "Thanks for the update!",
-            updatedAt: null, // No update time provided
-            // unreadMessageCount is optional and can be omitted if not needed.
+            updatedAt: null,
         },
     ];
     return dummyConversations;
 }
 
-export default async function MessengerPage() {
-    // 1) Fetch data on the server
+export default async function MessengerWithIdPage(props: unknown): Promise<React.ReactNode> {
+    const { params } = props as PageProps;
     const conversations = await fetchConversations();
-
-    // 2) Render a client component, passing in SSR data
     return (
-        <MessengerInterface initialConversations={conversations} />
+        <MessengerInterface
+            initialConversations={conversations}
+            selectedId={params.id}
+        />
     );
 }

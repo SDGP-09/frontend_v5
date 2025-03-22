@@ -6,6 +6,7 @@
 */
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Building2 } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import ChatWindow from './components/ChatWindow';
@@ -23,16 +24,24 @@ import {io, Socket} from "socket.io-client";
 
 interface MessengerInterfaceProps {
     initialConversations: Conversation[]; // from SSR
+    selectedId?: string;
 }
 
 export default function MessengerInterface({
                                                initialConversations,
+                                               selectedId,
                                            }: MessengerInterfaceProps) {
+    const router = useRouter();
     // 1) State for conversations (SSR-provided)
     const [conversations, setConversations] = useState<Conversation[]>(initialConversations);
 
     // 2) Currently selected conversation
-    const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
+    const [selectedConversation, setSelectedConversation] = useState<Conversation |null>(() => {
+        if (selectedId) {
+            return initialConversations.find(c => c.id.toString() === selectedId) || null;
+        }
+        return initialConversations[0] || null;
+    });
 
     // 3) State for sidebar width (drag to resize)
     const [sidebarWidth, setSidebarWidth] = useState(384); // initial 384px
@@ -57,6 +66,14 @@ export default function MessengerInterface({
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        if (selectedId) {
+            const conv = conversations.find(c => c.id.toString() === selectedId);
+            if (conv && conv.id !== selectedConversation?.id) {
+                setSelectedConversation(conv);
+            }
+        }
+    }, [selectedId, conversations, selectedConversation]);
 
     useEffect(()=>{
         const token: string = "This is a dummy token";
@@ -90,7 +107,11 @@ export default function MessengerInterface({
         return [conversations[lastIndex - 1].id, conversations[lastIndex].id];
     }
 
-
+    const handleSelectConversation = (conv: Conversation) => {
+        setSelectedConversation(conv);
+        // Update the URL to reflect the conversation id.
+        router.push(`/application/messenger/${conv.id}`);
+    };
 
 
     // 6) Drag logic: sidebar resize
@@ -142,7 +163,7 @@ export default function MessengerInterface({
                     <Sidebar
                         width={isMobileView ? '100%' : `${sidebarWidth}px`}
                         conversations={conversations}
-                        onSelectConversation={(conv) => setSelectedConversation(conv)}
+                        onSelectConversation={handleSelectConversation}
                         socket={socket}
                     />
                 )}
