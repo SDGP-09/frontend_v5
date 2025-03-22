@@ -26,7 +26,7 @@ export default function MainConsole(){
                    <button className="w-auto h-auto cursor-pointer">
                        <div>
                            <i className="ri-todo-line"></i>
-                           <p className="underline text-2xl">Manage Tenders</p>
+                           <p className="underline text-2xl"onClick={()=>router.push("/application/main-console/tender-management")}>Manage Tenders</p>
                        </div>
                    </button>
                </div>
