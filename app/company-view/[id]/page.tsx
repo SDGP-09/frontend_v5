@@ -33,7 +33,7 @@ export default function CompanyProfileByIdPage() {
                 // 1) Make the POST request to /api/contractors/Company-details
                 //    passing the ID in the request body.
                 const response = await axios.post(
-                    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/contractors/Company-details`,
+                    `http://35.193.219.136:4040/api/contractors/Company-details`,
                     { id: parseInt(id, 10) }, // must match your IdBasedRequestDTO
                     {
                         headers: {
