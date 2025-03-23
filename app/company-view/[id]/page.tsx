@@ -50,20 +50,20 @@ export default function CompanyProfileByIdPage() {
                 // 3) We still need some fields that your front-end expects but the backend might not provide
                 //    (e.g., isApproved, occupiedStartDate, etc.). For now, let’s assume you either
                 //    get them from the backend or just fill them in as dummy data:
-                const isApproved = true; // or read from backend if available
-                const occupiedStartDate = "2024-03-15";
-                const occupiedEndDate = "2024-03-22";
+                // const isApproved = true; // or read from backend if available
+                // const occupiedStartDate = "2024-03-15";
+                // const occupiedEndDate = "2024-03-22";
 
                 // 4) Also assume ongoingProjects and completedProjects are not yet returned by the backend,
                 //    so we use some dummy data:
-                const dummyOngoingProjects = [
-                    { id: 1, title: "City Center Mall", image: "https://via.placeholder.com/300" },
-                    { id: 2, title: "Riverside Apartments", image: "https://via.placeholder.com/300" },
-                ];
-                const dummyCompletedProjects = [
-                    { id: 1, title: "Downtown Plaza", image: "https://via.placeholder.com/300" },
-                    { id: 2, title: "Harbor Bridge", image: "https://via.placeholder.com/300" },
-                ];
+                // const dummyOngoingProjects = [
+                //     { id: 1, title: "City Center Mall", image: "https://via.placeholder.com/300" },
+                //     { id: 2, title: "Riverside Apartments", image: "https://via.placeholder.com/300" },
+                // ];
+                // const dummyCompletedProjects = [
+                //     { id: 1, title: "Downtown Plaza", image: "https://via.placeholder.com/300" },
+                //     { id: 2, title: "Harbor Bridge", image: "https://via.placeholder.com/300" },
+                // ];
 
                 // 5) Merge the backend data with your dummy or extra fields
                 const mergedBackendData: BackendCompanyData = {
@@ -72,11 +72,11 @@ export default function CompanyProfileByIdPage() {
                     profileImage: backendResponse.profileImage,
                     ratings: backendResponse.ratings,
                     hotDeals: backendResponse.hotDeals,
-                    isApproved,
-                    ongoingProjects: dummyOngoingProjects,
-                    completedProjects: dummyCompletedProjects,
-                    occupiedStartDate,
-                    occupiedEndDate,
+                    isApproved: backendResponse.isApproved,
+                    ongoingProjects: backendResponse.ongoingProjects,
+                    completedProjects: backendResponse.completedProjects,
+                    occupiedStartDate: backendResponse.occupiedStartDate,
+                    occupiedEndDate: backendResponse.occupiedEndDate,
                 };
 
                 // 6) Convert it to the front-end shape

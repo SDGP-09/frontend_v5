@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { useParams } from "next/navigation";
 import ProfileSection from "./ProfileSection";
 import CalendarSection from "./CalendarSection";
 import HotDealsSection from "./HotDealsSection";
@@ -12,18 +13,17 @@ import {
     BackendCompanyData,
 } from "../../../../util/dataConversion";
 
-export default function CompanyDashboard() {
-    // State for calendar selected dates
-    const [selectedDates, setSelectedDates] = useState<number[]>([15, 16, 20, 21, 22]);
+export default function CompanyProfileByIdPage() {
+    const params = useParams();
+    const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
     // State for editing the profile (controls modal visibility)
     const [isEditingProfile, setIsEditingProfile] = useState(false);
 
-    // [CHANGED] Define companyDetails and formData as CompanyData | null
     const [companyDetails, setCompanyDetails] = useState<CompanyData | null>(null);
     const [formData, setFormData] = useState<CompanyData | null>(null);
-
-    // Additional editing state if needed
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [selectedDates, setSelectedDates] = useState<number[]>([]);
     const [isEditing, setIsEditing] = useState(false);
 
     // File states
@@ -43,36 +43,78 @@ export default function CompanyDashboard() {
     useEffect(() => {
         const fetchCompanyDetails = async () => {
             try {
+                setIsLoading(true);
+                const contractorId = parseInt(id!, 10);
                 const response = await axios.post(
                     `http://35.193.219.136:4040/api/contractors/Company-details`,
+                    { id: contractorId },
                     {
-                        headers: { "X-Require-Auth": "true" },
+                        headers: {
+                            "X-Require-Auth": "true",
+                            "Content-Type": "application/json",},
                     }
                 );
-                // Prepare a BackendCompanyData object
-                const backendData: BackendCompanyData = {
-                    name: response.data.name,
-                    location: response.data.location,
-                    profileImage: response.data.profileImage,
-                    ratings: response.data.ratings || {},
-                    hotDeals: response.data.hotDeals || [],
-                    ongoingProjects: response.data.ongoingProjects || [],
-                    completedProjects: response.data.completedProjects || [],
-                    isApproved: response.data.isApproved ?? true,
-                    occupiedStartDate: response.data.occupiedStartDate ?? "2024-03-15",
-                    occupiedEndDate: response.data.occupiedEndDate ?? "2024-03-22",
-                };
 
-                // Convert the backend data to the front-end shape
-                const convertedData = convertBackendToFrontEnd(backendData);
-                setCompanyDetails(convertedData);
-                setFormData(convertedData);
+                const backendResponse = response.data?.data;
+                if (backendResponse) {
+                    // Prepare a BackendCompanyData object
+                    const backendData: BackendCompanyData = {
+                        name: response.data.name,
+                        location: response.data.location,
+                        profileImage: response.data.profileImage,
+                        ratings: response.data.ratings || {},
+                        hotDeals: response.data.hotDeals || [],
+                        ongoingProjects: response.data.ongoingProjects || [],
+                        completedProjects: response.data.completedProjects || [],
+                        isApproved: response.data.isApproved ?? true,
+                        occupiedStartDate: response.data.occupiedStartDate ?? "2024-03-15",
+                        occupiedEndDate: response.data.occupiedEndDate ?? "2024-03-22",
+                    };
+
+                    // Convert the backend data to the front-end shape
+                    const convertedData = convertBackendToFrontEnd(backendData);
+                    setCompanyDetails(convertedData);
+                    setFormData(convertedData);
+                }else {
+                    // [CREATE MODE] No data exists: initialize formData with empty values.
+                    const emptyData: CompanyData = {
+                        name: "",
+                        location: "",
+                        profileImage: "",
+                        isApproved: false,
+                        ratings: {},
+                        occupiedDates: [],
+                        hotDeals: [],
+                        ongoingProjects: [],
+                        completedProjects: [],
+                    };
+                    setFormData(emptyData);
+                    setCompanyDetails(null);
+                    // Also automatically set edit mode for creation.
+                    setIsEditingProfile(true);
+                }
             } catch (error) {
                 console.error("Error fetching company details:", error);
+                const emptyData: CompanyData = {
+                    name: "",
+                    location: "",
+                    profileImage: "",
+                    isApproved: false,
+                    ratings: {},
+                    occupiedDates: [],
+                    hotDeals: [],
+                    ongoingProjects: [],
+                    completedProjects: [],
+                };
+                setFormData(emptyData);
+                setCompanyDetails(null);
+                setIsEditingProfile(true);
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchCompanyDetails();
-    }, []);
+    }, [id]);
 
     // Toggle date selection in the calendar
     const toggleDateSelection = (day: number) => {
@@ -166,6 +208,22 @@ export default function CompanyDashboard() {
             if (response.status === 200 || response.status === 201) {
                 console.log("Profile updated successfully:", response.data);
                 setCompanyDetails(formData);
+            }else {
+                // No profile exists: Create a new contractor.
+                const response = await axios.post(
+                    `http://35.193.219.136:4040/api/contractors`,
+                    payload, // Ensure this matches your ContractorDTO structure.
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Require-Auth": "true",
+                        },
+                    }
+                );
+                if (response.status === 200 || response.status === 201) {
+                    console.log("Contractor created successfully:", response.data);
+                    setCompanyDetails(formData);
+                }
             }
         } catch (error) {
             console.error("Error updating profile:", error);
