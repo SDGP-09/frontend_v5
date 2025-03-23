@@ -1,173 +1,109 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { useParams } from "next/navigation";
-
 import CompanyInfo from "../components/CompanyInfo";
 import CompanyRatings from "../components/CompanyRatings";
 import AvailabilityCalendar from "../components/AvailabilityCalendar";
 import HotDealsCarousel from "../components/HotDealsCarousel";
 import OngoingProjects from "../components/OngoingProjects";
 import CompletedProjects from "../components/CompletedProjects";
-import { convertBackendToFrontEnd, calculateOccupiedDates, CompanyData, BackendCompanyData } from "../../util/dataConversion";
-
-
-// Type the dummyData object
-const dummyData: { [key: string]: CompanyData } = {
-    "1":convertBackendToFrontEnd( {
-        name: "BuildMaster Construction",
-        location: "New York, NY",
-        profileImage:
-            "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800",
-        isApproved: true,
-        ratings: { 5: 150, 4: 80, 3: 20, 2: 5, 1: 2 },
-        hotDeals: [
-            {
-                id: 1,
-                title: "Spring Special Offer",
-                description: "20% off on all residential projects",
-                image:
-                    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800",
-            },
-            {
-                id: 2,
-                title: "Commercial Package",
-                description: "Complete office renovation package",
-                image:
-                    "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800",
-            },
-        ],
-        ongoingProjects: [
-            {
-                id: 1,
-                title: "City Center Mall",
-                image:
-                    "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800",
-            },
-            {
-                id: 2,
-                title: "Riverside Apartments",
-                image:
-                    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800",
-            },
-        ],
-        completedProjects: [
-            {
-                id: 1,
-                title: "Downtown Plaza",
-                image:
-                    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800",
-            },
-            {
-                id: 2,
-                title: "Harbor Bridge",
-                image:
-                    "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800",
-            },
-        ],
-        occupiedStartDate: "2024-03-15",
-        occupiedEndDate: "2024-03-22",
-    }),
-    "2": convertBackendToFrontEnd({
-        name: "Redwood Interiors",
-        location: "Los Angeles, CA",
-        profileImage:
-            "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=800",
-        isApproved: false,
-        ratings: { 5: 75, 4: 40, 3: 15, 2: 2, 1: 1 },
-        hotDeals: [
-            {
-                id: 1,
-                title: "Summer Renovation Special",
-                description: "15% off on kitchen redesigns",
-                image:
-                    "https://images.unsplash.com/photo-1584986800933-0a6c9747b2ce?auto=format&fit=crop&w=800",
-            },
-            {
-                id: 2,
-                title: "Office Makeover",
-                description: "Complete office interior for a flat rate",
-                image:
-                    "https://images.unsplash.com/photo-1618223155391-1fa1b8c70e07?auto=format&fit=crop&w=800",
-            },
-        ],
-        ongoingProjects: [
-            {
-                id: 1,
-                title: "Bayside Loft",
-                image:
-                    "https://images.unsplash.com/photo-1607603321898-dc02fe5fbbb0?auto=format&fit=crop&w=800",
-            },
-            {
-                id: 2,
-                title: "Downtown Penthouse",
-                image:
-                    "https://images.unsplash.com/photo-1607007059515-46e9b12fef47?auto=format&fit=crop&w=800",
-            },
-        ],
-        completedProjects: [
-            {
-                id: 1,
-                title: "Sunset Boulevard Office",
-                image:
-                    "https://images.unsplash.com/photo-1598300050211-4f03f6bbcb6e?auto=format&fit=crop&w=800",
-            },
-            {
-                id: 2,
-                title: "Historic Villa Remodel",
-                image:
-                    "https://images.unsplash.com/photo-1571941708172-3f8f58f6eb36?auto=format&fit=crop&w=800",
-            },
-        ],
-        occupiedStartDate: "2024-03-10",
-        occupiedEndDate: "2024-03-18",
-
-    }),
-};
+import { convertBackendToFrontEnd, CompanyData, BackendCompanyData } from "../../util/dataConversion";
 
 export default function CompanyProfileByIdPage() {
     const params = useParams();
-    let id: string;
-    if (Array.isArray(params.id)) {
-        id = params.id[0];
-    } else if (params.id) {
-        id = params.id;
-    } else {
-        id = "1"; // Default to "1" if no id is provided
-    }
-
+    const id= Array.isArray(params.id)? params.id[0]:params.id;
     const [companyData, setCompanyData] = useState<CompanyData | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    // Removed unused variables: isEditing, handleInputChange, and handleSubmit
     const [formData, setFormData] = useState<CompanyData | null>(null);
     const isInitialMount = useRef<boolean>(true);
 
-    // Simulate fetching dummy data based on the "id" parameter
     useEffect(() => {
-        setIsLoading(true);
-        const timer = setTimeout(() => {
-            if (dummyData[id]) {
-                const company = dummyData[id];
-                setCompanyData(dummyData[id]);
-                setFormData(dummyData[id]);
-            } else {
-                setCompanyData(null);
-            }
+        if (!id) {
             setIsLoading(false);
-        }, 1000); // Simulated network delay
-        return () => clearTimeout(timer);
+            return;
+        }
+
+
+        // Async function to fetch data from the backend
+        const fetchCompanyDetails = async () => {
+            try {
+                setIsLoading(true);
+
+                // 1) Make the POST request to /api/contractors/Company-details
+                //    passing the ID in the request body.
+                const response = await axios.post(
+                    `http://35.193.219.136:4040/api/contractors/Company-details`,
+                    { id: parseInt(id, 10) }, // must match your IdBasedRequestDTO
+                    {
+                        headers: {
+                            "X-Require-Auth": "true",
+                            "Content-Type": "application/json"
+                        },
+                    }
+                );
+
+                // 2) The backend returns a StandardResponse, so the actual data is in response.data.data
+                //    e.g. { code: 200, message: "Company details", data: {...} }
+                const backendResponse = response.data?.data;
+
+                // 3) We still need some fields that your front-end expects but the backend might not provide
+                //    (e.g., isApproved, occupiedStartDate, etc.). For now, let’s assume you either
+                //    get them from the backend or just fill them in as dummy data:
+                // const isApproved = true; // or read from backend if available
+                // const occupiedStartDate = "2024-03-15";
+                // const occupiedEndDate = "2024-03-22";
+
+                // 4) Also assume ongoingProjects and completedProjects are not yet returned by the backend,
+                //    so we use some dummy data:
+                // const dummyOngoingProjects = [
+                //     { id: 1, title: "City Center Mall", image: "https://via.placeholder.com/300" },
+                //     { id: 2, title: "Riverside Apartments", image: "https://via.placeholder.com/300" },
+                // ];
+                // const dummyCompletedProjects = [
+                //     { id: 1, title: "Downtown Plaza", image: "https://via.placeholder.com/300" },
+                //     { id: 2, title: "Harbor Bridge", image: "https://via.placeholder.com/300" },
+                // ];
+
+                // 5) Merge the backend data with your dummy or extra fields
+                const mergedBackendData: BackendCompanyData = {
+                    name: backendResponse.name,
+                    location: backendResponse.location,
+                    profileImage: backendResponse.profileImage,
+                    ratings: backendResponse.ratings,
+                    hotDeals: backendResponse.hotDeals,
+                    isApproved: backendResponse.isApproved,
+                    ongoingProjects: backendResponse.ongoingProjects,
+                    completedProjects: backendResponse.completedProjects,
+                    occupiedStartDate: backendResponse.occupiedStartDate,
+                    occupiedEndDate: backendResponse.occupiedEndDate,
+                };
+
+                // 6) Convert it to the front-end shape
+                const frontEndData = convertBackendToFrontEnd(mergedBackendData);
+
+                // 7) Store in state
+                setCompanyData(frontEndData);
+            } catch (error) {
+                console.error("Error fetching company details:", error);
+                setCompanyData(null);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        // Call the function
+        fetchCompanyDetails();
     }, [id]);
 
-    // Simulate saving updated data (skip initial mount)
-    useEffect(() => {
-        if (isInitialMount.current) {
-            isInitialMount.current = false;
-        } else {
-            console.log("Saving updated data for id:", id, companyData);
-        }
-    }, [companyData, id]);
+    // Loading & error states
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
-    if (isLoading) return <div>Loading...</div>;
-    if (!companyData) return <div>No company data found for id: {id}</div>;
+    if (!companyData) {
+        return <div>No company data found for id: {id}</div>;
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
