@@ -29,7 +29,7 @@ export default function Tender (){
 
         try {
             setIsDeleting(true);
-            await axios.delete(`http://localhost:7075/api/tenders/${tender.id}`);
+            await axios.delete(`http://35.193.219.136:4040/api/tenders/${tender.id}`);
             router.push("/application/main-console/tender-management");
         } catch (error) {
             console.error("Error deleting task:", error);
