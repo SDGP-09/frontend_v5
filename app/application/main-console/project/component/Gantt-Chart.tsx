@@ -66,7 +66,7 @@ const GanttChart: React.FC<GanttChartProps> = ({ viewMode = "Day" }) => {
         try {
             setIsLoading(true);
             setError(null);
-            const response = await axios.get("http://localhost:7075/api/tasks");
+            const response = await axios.get("http://35.193.219.136:4040/api/v1/users/login",);
     
             const formattedTasks: GanttTask[]  = response.data.map((task: Task) => ({
                 id: task.id,
