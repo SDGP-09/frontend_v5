@@ -102,7 +102,7 @@ export default function Addtask() {
             let response;
             if (isEditMode) {
                 // Update existing task
-                response = await axios.put(`http://localhost:7075/api/tasks/${id}`, taskData, {
+                response = await axios.put(`http://35.193.219.136:4040/api/tasks/${id}`, taskData, {
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -110,7 +110,7 @@ export default function Addtask() {
                 console.log("Task updated successfully!", response.data);
             } else {
                 // Create new task
-                response = await axios.post("http://localhost:7075/api/tasks/save", taskData, {
+                response = await axios.post("http://35.193.219.136:4040/api/tasks/save", taskData, {
                     headers: {
                         "Content-Type": "application/json"
                     }

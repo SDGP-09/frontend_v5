@@ -31,7 +31,7 @@ export default function Task (){
 
         try {
             setIsDeleting(true);
-            await axios.delete(`http://localhost:7075/api/tasks/${task.id}`);
+            await axios.delete(`http://35.193.219.136:4040/api/tasks/${task.id}`);
             router.push("/application/main-console/project");
         } catch (error) {
             console.error("Error deleting task:", error);

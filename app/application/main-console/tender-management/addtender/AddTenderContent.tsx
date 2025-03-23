@@ -102,7 +102,7 @@ export default function Addtender() {
             let response;
             if (isEditMode) {
                 // Update existing task
-                response = await axios.put(`http://localhost:7075/api/tenders/${id}`, tenderData, {
+                response = await axios.put(`http://35.193.219.136:4040/api/tenders/${id}`, tenderData, {
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -110,7 +110,7 @@ export default function Addtender() {
                 console.log("Tender updated successfully!", response.data);
             } else {
                 // Create new task
-                response = await axios.post("http://localhost:7075/api/tenders/save", tenderData, {
+                response = await axios.post("http://35.193.219.136:4040/api/tenders/save", tenderData, {
                     headers: {
                         "Content-Type": "application/json"
                     }
