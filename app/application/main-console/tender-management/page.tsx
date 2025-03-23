@@ -1,7 +1,7 @@
 "use client"
 import GanttChart from "@/app/application/main-console/tender-management/component/Gantt-Chart";
 import {useRouter} from "next/navigation";
-import { CalendarClock, PlusCircle, Clock, BarChart4 } from "lucide-react";
+import { CalendarClock, PlusCircle, Clock, BarChart4, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 export default function Tender(){
@@ -15,37 +15,43 @@ export default function Tender(){
     ];
 
     return (
-        <div className="w-full h-full flex flex-col">
+        <div className="w-full h-screen flex flex-col overflow-hidden">
             {/* Header */}
-            <div className="w-full py-5 px-6 border-b border-gray-100 bg-gradient-to-r from-white to-gray-50 shadow-sm">
+            <div className="w-full py-3 px-6 border-b border-gray-100 bg-gradient-to-r from-white to-gray-50 shadow-sm">
                 <div className="w-full h-full flex items-center justify-between">
                     <div className="flex items-center">
+                        {/* Back Button */}
+                        <button
+                            onClick={() => router.push("/application/main-console")}
+                            className="mr-3 p-1.5 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors duration-200 border border-gray-100"
+                        >
+                            <ArrowLeft className="h-5 w-5 text-gray-600" />
+                        </button>
                         <div className="rounded-full bg-gradient-to-br from-green-400 to-blue-500 p-2 mr-3 shadow-md">
-                            <CalendarClock className="h-7 w-7 text-white"/>
+                            <CalendarClock className="h-6 w-6 text-white"/>
                         </div>
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-green-500 to-blue-600 text-transparent bg-clip-text">
+                        <h1 className="text-2xl font-bold bg-gradient-to-r from-green-500 to-blue-600 text-transparent bg-clip-text">
                             Tender Timeline
                         </h1>
                     </div>
                     <div>
                         <button
-                            className="py-2 px-5 rounded-full cursor-pointer bg-gradient-to-r from-green-500 to-blue-600 text-white font-medium flex items-center shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105"
+                            className="py-1.5 px-4 rounded-full cursor-pointer bg-gradient-to-r from-green-500 to-blue-600 text-white font-medium flex items-center shadow-md hover:shadow-lg transition-all duration-200 ease-in-out transform hover:scale-105"
                             onClick={() => router.push("/application/main-console/tender-management/addtender")}
                         >
-                            <PlusCircle className="w-5 h-5 mr-2"/>
-                            <span>Create New Tender</span>
+                            <PlusCircle className="w-4 h-4 mr-1"/>
+                            <span className="text-sm">New Tender</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             {/* Gantt Chart Section */}
-            <div className="flex-1 p-6">
-                <div className="rounded-xl shadow-sm border border-gray-100 p-5 h-full">
+            <div className="flex-1 p-3 overflow-hidden">
                     <div className="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center">
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-700">Tender Timeline Overview</h2>
-                            <p className="text-sm text-gray-500">Visualize your Tender schedule and track progress</p>
+                            <h2 className="text-lg font-semibold text-gray-700">Tender Timeline Overview</h2>
+                            <p className="text-sm text-gray-500">Visualize your tender schedule and track progress</p>
                         </div>
 
                         {/* View selector tabs */}
@@ -67,11 +73,11 @@ export default function Tender(){
                         </div>
                     </div>
 
-                    <div className="h-[calc(100%-80px)]">
-                       <GanttChart />
+                    <div className="flex-1 overflow-auto">
+                        <GanttChart viewMode={activeView}/>
                     </div>
                 </div>
             </div>
-        </div>
+
     );
 }

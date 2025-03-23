@@ -26,21 +26,21 @@ export default function Tender (){
         description: searchParams.get("description"),
     };
 
-    //const handleDelete = async () => {
-        //if (!tender.id) return;
+    const handleDelete = async () => {
+    if (!tender.id) return;
 
-        //try {
-           // setIsDeleting(true);
-            //await axios.delete(`http://localhost:7075/api/tasks/${task.id}`);
-            //router.push("/application/main-console/tender-management/addtender");
-        //} catch (error) {
-           // console.error("Error deleting task:", error);
-            //setIsDeleting(false);
-        //}
-    //};
+    try {
+    setIsDeleting(true);
+    await axios.delete(`http://localhost:7075/api/tenders/${tender.id}`);
+    router.push("/application/main-console/tender-management");
+    } catch (error) {
+    console.error("Error deleting task:", error);
+    setIsDeleting(false);
+    }
+    };
 
     const handleUpdate = () => {
-      router.push(`/application/main-console/tender-management/addtender?id=${tender.id}&name=${tender.name}&start=${tender.open}&end=${tender.close}&progress=${tender.progress}&dependencies=${tender.dependencies}&description=${tender.description}`);
+        router.push(`/application/main-console/tender-management/addtender?id=${tender.id}&name=${tender.name}&open=${tender.open}&close=${tender.close}&progress=${tender.progress}&dependencies=${tender.dependencies}&description=${tender.description}`);
     };
 
     // Calculate the duration in days
@@ -88,7 +88,7 @@ export default function Tender (){
         <>
             <button
                 className="py-2 px-4 rounded-full flex items-center gap-2 bg-blue-50 text-blue-600 border border-blue-100 hover:bg-blue-100 transition-colors font-sans"
-                //onClick={handleUpdate}
+                onClick={handleUpdate}
             >
                 <Pencil className="h-4 w-4" />
                 <span>Edit</span>
@@ -96,8 +96,8 @@ export default function Tender (){
 
             <button
                 className="py-2 px-4 rounded-full flex items-center gap-2 bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 transition-colors font-sans"
-                //onClick={handleDelete}
-                //disabled={isDeleting}
+                onClick={handleDelete}
+                disabled={isDeleting}
             >
                 <Trash2 className="h-4 w-4" />
                 <span>{isDeleting ? "Deleting..." : "Delete"}</span>

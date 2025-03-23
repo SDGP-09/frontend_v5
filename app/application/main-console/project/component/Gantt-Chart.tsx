@@ -166,8 +166,8 @@ const GanttChart: React.FC<GanttChartProps> = ({ viewMode = "Day" }) => {
     if (tasks.length === 0 && !isLoading) {
         return (
             <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                    <p>No tasks found. Create your first task to get started.</p>
+                <div className="text-center text-gray-500 mt-52">
+                    <p>No Tasks found. Create your first task to get started.</p>
                     <button
                         onClick={() => router.push("/application/main-console/project/addtask")}
                         className="mt-3 px-4 py-2 bg-green-500 text-white rounded-full text-sm hover:bg-green-600"

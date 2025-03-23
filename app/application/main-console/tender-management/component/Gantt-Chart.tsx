@@ -19,8 +19,8 @@ interface Tender{
 interface GanttTask {
     id: string;
     name: string;
-    open: string;
-    close: string;
+    start: string;
+    end: string;
     progress: number;
     dependencies: string;
     description: string;
@@ -61,35 +61,35 @@ const GanttChart: React.FC<GanttChartProps> = ({ viewMode = "Day" }) => {
     const [error, setError] = useState<string | null>(null);
 
 
-    // const fetchTenders = async () => {
-    //     try {
-    //         setIsLoading(true);
-    //         setError(null);
-    //         const response = await axios.get("http://localhost:7075/api/tasks");
-    //
-    //         const formattedTenders: GanttTask[]  = response.data.map((tender: Tender) => ({
-    //             id: tender.id,
-    //             name: tender.name,
-    //             start: tender.openDate,
-    //             end: tender.closeDate,
-    //             progress: Number(tender.progress) || 0,
-    //             dependencies: tender.dependencies || "",
-    //             description: tender.description || "No description available",
-    //         }));
-    //
-    //         setTenders(formattedTenders);
-    //         console.log("Tenders fetched and formatted:", formattedTenders);
-    //     } catch (error) {
-    //         console.error("Error fetching tenders:", error);
-    //         setError("Failed to load tenders. Please try again later.");
-    //     }finally {
-    //         setIsLoading(false);
-    //     }
-    // };
+    const fetchTenders = async () => {
+        try {
+            setIsLoading(true);
+            setError(null);
+            const response = await axios.get("http://localhost:7075/api/tenders");
 
-    // useEffect(() => {
-    //     fetchTenders(); // Load once on mount
-    // }, []);
+            const formattedTenders: GanttTask[]  = response.data.map((tender: Tender) => ({
+                id: tender.id,
+                name: tender.name,
+                start: tender.openDate,
+                end: tender.closeDate,
+                progress: Number(tender.progress) || 0,
+                dependencies: tender.dependencies || "",
+                description: tender.description || "No description available",
+            }));
+
+            setTenders(formattedTenders);
+            console.log("Tenders fetched and formatted:", formattedTenders);
+        } catch (error) {
+            console.error("Error fetching tenders:", error);
+            setError("Failed to load tenders. Please try again later.");
+        }finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchTenders(); // Load once on mount
+    }, []);
 
 
     // Update chart when view mode changes
@@ -121,7 +121,7 @@ const GanttChart: React.FC<GanttChartProps> = ({ viewMode = "Day" }) => {
                             language: "en",
                             on_click: (tender: GanttTask) => {
                                 console.log("Task Clicked:", tender);
-                                router.push(`/application/main-console/tender-management/tender?id=${tender.id}&name=${tender.name}&start=${tender.open}&end=${tender.close}&progress=${tender.progress}&dependencies=${tender.dependencies}&description=${tender.description}`);
+                                router.push(`/application/main-console/tender-management/tender?id=${tender.id}&name=${tender.name}&open=${tender.start}&close=${tender.end}&progress=${tender.progress}&dependencies=${tender.dependencies}&description=${tender.description}`);
                             },
                         }
                     );
@@ -153,7 +153,7 @@ const GanttChart: React.FC<GanttChartProps> = ({ viewMode = "Day" }) => {
                 <div className="text-center text-red-500">
                     <p>{error}</p>
                     <button
-                        //onClick={fetchTenders}
+                        onClick={fetchTenders}
                         className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-full text-sm hover:bg-blue-600"
                     >
                         Try Again
@@ -166,8 +166,8 @@ const GanttChart: React.FC<GanttChartProps> = ({ viewMode = "Day" }) => {
     if (tenders.length === 0 && !isLoading) {
         return (
             <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                    <p>No tenders found. Create your first tender to get started.</p>
+                <div className="text-center text-gray-500 mt-52">
+                    <p>No Tenders found. Create your first tender to get started.</p>
                     <button
                         onClick={() => router.push("/application/main-console/tender-management/addtender")}
                         className="mt-3 px-4 py-2 bg-green-500 text-white rounded-full text-sm hover:bg-green-600"

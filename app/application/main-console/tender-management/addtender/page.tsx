@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Save, Calendar, Clock, Hash, Type, Link, FileText, PercentSquare, CheckCircle, AlertTriangle } from "lucide-react";
 import TenderLayout from "@/app/components/TenderLayout";
 
-export default function Addtask() {
+export default function Addtender() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const tenderId = searchParams.get("id");
@@ -29,8 +29,8 @@ export default function Addtask() {
         if (isEditMode) {
             setId(tenderId || "");
             setName(searchParams.get("name") || "");
-            setOpenDate(searchParams.get("start") || "");
-            setCloseDate(searchParams.get("end") || "");
+            setOpenDate(searchParams.get("open") || "");
+            setCloseDate(searchParams.get("close") || "");
             setProgress(Number(searchParams.get("progress") || 0));
             setDependencies(searchParams.get("dependencies") || "");
             setDescription(searchParams.get("description") || "");
@@ -75,66 +75,66 @@ export default function Addtask() {
         return true;
     };
 
-    //
-    // const handleSave = async () => {
-    //
-    //     // Reset status
-    //     setSaveSuccess(null);
-    //     setErrorMessage(null);
-    //
-    //     // Validate form
-    //     if (!validateForm()) {
-    //         return;
-    //     }
-    //
-    //     try {
-    //         setIsLoading(true);
-    //         const tenderData = {
-    //             id,
-    //             name,
-    //             openDate,
-    //             closeDate,
-    //             progress: progress.toString(),
-    //             dependencies,
-    //             description,
-    //         };
-    //
-    //         let response;
-    //         if (isEditMode) {
-    //             // Update existing task
-    //             response = await axios.put(`http://localhost:7075/api/tasks/${id}`, tenderData, {
-    //                 headers: {
-    //                     "Content-Type": "application/json"
-    //                 }
-    //             });
-    //             console.log("Tender updated successfully!", response.data);
-    //         } else {
-    //             // Create new task
-    //             response = await axios.post("http://localhost:7075/api/tasks/save", tenderData, {
-    //                 headers: {
-    //                     "Content-Type": "application/json"
-    //                 }
-    //             });
-    //             console.log("Tender added successfully!", response.data);
-    //         }
-    //
-    //         // Navigate back to Gantt chart after short delay
-    //         setTimeout(() => {
-    //             router.push("/application/main-console/tender-management/");
-    //         }, 1000);
-    //
-    //     } catch (error) {
-    //         console.error("Error saving tender:", error);
-    //         setSaveSuccess(false);
-    //         setErrorMessage("Failed to save tender. Please try again.");
-    //         setIsLoading(false);
-    //     }
-    // };
+
+    const handleSave = async () => {
+
+        // Reset status
+        setSaveSuccess(null);
+        setErrorMessage(null);
+
+        // Validate form
+        if (!validateForm()) {
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+            const tenderData = {
+                id,
+                name,
+                openDate,
+                closeDate,
+                progress: progress.toString(),
+                dependencies,
+                description,
+            };
+
+            let response;
+            if (isEditMode) {
+                // Update existing task
+                response = await axios.put(`http://localhost:7075/api/tenders/${id}`, tenderData, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                console.log("Tender updated successfully!", response.data);
+            } else {
+                // Create new task
+                response = await axios.post("http://localhost:7075/api/tenders/save", tenderData, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                console.log("Tender added successfully!", response.data);
+            }
+
+            // Navigate back to Gantt chart after short delay
+            setTimeout(() => {
+                router.push("/application/main-console/tender-management/");
+            }, 1000);
+
+        } catch (error) {
+            console.error("Error saving tender:", error);
+            setSaveSuccess(false);
+            setErrorMessage("Failed to save tender. Please try again.");
+            setIsLoading(false);
+        }
+    };
 
     // Action button for the save
     const saveButton = (
         <button
-            //onClick={handleSave}
+            onClick={handleSave}
             disabled={isLoading}
             className="py-2 px-5 rounded-full flex items-center gap-2 cursor-pointer bg-gradient-to-r from-green-500 to-blue-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-200 ease-in-out"
         >
