@@ -14,7 +14,8 @@ export interface BackendProject {
 export interface BackendCompanyData {
     name: string;
     location: string;
-    profileImage: string; // Note the backend field name
+    profileImage?: string;  // Note the backend field name
+    profilePicture?: string;
     isApproved: boolean;
     ratings: { [key: number]: number };
     hotDeals: BackendHotDeal[];
@@ -55,7 +56,7 @@ export function convertBackendToFrontEnd(backendData: BackendCompanyData): Compa
     return {
         name: backendData.name,
         location: backendData.location,
-        profileImage: backendData.profileImage,
+        profileImage: backendData.profileImage || backendData.profilePicture || "",
         isApproved: backendData.isApproved,
         ratings: backendData.ratings,
         occupiedDates: calculateOccupiedDates(backendData.occupiedStartDate, backendData.occupiedEndDate),
