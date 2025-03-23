@@ -83,10 +83,11 @@ export default function CompanyProfileByIdPage() {
                         profileImage: "",
                         isApproved: false,
                         ratings: {},
-                        occupiedDates: [],
                         hotDeals: [],
                         ongoingProjects: [],
                         completedProjects: [],
+                        occupiedStartDate: "",
+                        occupiedEndDate: ""
                     };
                     setFormData(emptyData);
                     setCompanyDetails(null);
@@ -101,10 +102,11 @@ export default function CompanyProfileByIdPage() {
                     profileImage: "",
                     isApproved: false,
                     ratings: {},
-                    occupiedDates: [],
                     hotDeals: [],
                     ongoingProjects: [],
                     completedProjects: [],
+                    occupiedStartDate: "",
+                    occupiedEndDate: ""
                 };
                 setFormData(emptyData);
                 setCompanyDetails(null);

@@ -1,3 +1,5 @@
+
+
 export interface BackendHotDeal {
     id: number;
     title: string;
@@ -9,6 +11,10 @@ export interface BackendProject {
     id: number;
     title: string;
     image: string;
+    description?: string;
+    startDate: string;
+    estimatedCompletionDate: string;
+    status?: string;
 }
 
 export interface BackendCompanyData {
@@ -32,7 +38,6 @@ export interface CompanyData {
     profileImage: string;
     isApproved: boolean;
     ratings: { [key: number]: number };
-    occupiedDates: string[];
     hotDeals: {
         id: number;
         title: string;
@@ -49,9 +54,61 @@ export interface CompanyData {
         title: string;
         image: string;
     }[];
+    occupiedStartDate: string;
+    occupiedEndDate: string;
 }
 
-export function convertBackendToFrontEnd(backendData: BackendCompanyData): CompanyData {
+export function calculateOccupiedDates(projects: BackendProject[]): {
+    occupiedStartDate: string;
+    occupiedEndDate: string;
+} {
+    if (!projects || projects.length === 0) {
+        return {
+            occupiedStartDate: "",
+            occupiedEndDate: ""
+        };
+    }
+
+    // Filter out projects without valid dates
+    const validProjects = projects.filter(project =>
+        project.startDate && project.estimatedCompletionDate
+    );
+
+    if (validProjects.length === 0) {
+        return {
+            occupiedStartDate: "",
+            occupiedEndDate: ""
+        };
+    }
+
+    // Find earliest start date and latest end date
+    const startDates = validProjects.map(project => new Date(project.startDate));
+    const endDates = validProjects.map(project => new Date(project.estimatedCompletionDate));
+
+    const earliestStart = new Date(Math.min(...startDates.map(date => date.getTime())));
+    const latestEnd = new Date(Math.max(...endDates.map(date => date.getTime())));
+
+    // Format dates to ISO string (YYYY-MM-DD)
+    return {
+        occupiedStartDate: earliestStart.toISOString().split('T')[0],
+        occupiedEndDate: latestEnd.toISOString().split('T')[0]
+    };
+}
+
+export function convertBackendToFrontEnd(backendData: BackendCompanyData): {
+    occupiedEndDate: string;
+    occupiedStartDate: string;
+    ongoingProjects: { image: string; id: number; title: string }[];
+    ratings: { [p: number]: number };
+    hotDeals: { image: string; description: string; id: number; title: string }[];
+    name: string;
+    location: string;
+    profileImage: string;
+    isApproved: boolean;
+    completedProjects: { image: string; id: number; title: string }[]
+} {
+    const { occupiedStartDate, occupiedEndDate } = calculateOccupiedDates(backendData.ongoingProjects);
+
 
     return {
         name: backendData.name,
@@ -59,7 +116,8 @@ export function convertBackendToFrontEnd(backendData: BackendCompanyData): Compa
         profileImage: backendData.profileImage || backendData.profilePicture || "",
         isApproved: backendData.isApproved,
         ratings: backendData.ratings,
-        occupiedDates: calculateOccupiedDates(backendData.occupiedStartDate, backendData.occupiedEndDate),
+        occupiedStartDate: backendData.occupiedStartDate,
+        occupiedEndDate: backendData.occupiedEndDate,
         hotDeals: backendData.hotDeals.map((deal) => ({
             id: deal.id,
             title: deal.title,
@@ -79,16 +137,30 @@ export function convertBackendToFrontEnd(backendData: BackendCompanyData): Compa
     };
 }
 
-export function calculateOccupiedDates(startDateStr: string, endDateStr: string): string[] {
-    const startDate = new Date(startDateStr);
-    const endDate = new Date(endDateStr);
-    const dates: string[] = [];
-    const currentDate = new Date(startDate);
+export function isDateRangeOverlapping(
+    start1: string,
+    end1: string,
+    start2: string,
+    end2: string
+): boolean {
+    const s1 = new Date(start1);
+    const e1 = new Date(end1);
+    const s2 = new Date(start2);
+    const e2 = new Date(end2);
 
-    while (currentDate <= endDate) {
-        dates.push(currentDate.toISOString().split("T")[0]);
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
+    return s1 <= e2 && s2 <= e1;
+}
 
-    return dates;
+export function isDateOccupied(
+    date: string,
+    occupiedStartDate: string,
+    occupiedEndDate: string
+): boolean {
+    if (!occupiedStartDate || !occupiedEndDate) return false;
+
+    const checkDate = new Date(date);
+    const startDate = new Date(occupiedStartDate);
+    const endDate = new Date(occupiedEndDate);
+
+    return checkDate >= startDate && checkDate <= endDate;
 }
