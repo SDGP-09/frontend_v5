@@ -7,8 +7,6 @@ import { useState } from "react";
 import { Hash, FileTextIcon, PercentSquare, Link2, Pencil, Trash2, AlertCircle, Calendar, Clock } from 'lucide-react';
 import TenderLayout from "@/app/components/TenderLayout";
 
-
-
 export default function Tender (){
     const router = useRouter();
     const params = useParams();
