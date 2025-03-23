@@ -21,14 +21,6 @@ export default function CompletedProjectDetails({ project }: CompletedProjectDet
             <div className="p-6">
                 <h2 className="text-2xl font-bold text-gray-900">{project.title}</h2>
                 <p className="text-gray-600 mt-2">{project.description}</p>
-                <div className="mt-4">
-                    <span className="text-sm font-medium text-gray-700">Completed in: </span>
-                    <span className="text-sm text-gray-600">{project.duration}</span>
-                </div>
-                <div className="mt-2">
-                    <span className="text-sm font-medium text-gray-700">Completion Date: </span>
-                    <span className="text-sm text-gray-600">{project.completedDate}</span>
-                </div>
             </div>
         </div>
     );
