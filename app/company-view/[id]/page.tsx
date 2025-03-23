@@ -118,10 +118,11 @@ export default function CompanyProfileByIdPage() {
                     <CompanyRatings
                         ratings={companyData.ratings}
                         isApproved={companyData.isApproved}
+                        contractorId={parseInt(id as string, 10)}
                     />
                     <div className="bg-white p-6 rounded-lg shadow-sm">
                         <h2 className="text-xl font-semibold mb-4">Availability</h2>
-                        <AvailabilityCalendar occupiedDates={companyData.occupiedDates} />
+                        <AvailabilityCalendar occupiedDates={[companyData.occupiedStartDate, companyData.occupiedEndDate]} />
                     </div>
                 </div>
 

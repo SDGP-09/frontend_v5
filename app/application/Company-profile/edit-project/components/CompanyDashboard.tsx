@@ -7,10 +7,12 @@ import CalendarSection from "./CalendarSection";
 import HotDealsSection from "./HotDealsSection";
 import OngoingProjectsSection from "./OngoingProjectsSection";
 import CompletedProjectsSection from "./CompletedProjectsSection";
+import { fetchRatingSummary, RatingSummary } from "../../../../util/fetchRatingSummary";
 import {
     convertBackendToFrontEnd,
     CompanyData,
     BackendCompanyData,
+    isDateOccupied
 } from "../../../../util/dataConversion";
 
 export default function CompanyProfileByIdPage() {
@@ -22,6 +24,7 @@ export default function CompanyProfileByIdPage() {
 
     const [companyDetails, setCompanyDetails] = useState<CompanyData | null>(null);
     const [formData, setFormData] = useState<CompanyData | null>(null);
+    const [ratingSummary, setRatingSummary] = useState<RatingSummary | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [selectedDates, setSelectedDates] = useState<number[]>([]);
     const [isEditing, setIsEditing] = useState(false);
@@ -83,10 +86,11 @@ export default function CompanyProfileByIdPage() {
                         profileImage: "",
                         isApproved: false,
                         ratings: {},
-                        occupiedDates: [],
                         hotDeals: [],
                         ongoingProjects: [],
                         completedProjects: [],
+                        occupiedStartDate: "",
+                        occupiedEndDate: ""
                     };
                     setFormData(emptyData);
                     setCompanyDetails(null);
@@ -101,10 +105,11 @@ export default function CompanyProfileByIdPage() {
                     profileImage: "",
                     isApproved: false,
                     ratings: {},
-                    occupiedDates: [],
                     hotDeals: [],
                     ongoingProjects: [],
                     completedProjects: [],
+                    occupiedStartDate: "",
+                    occupiedEndDate: ""
                 };
                 setFormData(emptyData);
                 setCompanyDetails(null);
@@ -114,6 +119,11 @@ export default function CompanyProfileByIdPage() {
             }
         };
         fetchCompanyDetails();
+        if (id != null) {
+            fetchRatingSummary(parseInt(id, 10))
+                .then(summary => setRatingSummary(summary))
+                .catch(err => console.error("Error fetching rating summary:", err));
+        }
     }, [id]);
 
     // Toggle date selection in the calendar
@@ -235,7 +245,12 @@ export default function CompanyProfileByIdPage() {
     };
 
     // If company details have not been loaded yet, show a loading state
+
     if (!companyDetails) return <div>Loading...</div>;
+
+    const reviewsCount = ratingSummary
+        ? ratingSummary.Ones + ratingSummary.Twos + ratingSummary.Threes + ratingSummary.Fours + ratingSummary.Fives
+        : 0;
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -246,7 +261,7 @@ export default function CompanyProfileByIdPage() {
                         <ProfileSection
                             companyName={companyDetails.name}
                             location={companyDetails.location}
-                            rating={companyDetails.ratings["5"] || 0}
+                            rating={ratingSummary ? ratingSummary.meanRating : 0}
                             reviewsCount={Object.values(companyDetails.ratings).reduce(
                                 (acc, val) => acc + val,
                                 0
