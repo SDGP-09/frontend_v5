@@ -40,29 +40,7 @@ export default function ProjectCard({
             <div className="p-5">
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">{project.title}</h3>
                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
-                <div className="mb-4">
-                    <div className="text-sm font-medium text-gray-700 mb-1">Completed</div>
-                    <div className="text-sm text-gray-600">{project.completedDate}</div>
-                </div>
                 <div className="flex items-center justify-between text-sm text-gray-600 mt-4">
-                    <div className="flex items-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="mr-1"
-                        >
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        <span>{project.duration}</span>
-                    </div>
                     {isAdmin && onViewDetails && (
                         <button
                             onClick={onViewDetails}
