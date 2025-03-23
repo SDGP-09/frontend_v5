@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useCallback } from "react";
+import axios from "axios";
 import RatingBar from "./RatingBar";
 import RatingModal from "./RatingModal";
 import { BadgeCheck, Star } from "lucide-react";
@@ -7,11 +8,13 @@ import { BadgeCheck, Star } from "lucide-react";
 interface CompanyRatingsProps {
     ratings: { [key: number]: number };
     isApproved: boolean;
+    contractorId : number;
 }
 
 const CompanyRatings: React.FC<CompanyRatingsProps> = ({
                                                            ratings: initialRatings,
                                                            isApproved,
+                                                           contractorId,
                                                        }) => {
     const [ratings, setRatings] = useState(initialRatings);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,15 +28,42 @@ const CompanyRatings: React.FC<CompanyRatingsProps> = ({
         ) / totalRatings || 0;
 
     // Handle new rating submission
-    const handleRatingSubmit = useCallback((rating: number) => {
-        setRatings((prevRatings) => {
-            const newRatings = { ...prevRatings };
-            newRatings[rating] = (newRatings[rating] || 0) + 1;
-            return newRatings;
-        });
+    const handleRatingSubmit = useCallback(
+        async (rating: number) => {
+            try {
+                // Example: Retrieve auth token (modify as per your authentication flow)
+                const token = localStorage.getItem("token");
 
-        // You could add an API call here to save the rating to your backend
-    }, []);
+                // POST the rating to the backend endpoint.
+                await axios.post(
+                    "http://35.193.219.136:4040/api/blablabla/add-update",
+                    {
+                        rateReceiver: contractorId, // backend expects contractor id as rateReceiver
+                        rating: rating,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+
+                // Option 1: Update the ratings state locally.
+                setRatings((prevRatings) => ({
+                    ...prevRatings,
+                    [rating]: (prevRatings[rating] || 0) + 1,
+                }));
+
+                // Option 2: Alternatively, re-fetch the updated ratings from the backend.
+            } catch (error) {
+                console.error("Error submitting rating:", error);
+            }
+        },
+        [contractorId]
+    );
+
+
 
     // Open and close modal handlers
     const openModal = useCallback(() => setIsModalOpen(true), []);
@@ -72,10 +102,9 @@ const CompanyRatings: React.FC<CompanyRatingsProps> = ({
 
             <button
                 onClick={openModal}
-                className="mt-4 w-full bg-gradient-to-r from-green-400 to-blue-500
- px-6 py-2 rounded-md  hover:from-green-500 hover:to-blue-600 transition-all font-medium text-white"
+                className="mt-4 w-full bg-gradient-to-r from-green-400 to-blue-500 px-6 py-2 rounded-md  hover:from-green-500 hover:to-blue-600 transition-all font-medium text-white"
             >
-                Rate Civilink
+                Rate CiviLink
             </button>
 
             {/* Rating Modal */}

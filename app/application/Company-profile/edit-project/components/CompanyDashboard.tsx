@@ -11,6 +11,7 @@ import {
     convertBackendToFrontEnd,
     CompanyData,
     BackendCompanyData,
+    isDateOccupied
 } from "../../../../util/dataConversion";
 
 export default function CompanyProfileByIdPage() {
@@ -237,6 +238,7 @@ export default function CompanyProfileByIdPage() {
     };
 
     // If company details have not been loaded yet, show a loading state
+
     if (!companyDetails) return <div>Loading...</div>;
 
     return (
