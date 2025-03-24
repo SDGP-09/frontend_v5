@@ -118,6 +118,17 @@ export default function Addtask() {
                 console.log("Task added successfully!", response.data);
             }
 
+            if (response.status !== 200) {
+                setErrorMessage("Failed to save task. Please try again.");
+                setSaveSuccess(false);
+                setIsLoading(false);
+                return;
+            }
+
+            // If response.status is 200, mark as successful
+            setSaveSuccess(true);
+            setIsLoading(false);
+
             // Navigate back to Gantt chart after short delay
             setTimeout(() => {
                 router.push("/application/main-console/project/");
@@ -126,7 +137,6 @@ export default function Addtask() {
         } catch (error) {
             console.error("Error saving task:", error);
             setSaveSuccess(false);
-            setErrorMessage("Failed to save task. Please try again.");
             setIsLoading(false);
         }
     };
