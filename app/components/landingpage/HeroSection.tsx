@@ -409,7 +409,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroRef }) => {
 
                                             </motion.a>
                                             <motion.a
-                                                href="/"
+                                                href="/application/main-console"
                                                 className="inline-block px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold text-sm tracking-wider rounded-md hover:bg-white/20 transition-all"
                                                 whileHover={{
                                                     scale: 1.05,
