@@ -20,9 +20,7 @@ interface MessageBubbleProps {
 
 //Make sure to engineer the function or you are done.
 function isSent(message: Message){
-    // Logic to check whether sent
-
-
+    // The only way to handle this is through making a flag.
     return true;
 }
 
