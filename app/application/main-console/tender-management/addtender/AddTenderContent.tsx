@@ -118,6 +118,17 @@ export default function Addtender() {
                 console.log("Tender added successfully!", response.data);
             }
 
+            if (response.status !== 200) {
+                setErrorMessage("Failed to save tender. Please try again.");
+                setSaveSuccess(false);
+                setIsLoading(false);
+                return;
+            }
+
+            // If response.status is 200, mark as successful
+            setSaveSuccess(true);
+            setIsLoading(false);
+
             // Navigate back to Gantt chart after short delay
             setTimeout(() => {
                 router.push("/application/main-console/tender-management/");
@@ -126,7 +137,6 @@ export default function Addtender() {
         } catch (error) {
             console.error("Error saving tender:", error);
             setSaveSuccess(false);
-            setErrorMessage("Failed to save tender. Please try again.");
             setIsLoading(false);
         }
     };
