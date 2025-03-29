@@ -12,8 +12,14 @@ import {
     convertBackendToFrontEnd,
     CompanyData,
     BackendCompanyData,
-    isDateOccupied
 } from "../../../../util/dataConversion";
+
+interface VisibleProject {
+    startDate: string;
+    estimatedCompletion: string;
+    // Add other properties as needed
+}
+
 
 export default function CompanyProfileByIdPage() {
     const params = useParams();
@@ -70,8 +76,8 @@ export default function CompanyProfileByIdPage() {
                         ongoingProjects: response.data.ongoingProjects || [],
                         completedProjects: response.data.completedProjects || [],
                         isApproved: response.data.isApproved ?? true,
-                        occupiedStartDate: response.data.occupiedStartDate ?? "2024-03-15",
-                        occupiedEndDate: response.data.occupiedEndDate ?? "2024-03-22",
+                        occupiedStartDate: response.data.occupiedStartDate ?? "",
+                        occupiedEndDate: response.data.occupiedEndDate ?? "",
                     };
 
                     // Convert the backend data to the front-end shape
@@ -123,6 +129,57 @@ export default function CompanyProfileByIdPage() {
             fetchRatingSummary(parseInt(id, 10))
                 .then(summary => setRatingSummary(summary))
                 .catch(err => console.error("Error fetching rating summary:", err));
+        }
+    }, [id]);
+
+    useEffect(() => {
+        const fetchVisibleProjects = async () => {
+            try {
+                const contractorId = parseInt(id!, 10);
+                const response = await axios.post(
+                    `http://35.193.219.136:4040/api/public-project-display/get-visible-projects`,
+                    { id: contractorId },
+                    {
+                        headers: {
+                            "X-Require-Auth": "true",
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                // Assuming the response structure is: { data: { projects: [...] } }
+                const projects = response.data?.data?.projects;
+                if (projects && projects.length > 0) {
+                    // Compute the earliest start date and the latest estimated completion date
+                    let earliest = new Date(projects[0].startDate);
+                    let latest = new Date(projects[0].estimatedCompletion);
+                    projects.forEach((project: VisibleProject) => {
+                        const start = new Date(project.startDate);
+                        const end = new Date(project.estimatedCompletion);
+                        if (start < earliest) {
+                            earliest = start;
+                        }
+                        if (end > latest) {
+                            latest = end;
+                        }
+                    });
+
+                    // Now, assuming your calendar always shows days 1 to 28,
+                    // extract the day numbers from these dates.
+                    const startDay = earliest.getDate();
+                    const endDay = latest.getDate();
+                    const occupiedDays: number[] = [];
+                    for (let day = startDay; day <= endDay; day++) {
+                        occupiedDays.push(day);
+                    }
+                    setSelectedDates(occupiedDays);
+                }
+            } catch (error) {
+                console.error("Error fetching visible projects:", error);
+            }
+        };
+
+        if (id) {
+            fetchVisibleProjects();
         }
     }, [id]);
 
