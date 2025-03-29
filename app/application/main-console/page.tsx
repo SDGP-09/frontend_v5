@@ -11,7 +11,11 @@ import {
     Layers,
     FileText,
     ClipboardCheck,
-    Briefcase
+    Briefcase,
+    User,
+    Settings,
+    Edit,
+    UserCircle
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -20,6 +24,7 @@ export default function MainConsole() {
     const router = useRouter();
     const [hoverProject, setHoverProject] = useState(false);
     const [hoverTender, setHoverTender] = useState(false);
+    const [hoverProfile, setHoverProfile] = useState(false);
     const [hoverSupport, setHoverSupport] = useState(false);
 
     const handleLogout = () => {
@@ -81,7 +86,7 @@ export default function MainConsole() {
 
             {/* Cards container */}
             <div className="flex justify-center mt-4 flex-1">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
                     {/* Project Management Card */}
                     <motion.div
                         className={`relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-300 ${
@@ -255,9 +260,9 @@ export default function MainConsole() {
                         }`}
                         onMouseEnter={() => setHoverTender(true)}
                         onMouseLeave={() => setHoverTender(false)}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
                     >
                         <button
                             onClick={() => router.push("/application/main-console/tender-management")}
@@ -413,6 +418,172 @@ export default function MainConsole() {
                             </div>
                         </button>
                     </motion.div>
+
+                    {/* Edit Profile Card */}
+                    <motion.div
+                        className={`relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-300 ${
+                            hoverProfile ? "shadow-2xl transform scale-105" : ""
+                        }`}
+                        onMouseEnter={() => setHoverProfile(true)}
+                        onMouseLeave={() => setHoverProfile(false)}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                    >
+                        <button
+                            onClick={() => router.push("/application/Company-profile/edit-project")}
+                            className="w-full h-full p-5 flex flex-col items-center text-center group"
+                        >
+                            {/* Edit Profile Icon Animation */}
+                            <motion.div
+                                className="relative h-32 w-32 flex items-center justify-center mb-4"
+                            >
+                                {/* Background elements */}
+                                <motion.div
+                                    className="absolute top-0 right-0 w-16 h-16 bg-purple-100 rounded-full opacity-60"
+                                    animate={{
+                                        x: [0, 8, 0],
+                                        y: [0, 8, 0]
+                                    }}
+                                    transition={{
+                                        duration: 3.2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                />
+                                <motion.div
+                                    className="absolute bottom-0 left-0 w-20 h-20 bg-purple-200 rounded-full opacity-60"
+                                    animate={{
+                                        x: [0, -10, 0],
+                                        y: [0, -10, 0]
+                                    }}
+                                    transition={{
+                                        duration: 4.2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                />
+                                <motion.div
+                                    className="absolute top-4 left-4 w-14 h-14 bg-violet-100 rounded-full opacity-70"
+                                    animate={{
+                                        scale: [1, 1.2, 1],
+                                    }}
+                                    transition={{
+                                        duration: 4.5,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                />
+
+                                {/* Main Icon Group */}
+                                <motion.div
+                                    className="relative z-10 flex items-center justify-center"
+                                    animate={{ rotate: [0, 5, 0, -5, 0] }}
+                                    transition={{
+                                        duration: 8,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                >
+                                    {/* User Icon */}
+                                    <motion.div
+                                        className="absolute"
+                                        initial={{ opacity: 1 }}
+                                        animate={{
+                                            opacity: [1, 0.2, 1],
+                                            scale: [1, 0.8, 1]
+                                        }}
+                                        transition={{
+                                            duration: 4,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                            repeatType: "reverse"
+                                        }}
+                                    >
+                                        <UserCircle className="h-16 w-16 text-purple-700" />
+                                    </motion.div>
+
+                                    {/* Settings Icon */}
+                                    <motion.div
+                                        className="absolute"
+                                        initial={{ opacity: 0 }}
+                                        animate={{
+                                            opacity: [0, 1, 0],
+                                            scale: [0.8, 1.1, 0.8],
+                                            rotate: [0, 30, 0]
+                                        }}
+                                        transition={{
+                                            duration: 4,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                            repeatType: "reverse"
+                                        }}
+                                    >
+                                        <Settings className="h-14 w-14 text-purple-500" />
+                                    </motion.div>
+
+                                    {/* Edit Icon */}
+                                    <motion.div
+                                        className="absolute"
+                                        initial={{ opacity: 0 }}
+                                        animate={{
+                                            opacity: [0, 1, 0],
+                                            scale: [0.7, 1, 0.7],
+                                            rotate: [0, -15, 0]
+                                        }}
+                                        transition={{
+                                            duration: 4,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                            delay: 1.3,
+                                            repeatType: "reverse"
+                                        }}
+                                    >
+                                        <Edit className="h-14 w-14 text-violet-600" />
+                                    </motion.div>
+
+                                    {/* User Icon animated differently */}
+                                    <motion.div
+                                        className="absolute"
+                                        initial={{ opacity: 0 }}
+                                        animate={{
+                                            opacity: [0, 1, 0],
+                                            y: [5, -5, 5],
+                                            scale: [0.8, 1.1, 0.8]
+                                        }}
+                                        transition={{
+                                            duration: 4,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                            delay: 2.5,
+                                            repeatType: "reverse"
+                                        }}
+                                    >
+                                        <User className="h-14 w-14 text-purple-600" />
+                                    </motion.div>
+                                </motion.div>
+                            </motion.div>
+
+                            <h2 className="text-2xl font-bold text-slate-800 mb-2 group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-gradient-to-r from-purple-600 to-purple-800 transition-colors duration-300">
+                                Edit Profile
+                            </h2>
+                            <p className="text-slate-600 mb-4 text-sm group-hover:text-purple-600 transition-colors duration-300">
+                                Update your personal information, credentials, and preferences for your construction platform account
+                            </p>
+                            <div
+                                className={`mt-auto flex items-center text-purple-600 font-medium transition-all duration-300 ${
+                                    hoverProfile ? "text-purple-700" : ""
+                                }`}
+                            >
+                                <span>Manage Profile</span>
+                                <ChevronRight
+                                    className={`h-4 w-4 ml-1 transition-transform duration-300 ${
+                                        hoverProfile ? "transform translate-x-1" : ""
+                                    }`}
+                                />
+                            </div>
+                        </button>
+                    </motion.div>
                 </div>
             </div>
 
@@ -425,14 +596,13 @@ export default function MainConsole() {
                 onMouseLeave={() => setHoverSupport(false)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
             >
                 <div className="text-sm md:text-base font-medium text-center md:text-left">
                     Need assistance with your construction management?
                 </div>
                 <motion.button
                     onClick={() => router.push("/messenger")}
-
                     className="mt-3 md:mt-0 px-4 py-2 bg-white text-blue-600 rounded-md font-medium hover:bg-blue-50 transition-colors shadow-md flex items-center text-sm"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
