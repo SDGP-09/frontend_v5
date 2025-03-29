@@ -1,5 +1,3 @@
-
-
 export interface BackendHotDeal {
     id: number;
     title: string;
